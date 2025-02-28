@@ -1,31 +1,32 @@
-import React, { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
-import ErrorPage from './component/ErrorPage/ErrorPage.jsx';
-import Home from './component/Shared/Home.jsx';
+import React from "react";
+import { createRoot } from "react-dom/client";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import "./index.css";
+import ErrorPage from "./component/ErrorPage/ErrorPage.jsx";
+import PatientDetails from "./component/Shared/PatientDetails.jsx";
+import Roots from "./Root/Roots.jsx";  // ✅ Import the correct file
+import Home from "./component/Shared/Home.jsx";  // ✅ Import the correct file
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element:<Home/> ,
-    errorElement:<ErrorPage/>,
+    element: <Roots />,  
+    errorElement: <ErrorPage />,
     children: [
       {
-        path: "/",
-        element:<Home/> ,
+        path: "/",  
+        element:<Home/>
+      },
+      {
+        path: "/patientDetails",  
+        element: <PatientDetails />,
       },
     ],
   },
 ]);
 
-createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <React.StrictMode>
+createRoot(document.getElementById("root")).render(
+  <React.StrictMode>
     <RouterProvider router={router} />
   </React.StrictMode>
-  </StrictMode>,
-)
+);

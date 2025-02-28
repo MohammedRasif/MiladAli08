@@ -2,12 +2,25 @@ import { useState, useRef, useEffect } from "react";
 import { FaCloudUploadAlt } from "react-icons/fa";
 import { FiChevronLeft, FiChevronRight, FiSend } from "react-icons/fi";
 import { LuPanelLeftClose, LuPanelRightClose, LuTriangleAlert } from "react-icons/lu";
+import { NavLink } from "react-router-dom";
 
-const Home = () => {
+const Header = () => {
     const [isExpanded, setIsExpanded] = useState(true);
     const [messages, setMessages] = useState([]);
     const [isLoading, setIsLoading] = useState(false); // Loading state for AI response
     const chatContainerRef = useRef(null);
+    const [inputText, setInputText] = useState(""); // State to track input text
+    const [patientName, setPatientName] = useState(""); // State to store the patient's name
+    console.log("name", patientName);
+    // Fetch patient details from localStorage on component mount
+    useEffect(() => {
+        const patientDetails = JSON.parse(localStorage.getItem("patientDetails"));
+        if (patientDetails && patientDetails.name) {
+            setPatientName(patientDetails.name); // Set the name if it exists
+        }
+        console.log(patientDetails);
+    }, []);
+
 
     const toggleSidebar = () => {
         setIsExpanded(!isExpanded);
@@ -91,8 +104,15 @@ const Home = () => {
                         <h1 className="text-[18px] font-[500]">
                             This is an AI-based health support system. <br /> Please consult your doctor for medical advice.
                         </h1>
-                        <button className="text-white bg-[#006400] rounded-md px-4 mt-5">Got it</button>
+                        <NavLink to="/patientDetails">
+                            <button className="text-white bg-[#006400] rounded-md px-4 mt-5">Got It</button>
+                        </NavLink>
                     </div>
+                </div>
+                
+                <div className="text-[24px] text-center font-[500] fixed bottom-32 right-[600px]">
+                    <h1>Hi, {patientName || "User"}!!</h1>
+                    <h1>How can I help you today?</h1>
                 </div>
 
                 {/* Chat Messages (Scrollable) */}
@@ -139,10 +159,11 @@ const Home = () => {
                 {/* Fixed Chat Input Field */}
                 <form
                     onSubmit={handleSendMessage}
-                    className="sticky bottom-0 w-full bg-white p-2  rounded-full"
+                    className="sticky bottom-0 w-full bg-white p-2 rounded-full"
                 >
-                    <div className="relative flex items-centerl">
-                        <div className="relative">
+                    <div className="relative flex items-center">
+                        {/* File Upload Section with Background Color */}
+                        <div className="relative bg-[#F5F5F5] rounded-l-full p-3 ml-2 flex items-center">
                             {/* Hidden File Input */}
                             <input
                                 type="file"
@@ -155,24 +176,32 @@ const Home = () => {
                             <label htmlFor="fileUpload" className="cursor-pointer">
                                 <img
                                     src="https://res.cloudinary.com/dfsu0cuvb/image/upload/v1740749111/iconoir_attachment_qfdm9b.png"
-                                    className="h-[20px] mt-3 mx-2 cursor-pointer"
+                                    className="h-[20px] cursor-pointer"
                                     alt="Upload File"
                                 />
                             </label>
                         </div>
 
+                        {/* Input Field */}
                         <input
                             type="text"
                             name="message"
                             placeholder="Ask me anything about health issues"
-                            className="flex-1 p-3 bg-[#F5F5F5] text-gray-600 rounded-full border-none outline-none shadow-md placeholder:text-gray-500"
+                            value={inputText} // Controlled input
+                            onChange={(e) => setInputText(e.target.value)} // Update state on change
+                            className="flex-1 p-3 bg-[#F5F5F5] text-gray-600 border-none outline-none placeholder:text-gray-500"
                         />
-                        <button
-                            type="submit"
-                            className="absolute right-3 text-gray-400 hover:text-gray-600 cursor-pointer"
-                        >
-                            <FiSend className="w-6 h-6 mt-3" />
-                        </button>
+
+                        {/* Send Button */}
+                        <div className="bg-[#F5F5F5] rounded-r-full p-3 mr-2 flex items-center">
+                            <button
+                                type="submit"
+                                className={`cursor-pointer ${inputText.trim() === "" ? "text-gray-400" : "text-[#006400]"
+                                    }`}
+                            >
+                                <FiSend className="w-6 h-6" />
+                            </button>
+                        </div>
                     </div>
                 </form>
             </div>
@@ -181,4 +210,4 @@ const Home = () => {
     );
 };
 
-export default Home;
+export default Header;
