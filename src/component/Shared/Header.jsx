@@ -45,7 +45,7 @@ const Header = () => {
 
             // Simulate AI response with a delay
             setTimeout(() => {
-                const aiResponse = { text: "This is a default AI response.", sender: "ai" };
+                const aiResponse = { text: "This is a default AI response.his is a default AI response.his is a default AI response.his is a default AI response.his is a default AI response.his is a default AI response.his is a default AI response.his is a default AI response.", sender: "ai" };
                 setMessages((prevMessages) => [...prevMessages, aiResponse]);
                 setIsLoading(false); // Stop loading
             }, 1000); // 1-second delay for simulation
@@ -140,46 +140,37 @@ const Header = () => {
                     </div>
                 )}
 
-                {/* Chat Messages (Scrollable) */}
-                <div
-                    ref={chatContainerRef}
-                    className="flex-1 overflow-y-auto space-y-4 p-4"
-                    style={{ maxHeight: "calc(100vh - 150px)" }}
-                >
-                    {messages.map((msg, index) => (
-                        <div key={index} className={`flex items-center ${msg.sender === "user" ? "justify-end" : "justify-start"}`}>
-                            {msg.sender === "ai" && (
-                                <img
-                                    src="https://res.cloudinary.com/dfsu0cuvb/image/upload/v1740739500/Capa_2_inzboj.png"
-                                    alt="AI Avatar"
-                                    className="w-10 h-10 rounded-full mr-2"
-                                />
-                            )}
-                            <div
-                                className={`px-4 py-2 rounded-lg ${msg.sender === "user" ? "bg-blue-500 text-white" : "bg-gray-300 text-black"}`}
-                            >
-                                {msg.text}
-                            </div>
-                            {msg.sender === "user" && (
-                                <img
-                                    src="https://res.cloudinary.com/dfsu0cuvb/image/upload/v1738133725/56832_cdztsw.png"
-                                    alt="User Avatar"
-                                    className="w-10 h-10 rounded-full ml-2"
-                                />
-                            )}
-                        </div>
-                    ))}
-                    {/* Loading Spinner for AI Response */}
-                    {isLoading && (
-                        <div className="flex items-center justify-start">
-                            <img src="https://via.placeholder.com/40" alt="AI Avatar" className="w-10 h-10 rounded-full mr-2" />
-                            <div className="flex items-center px-4 py-2 rounded-lg bg-gray-300 text-black">
-                                <div className="w-5 h-5 border-2 border-gray-500 border-t-transparent rounded-full animate-spin"></div>
-                                <span className="ml-2">Loading...</span>
-                            </div>
-                        </div>
-                    )}
-                </div>
+                {/* Chat Messages (Scrollable, No Images) */}
+               {/* Chat Messages (Scrollable, No Images, 100px Side Padding) */}
+               <div
+    ref={chatContainerRef}
+    className="flex-1 overflow-y-auto space-y-4 p-4"
+    style={{ maxHeight: "calc(100vh - 150px)", paddingLeft: "100px", paddingRight: "100px" }}
+>
+    {messages.map((msg, index) => (
+        <div key={index} className={`flex ${msg.sender === "user" ? "justify-end" : "justify-start"}`}>
+            <div
+                className={`px-4 py-3 rounded-lg ${msg.sender === "user" ? "bg-gray-200 text-black max-w-[66%]" : " text-black w-full"}`}
+            >
+                {msg.text}
+            </div>
+        </div>
+    ))}
+
+    {/* Loading Spinner for AI Response */}
+    {isLoading && (
+        <div className="flex justify-start">
+            <div className="flex items-center px-4 py-2 rounded-lg bg-gray-300 text-black">
+                <div className="w-5 h-5 border-2 border-gray-500 border-t-transparent rounded-full animate-spin"></div>
+                <span className="ml-2">Loading...</span>
+            </div>
+        </div>
+    )}
+</div>
+
+
+
+
 
                 {/* Fixed Chat Input Field */}
                 <form
