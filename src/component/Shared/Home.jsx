@@ -1,10 +1,15 @@
+import Navbar from "../Navbar/Navbar";
+import Header from "./Header";
+
 
 const Home = () => {
+  
     return (
         <div>
-            <h1>this is home section</h1>
+            <Navbar/>
+            <Header />
         </div>
     );
-}
+};
 
 export default Home;

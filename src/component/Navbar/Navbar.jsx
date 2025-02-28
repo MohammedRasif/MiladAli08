@@ -1,8 +1,8 @@
 
 const Navbar = () => {
     return (
-        <div>
-           <h1>This is navbar section</h1> 
+        <div className="absolute z-30">
+           <h1>E-Hospital</h1>
         </div>
     );
 }
