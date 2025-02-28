@@ -11,16 +11,18 @@ const Header = () => {
     const chatContainerRef = useRef(null);
     const [inputText, setInputText] = useState(""); // State to track input text
     const [patientName, setPatientName] = useState(""); // State to store the patient's name
+    const [showNotification, setShowNotification] = useState(true); // State to control notification visibility
+
     console.log("name", patientName);
     // Fetch patient details from localStorage on component mount
-    useEffect(() => {
+       // Fetch patient details from localStorage on component mount
+       useEffect(() => {
         const patientDetails = JSON.parse(localStorage.getItem("patientDetails"));
         if (patientDetails && patientDetails.name) {
             setPatientName(patientDetails.name); // Set the name if it exists
+            setShowNotification(false); // Hide notification if data exists
         }
-        console.log(patientDetails);
     }, []);
-
 
     const toggleSidebar = () => {
         setIsExpanded(!isExpanded);
@@ -98,6 +100,8 @@ const Header = () => {
             {/* Main Content */}
             <div className="flex-1 flex flex-col p-4 relative h-screen overflow-hidden pt-20 bg-gray-100">
                 {/* AI Notification Box */}
+                {showNotification ? (
+                // AI Notification Box (shown if localStorage has no patientDetails)
                 <div className="flex items-center justify-center w-full h-full absolute top-0 left-0">
                     <div className="w-[690px] h-[324px] text-center bg-white flex flex-col justify-center items-center border border-gray-200 rounded-2xl shadow-lg">
                         <LuTriangleAlert className="text-7xl font-[500] text-red-700 mb-5" />
@@ -109,6 +113,20 @@ const Header = () => {
                         </NavLink>
                     </div>
                 </div>
+            ) : (
+                // Dedication Message Box (shown if localStorage has patientDetails)
+                <div className="flex items-center justify-center w-full h-full absolute top-0 left-0">
+                    <div className="w-[690px] h-[324px] text-center bg-white flex flex-col justify-center items-center border border-gray-200 rounded-2xl shadow-lg">
+                        <img
+                            src="https://res.cloudinary.com/dfsu0cuvb/image/upload/v1740756752/Objects_eszpyt.png"
+                            alt="Dedication"
+                        />
+                        <h1 className="text-[18px] font-[500] mt-2">
+                            This chatbot is dedicated to my cousin, who passed away. <br /> Please keep him in your prayers.
+                        </h1>
+                    </div>
+                </div>
+            )}
                 
                 <div className="text-[24px] text-center font-[500] fixed bottom-32 right-[600px]">
                     <h1>Hi, {patientName || "User"}!!</h1>
