@@ -65,21 +65,21 @@ const Home = () => {
                 <h1 className="text-xl font-bold mb-4">Chat Interface</h1>
 
                 {/* Chat Messages (Scrollable) */}
-                <div 
-                    ref={chatContainerRef} 
-                    className="flex-1 overflow-y-auto space-y-4 p-4" 
+                <div
+                    ref={chatContainerRef}
+                    className="flex-1 overflow-y-auto space-y-4 p-4"
                     style={{ maxHeight: 'calc(100vh - 150px)' }}
                 >
                     {messages.map((msg, index) => (
                         <div key={index} className={`flex items-center ${msg.sender === "user" ? "justify-end" : "justify-start"}`}>
                             {msg.sender === "ai" && (
-                                <img src="https://via.placeholder.com/40" alt="AI Avatar" className="w-10 h-10 rounded-full mr-2" />
+                                <img src="https://res.cloudinary.com/dfsu0cuvb/image/upload/v1740739500/Capa_2_inzboj.png" alt="AI Avatar" className="w-10 h-10 rounded-full mr-2" />
                             )}
                             <div className={`px-4 py-2 rounded-lg ${msg.sender === "user" ? "bg-blue-500 text-white" : "bg-gray-300 text-black"}`}>
                                 {msg.text}
                             </div>
                             {msg.sender === "user" && (
-                                <img src="https://via.placeholder.com/40" alt="User Avatar" className="w-10 h-10 rounded-full ml-2" />
+                                <img src="https://res.cloudinary.com/dfsu0cuvb/image/upload/v1738133725/56832_cdztsw.png" alt="User Avatar" className="w-10 h-10 rounded-full ml-2" />
                             )}
                         </div>
                     ))}
@@ -96,11 +96,11 @@ const Home = () => {
                 </div>
 
                 {/* Fixed Chat Input Field */}
-                <form 
-                    onSubmit={handleSendMessage} 
+                <form
+                    onSubmit={handleSendMessage}
                     className="sticky bottom-0 w-full bg-white border-t flex items-center p-4"
                 >
-                    <input 
+                    <input
                         type="text"
                         name="message"
                         placeholder="Type your message..."
