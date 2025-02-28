@@ -7,7 +7,7 @@ const Navbar = () => {
         setActiveTab(tab); // Set the clicked tab as active
     };
     return (
-        <div className="absolute z-30 flex items-center justify-between w-full bg-white px-5 py-5 roboto font-[600] text-[16px]">
+        <div className="absolute z-30 flex items-center justify-between w-full bg-white px-5 py-3 roboto font-[600] text-[16px] border-b border-gray-200">
             <div className="flex items-center space-x-2">
                 <div className="bg-[#006400] p-3 rounded-full border-2 border-[#D9D9D9]">
 

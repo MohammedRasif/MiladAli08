@@ -1,5 +1,7 @@
 import { useState, useRef, useEffect } from "react";
-import { LuPanelLeftClose, LuPanelRightClose } from "react-icons/lu";
+import { FaCloudUploadAlt } from "react-icons/fa";
+import { FiChevronLeft, FiChevronRight, FiSend } from "react-icons/fi";
+import { LuPanelLeftClose, LuPanelRightClose, LuTriangleAlert } from "react-icons/lu";
 
 const Home = () => {
     const [isExpanded, setIsExpanded] = useState(true);
@@ -43,26 +45,55 @@ const Home = () => {
     }, [messages]);
 
     return (
-        <div className="flex min-h-screen relative overflow-hidden">
+        <div className="flex relative overflow-hidden">
             {/* Sidebar */}
-            <div className={`relative transition-all duration-300 bg-gray-100 p-2 ${isExpanded ? "w-[13.33%]" : "w-[50px]"}`}>
-                <button onClick={toggleSidebar} className="absolute top-2 right-2">
+            <div className={`relative transition-all duration-300 bg-white shadow-2xl rounded-2xl p-2 ${isExpanded ? "w-[427px]" : "w-[50px]"}`}>
+                <button onClick={toggleSidebar} className="top-2 right-2 absolute">
                     {isExpanded ? (
-                        <LuPanelLeftClose className="text-2xl" />
+                        <FiChevronLeft className="text-2xl mt-20 bg-[#006400] text-white rounded-full" />
                     ) : (
-                        <LuPanelRightClose className="text-2xl" />
+                        <FiChevronRight className="text-2xl mt-20 bg-[#006400] text-white rounded-full" />
                     )}
                 </button>
                 {isExpanded && (
-                    <div className="mt-10">
-                        hello
+                    <div className="mt-44">
+                        <div className="flex ml-[80px]">
+                            <img
+                                src="https://res.cloudinary.com/dfsu0cuvb/image/upload/v1740739374/Capa_1_iudxxl.png"
+                                className="h-[336px] w-[238px] relative z-30"
+                                alt=""
+                            />
+                            <img
+                                src="https://res.cloudinary.com/dfsu0cuvb/image/upload/v1740743595/Ellipse_1386_kidxgy.png"
+                                alt=""
+                                className="rotate-90 h-[300px] w-[100px] absolute top-80 ml-16 mt-14"
+                            />
+                            <h1 className="text-[40px] font=[700] roboto">Hi</h1>
+                        </div>
+                        <div className="mt-32 text-center text-[27px] font-[500]">
+                            <h1>I’m your AI agent from</h1>
+                            <h1 className="text-[#006400]">“E- hospital”</h1>
+                        </div>
+                        <p className="text-center text-[16px]">
+                            Ask me anything that you want to know <br />
+                            about your health issues
+                        </p>
                     </div>
                 )}
             </div>
 
             {/* Main Content */}
-            <div className="flex-1 flex flex-col p-4 relative h-screen overflow-hidden">
-                <h1 className="text-xl font-bold mb-4">Chat Interface</h1>
+            <div className="flex-1 flex flex-col p-4 relative h-screen overflow-hidden pt-20 bg-gray-100">
+                {/* AI Notification Box */}
+                <div className="flex items-center justify-center w-full h-full absolute top-0 left-0">
+                    <div className="w-[690px] h-[324px] text-center bg-white flex flex-col justify-center items-center border border-gray-200 rounded-2xl shadow-lg">
+                        <LuTriangleAlert className="text-7xl font-[500] text-red-700 mb-5" />
+                        <h1 className="text-[18px] font-[500]">
+                            This is an AI-based health support system. <br /> Please consult your doctor for medical advice.
+                        </h1>
+                        <button className="text-white bg-[#006400] rounded-md px-4 mt-5">Got it</button>
+                    </div>
+                </div>
 
                 {/* Chat Messages (Scrollable) */}
                 <div
@@ -73,13 +104,23 @@ const Home = () => {
                     {messages.map((msg, index) => (
                         <div key={index} className={`flex items-center ${msg.sender === "user" ? "justify-end" : "justify-start"}`}>
                             {msg.sender === "ai" && (
-                                <img src="https://res.cloudinary.com/dfsu0cuvb/image/upload/v1740739500/Capa_2_inzboj.png" alt="AI Avatar" className="w-10 h-10 rounded-full mr-2" />
+                                <img
+                                    src="https://res.cloudinary.com/dfsu0cuvb/image/upload/v1740739500/Capa_2_inzboj.png"
+                                    alt="AI Avatar"
+                                    className="w-10 h-10 rounded-full mr-2"
+                                />
                             )}
-                            <div className={`px-4 py-2 rounded-lg ${msg.sender === "user" ? "bg-blue-500 text-white" : "bg-gray-300 text-black"}`}>
+                            <div
+                                className={`px-4 py-2 rounded-lg ${msg.sender === "user" ? "bg-blue-500 text-white" : "bg-gray-300 text-black"}`}
+                            >
                                 {msg.text}
                             </div>
                             {msg.sender === "user" && (
-                                <img src="https://res.cloudinary.com/dfsu0cuvb/image/upload/v1738133725/56832_cdztsw.png" alt="User Avatar" className="w-10 h-10 rounded-full ml-2" />
+                                <img
+                                    src="https://res.cloudinary.com/dfsu0cuvb/image/upload/v1738133725/56832_cdztsw.png"
+                                    alt="User Avatar"
+                                    className="w-10 h-10 rounded-full ml-2"
+                                />
                             )}
                         </div>
                     ))}
@@ -98,17 +139,44 @@ const Home = () => {
                 {/* Fixed Chat Input Field */}
                 <form
                     onSubmit={handleSendMessage}
-                    className="sticky bottom-0 w-full bg-white border-t flex items-center p-4"
+                    className="sticky bottom-0 w-full bg-white p-2  rounded-full"
                 >
-                    <input
-                        type="text"
-                        name="message"
-                        placeholder="Type your message..."
-                        className="flex-1 p-2 border border-gray-300 rounded-lg"
-                    />
-                    <button type="submit" className="ml-2 bg-blue-500 text-white px-4 py-2 rounded-lg">Send</button>
+                    <div className="relative flex items-centerl">
+                        <div className="relative">
+                            {/* Hidden File Input */}
+                            <input
+                                type="file"
+                                id="fileUpload"
+                                className="hidden"
+                                onChange={(event) => console.log(event.target.files[0])}
+                            />
+
+                            {/* Clickable Image */}
+                            <label htmlFor="fileUpload" className="cursor-pointer">
+                                <img
+                                    src="https://res.cloudinary.com/dfsu0cuvb/image/upload/v1740749111/iconoir_attachment_qfdm9b.png"
+                                    className="h-[20px] mt-3 mx-2 cursor-pointer"
+                                    alt="Upload File"
+                                />
+                            </label>
+                        </div>
+
+                        <input
+                            type="text"
+                            name="message"
+                            placeholder="Ask me anything about health issues"
+                            className="flex-1 p-3 bg-[#F5F5F5] text-gray-600 rounded-full border-none outline-none shadow-md placeholder:text-gray-500"
+                        />
+                        <button
+                            type="submit"
+                            className="absolute right-3 text-gray-400 hover:text-gray-600 cursor-pointer"
+                        >
+                            <FiSend className="w-6 h-6 mt-3" />
+                        </button>
+                    </div>
                 </form>
             </div>
+
         </div>
     );
 };
