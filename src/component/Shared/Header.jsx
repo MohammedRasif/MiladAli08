@@ -126,32 +126,28 @@ const Header = () => {
             {/* Main Content */}
             <div className="flex-1 flex flex-col p-4 relative h-screen overflow-hidden pt-20 bg-gray-100">
                 {/* Conditionally render notification or dedication box */}
-                {!hasSentMessage && (
-                    <>
-                        {showNotification ? (
-                            // AI Notification Box (shown if localStorage has no patientDetails)
-                            <div className="flex items-center justify-center w-full h-full absolute top-0 left-0">
-                                <div className="w-[690px] h-[324px] text-center bg-white flex flex-col justify-center items-center border border-gray-200 rounded-2xl shadow-lg">
-                                    <LuTriangleAlert className="text-7xl font-[500] text-red-700 mb-5" />
-                                    <h1 className="text-[18px] font-[500]">
-                                        This is an AI-based health support system. <br /> Please consult your doctor for medical advice.
-                                    </h1>
-                                    <NavLink to="/patientDetails">
-                                        <button className="text-white bg-[#006400] rounded-md px-4 mt-5">Got It</button>
-                                    </NavLink>
-                                </div>
-                            </div>
-                        ) : (
-                            <div></div>
-                        )}
-                    </>
+                {/* AI Notification Box */}
+                {showNotification && (
+                    <div className="flex items-center justify-center w-full h-screen absolute top-0 left-0">
+                        <div className="w-[690px] h-[324px] text-center bg-white flex flex-col justify-center items-center border border-gray-200 rounded-2xl shadow-lg">
+                            <LuTriangleAlert className="text-7xl font-[500] text-red-700 mb-5" />
+                            <h1 className="text-[18px] font-[500]">
+                                This is an AI-based health support system. <br /> Please consult your doctor for medical advice.
+                            </h1>
+                            <NavLink to="/patientDetails">
+                                <button className="text-white bg-[#006400] rounded-md px-4 mt-5">Got It</button>
+                            </NavLink>
+                        </div>
+                    </div>
                 )}
 
                 {/* Welcome Message */}
                 {!hasSentMessage && (
-                    <div className="text-[24px] text-center font-[500] fixed bottom-32 right-[600px]">
-                        <h1>Hi, {patientName || "User"}!!</h1>
-                        <h1>How can I help you today?</h1>
+                    <div className="text-[24px] text-center font-[500] absolute inset-0 flex items-center justify-center mt-[600px]">
+                        <div>
+                            <h1>Hi, {patientName || "User"}!!</h1>
+                            <h1>How can I help you today?</h1>
+                        </div>
                     </div>
                 )}
 
