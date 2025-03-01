@@ -6,6 +6,7 @@ import ErrorPage from "./component/ErrorPage/ErrorPage.jsx";
 import PatientDetails from "./component/Shared/PatientDetails.jsx";
 import Roots from "./Root/Roots.jsx";  // ✅ Import the correct file
 import Home from "./component/Shared/Home.jsx";  // ✅ Import the correct file
+// import Disclaimer from "./component/Shared/Disclaimer.jsx";
 
 const router = createBrowserRouter([
   {
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
         path: "/patientDetails",  
         element: <PatientDetails />,
       },
+      // {
+      //   path: "/disclaimer",  
+      //   element: <Disclaimer />,
+      // },
     ],
   },
 ]);

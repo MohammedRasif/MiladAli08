@@ -6,46 +6,23 @@ import { IoIosArrowRoundBack } from "react-icons/io";
 import { LuPanelLeftClose, LuPanelRightClose, LuTriangleAlert } from "react-icons/lu";
 import { NavLink } from "react-router-dom";
 
-const Header = () => {
+const Disclaimer = () => {
     const [isExpanded, setIsExpanded] = useState(true);
     const [messages, setMessages] = useState([]);
     const [isLoading, setIsLoading] = useState(false); // Loading state for AI response
     const chatContainerRef = useRef(null);
     const [inputText, setInputText] = useState(""); // State to track input text
     const [patientName, setPatientName] = useState(""); // State to store the patient's name
-    const [isInputActive, setIsInputActive] = useState(false); // State to control input functionality
     const [showNotification, setShowNotification] = useState(true); // State to control notification visibility
     const [hasSentMessage, setHasSentMessage] = useState(false); // State to track if a message has been sent
 
+    // Fetch patient details from localStorage on component mount
     useEffect(() => {
-        const checkLocalStorage = () => {
-            const patientDetails = localStorage.getItem("patientDetails");
-            console.log("LocalStorage patientDetails:", patientDetails); // Debug log
-            if (patientDetails) {
-                try {
-                    const parsedDetails = JSON.parse(patientDetails);
-                    if (parsedDetails && parsedDetails.name) {
-                        setPatientName(parsedDetails.name);
-                        setShowNotification(false);
-                        setIsInputActive(true); // Enable input if patientDetails exists and has a name
-                        console.log("Input activated, patientName:", parsedDetails.name); // Debug log
-                    } else {
-                        setIsInputActive(false);
-                        console.log("No valid name in patientDetails");
-                    }
-                } catch (e) {
-                    console.error("Error parsing patientDetails:", e);
-                    setIsInputActive(false);
-                }
-            } else {
-                setIsInputActive(false);
-                console.log("No patientDetails in localStorage");
-            }
-        };
-
-        checkLocalStorage(); // Initial check
-        window.addEventListener("storage", checkLocalStorage);
-        return () => window.removeEventListener("storage", checkLocalStorage);
+        const patientDetails = JSON.parse(localStorage.getItem("patientDetails"));
+        if (patientDetails && patientDetails.name) {
+            setPatientName(patientDetails.name); // Set the name if it exists
+            setShowNotification(false); // Hide notification if data exists
+        }
     }, []);
 
     const toggleSidebar = () => {
@@ -200,7 +177,6 @@ const Header = () => {
                                 id="fileUpload"
                                 className="hidden"
                                 onChange={(event) => console.log(event.target.files[0])}
-                                disabled={!isInputActive} // Disable if not active
                             />
 
                             {/* Clickable Image */}
@@ -240,4 +216,4 @@ const Header = () => {
     );
 };
 
-export default Header;
+export default Disclaimer;
