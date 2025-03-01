@@ -62,17 +62,32 @@ const PatientDetailsForm = () => {
             const result = await response.json();
             console.log("Success - Parsed Result:", result);
 
-            // Save form data to localStorage
-            localStorage.setItem("patientDetails", JSON.stringify(formData));
+            // Extract unique_id (assuming it comes as 'id' in the response)
+            const uniqueId = result.unique_id ; // Assuming the API returns an 'id' field
+            if (uniqueId) {
+                // Combine formData with the unique_id
+                const updatedPatientDetails = {
+                    ...formData,
+                    id: uniqueId,
+                };
+
+                // Save updated data to localStorage
+                localStorage.setItem("patientDetails", JSON.stringify(updatedPatientDetails));
+                console.log("Saved to localStorage with unique_id:", updatedPatientDetails);
+            } else {
+                console.warn("No unique_id (id) found in API response");
+                // Fallback: Save without unique_id if not found
+                localStorage.setItem("patientDetails", JSON.stringify(formData));
+            }
 
             // Navigate to the home page
             navigate("/");
 
             // Show a success message
-            // alert("Patient details saved successfully!");
+            alert("Patient details saved successfully!");
         } catch (error) {
             console.error("Error:", error.message); // Log the error message
-            // alert("An error occurred while saving patient details. Please try again.");
+            alert("An error occurred while saving patient details. Please try again.");
         }
     };
 

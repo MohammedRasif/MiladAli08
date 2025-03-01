@@ -21,7 +21,7 @@ const Header = () => {
     const handleFileChange = (event) => {
         const file = event.target.files[0];
         if (file) {
-            setFileName(file.full_name); // Set the file name
+            setFileName(file.name); // Set the file name
         } else {
             setFileName(null); // Reset if no file is selected
         }
@@ -62,36 +62,81 @@ const Header = () => {
         setIsExpanded(!isExpanded);
     };
 
-    const handleSendMessage = (event) => {
-        event.preventDefault();
-        if (!isInputActive) return; // Prevent sending messages if input is not active
+   const handleSendMessage = async (event) => {
+    event.preventDefault();
+    if (!isInputActive) return; // Prevent sending messages if input is not active
 
-        const input = event.target.elements.message;
-        const userMessage = input.value.trim();
+    const input = event.target.elements.message;
+    const userMessage = input.value.trim();
 
-        if (userMessage) {
-            // Add user message immediately
-            const newMessages = [
-                ...messages,
-                { text: userMessage, sender: "user" },
-            ];
-            setMessages(newMessages);
-            setInputText(""); // Clear input state
-            setIsLoading(true); // Start loading
-            setHasSentMessage(true); // Hide notification and welcome message
+    if (userMessage) {
+        // Add user message immediately
+        const newMessages = [
+            ...messages,
+            { text: userMessage, sender: "user" },
+        ];
+        setMessages(newMessages);
+        setInputText(""); // Clear input state
+        setIsLoading(true); // Start loading
+        setHasSentMessage(true); // Hide notification and welcome message
 
-            // Simulate AI response with a delay
-            setTimeout(() => {
+        try {
+            // Fetch patientDetails from localStorage
+            const patientDetails = JSON.parse(localStorage.getItem("patientDetails"));
+            const uniqueId = patientDetails?.id; // Extract the unique_id from patientDetails
+
+            if (!uniqueId) {
+                throw new Error("Unique ID not found in patientDetails");
+            }
+
+            // Prepare the request body
+            const requestBody = {
+                question: userMessage, // User's message
+                pdf_file: fileName || "", // Include the uploaded file name (if any)
+                unique_id: uniqueId, // Use the unique_id from patientDetails
+            };
+
+            // Send the user's message to the API
+            const response = await fetch("http://192.168.10.131:8002/api/v1/chat/bot", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(requestBody), // Include pdf_file and unique_id
+            });
+
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
+            }
+
+            const result = await response.json();
+            console.log("API Response:", result);
+
+            // Add AI's response to the messages
+            if (result.success && result.data && result.data.length > 0) {
                 const aiResponse = {
-                    text: "This is a default AI response. This is a default AI response. This is a default AI response. This is a default AI response. This is a default AI response. This is a default AI response. This is a default AI response. This is a default AI response. This is a default AI response. This is a default AI response. This is a default AI response.",
-                    sender: "ai"
+                    text: result.data[0].answer, // Use the AI's answer
+                    sender: "ai",
+                    question: userMessage, // Store the user's question for mapping
                 };
                 setMessages((prevMessages) => [...prevMessages, aiResponse]);
-                setIsLoading(false); // Stop loading
-            }, 1000); // 1-second delay for simulation
+            } else {
+                throw new Error("Invalid response format from API");
+            }
+        } catch (error) {
+            console.error("Error sending message to API:", error);
+            // Display an error message in the chat
+            const errorMessage = {
+                text: "Failed to get a response from the AI. Please try again.",
+                sender: "ai",
+                question: userMessage, // Store the user's question for mapping
+            };
+            setMessages((prevMessages) => [...prevMessages, errorMessage]);
+        } finally {
+            setIsLoading(false); // Stop loading
         }
-    };
-
+    }
+};
     // Auto-scroll to bottom whenever messages change
     useEffect(() => {
         if (chatContainerRef.current) {
