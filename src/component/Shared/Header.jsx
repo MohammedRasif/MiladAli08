@@ -1,4 +1,3 @@
-import { div } from "framer-motion/client";
 import { useState, useRef, useEffect } from "react";
 import { FaCloudUploadAlt } from "react-icons/fa";
 import { FiChevronLeft, FiChevronRight, FiSend } from "react-icons/fi";
@@ -54,6 +53,8 @@ const Header = () => {
 
     const handleSendMessage = (event) => {
         event.preventDefault();
+        if (!isInputActive) return; // Prevent sending messages if input is not active
+
         const input = event.target.elements.message;
         const userMessage = input.value.trim();
 
@@ -70,7 +71,7 @@ const Header = () => {
 
             // Simulate AI response with a delay
             setTimeout(() => {
-                const aiResponse = { text: "This is a default AI response.his is a default AI response.his is a default AI response.his is a default AI response.his is a default AI response.his is a default AI response.his is a default AI response.his is a default AI response.", sender: "ai" };
+                const aiResponse = { text: "This is a default AI response.", sender: "ai" };
                 setMessages((prevMessages) => [...prevMessages, aiResponse]);
                 setIsLoading(false); // Stop loading
             }, 1000); // 1-second delay for simulation
@@ -154,7 +155,6 @@ const Header = () => {
                     </div>
                 )}
 
-                {/* Chat Messages (Scrollable, No Images) */}
                 {/* Chat Messages (Scrollable, No Images, 100px Side Padding) */}
                 <div
                     ref={chatContainerRef}
@@ -181,10 +181,6 @@ const Header = () => {
                         </div>
                     )}
                 </div>
-
-
-
-
 
                 {/* Fixed Chat Input Field */}
                 <form
@@ -217,18 +213,20 @@ const Header = () => {
                         <input
                             type="text"
                             name="message"
-                            placeholder="Ask me anything about health issues"
+                            placeholder={isInputActive ? "Ask me anything about health issues" : "Please provide patient details to start chatting"}
                             value={inputText} // Controlled input
                             onChange={(e) => setInputText(e.target.value)} // Update state on change
                             className="flex-1 p-3 bg-[#F5F5F5] text-gray-600 border-none outline-none placeholder:text-gray-500"
+                            disabled={!isInputActive} // Disable if not active
                         />
 
                         {/* Send Button */}
                         <div className="bg-[#F5F5F5] rounded-r-full p-3 mr-2 flex items-center">
                             <button
                                 type="submit"
-                                className={`cursor-pointer ${inputText.trim() === "" ? "text-gray-400" : "text-[#006400]"
+                                className={`cursor-pointer ${inputText.trim() === "" || !isInputActive ? "text-gray-400" : "text-[#006400]"
                                     }`}
+                                disabled={!isInputActive} // Disable if not active
                             >
                                 <FiSend className="w-6 h-6" />
                             </button>
