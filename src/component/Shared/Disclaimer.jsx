@@ -60,7 +60,7 @@ const Disclaimer = () => {
                                     <h1 className="text-[18px] font-[500]">
                                         This is an AI-based health support system. <br /> Please consult your doctor for medical advice.
                                     </h1>
-                                    <NavLink to="/patientDetails">
+                                    <NavLink to="/">
                                         <button className="text-white bg-[#006400] rounded-md px-4 mt-5">Got It</button>
                                     </NavLink>
                                 </div>
