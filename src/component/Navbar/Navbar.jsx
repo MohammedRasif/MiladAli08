@@ -1,22 +1,34 @@
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom"; // Import useLocation for route tracking
 import { motion } from "framer-motion"; // For modal animation
 import { IoIosArrowRoundBack } from "react-icons/io";
 
 const Navbar = () => {
-    const [activeTab, setActiveTab] = useState("Disclaimer");
-    const [isModalOpen, setIsModalOpen] = useState(false); // State for the modal
+    const location = useLocation(); // Hook to get the current route
+    const [isAboutUsModalOpen, setIsAboutUsModalOpen] = useState(false); // State for About us modal
 
-    const handleTabClick = (tab) => {
-        setActiveTab(tab);
+    // Determine the active tab based on the current route
+    const getActiveTab = () => {
+        switch (location.pathname) {
+            case "/":
+                return "Home";
+            case "/disclaimer":
+                return "Disclaimer";
+            case "/patientDetails":
+                return "Patient Details";
+            default:
+                return "Home";
+        }
     };
 
-    const openModal = () => {
-        setIsModalOpen(true);
+    const activeTab = getActiveTab(); // Get the active tab
+
+    const openAboutUsModal = () => {
+        setIsAboutUsModalOpen(true); // Open About us modal
     };
 
-    const closeModal = () => {
-        setIsModalOpen(false);
+    const closeAboutUsModal = () => {
+        setIsAboutUsModalOpen(false); // Close About us modal
     };
 
     // Modal animation variants
@@ -44,10 +56,9 @@ const Navbar = () => {
             <div className="flex items-center space-x-3">
                 <NavLink
                     to="/"
-                    onClick={() => handleTabClick("Home")}
                     className={({ isActive }) =>
                         `cursor-pointer px-4 py-2 rounded-md transition-all ${
-                            isActive ? "bg-[#006400] text-white" : "bg-transparent text-black"
+                            activeTab === "Home" ? "bg-[#006400] text-white" : "bg-transparent text-black"
                         }`
                     }
                 >
@@ -55,10 +66,9 @@ const Navbar = () => {
                 </NavLink>
                 <NavLink
                     to="/disclaimer"
-                    onClick={() => handleTabClick("Disclaimer")}
                     className={({ isActive }) =>
                         `cursor-pointer px-4 py-2 rounded-md transition-all ${
-                            isActive ? "bg-[#006400] text-white" : "bg-transparent text-black"
+                            activeTab === "Disclaimer" ? "bg-[#006400] text-white" : "bg-transparent text-black"
                         }`
                     }
                 >
@@ -66,10 +76,9 @@ const Navbar = () => {
                 </NavLink>
                 <NavLink
                     to="/patientDetails"
-                    onClick={() => handleTabClick("Patient Details")}
                     className={({ isActive }) =>
                         `cursor-pointer px-4 py-2 rounded-md transition-all ${
-                            isActive ? "bg-[#006400] text-white" : "bg-transparent text-black"
+                            activeTab === "Patient Details" ? "bg-[#006400] text-white" : "bg-transparent text-black"
                         }`
                     }
                 >
@@ -78,47 +87,47 @@ const Navbar = () => {
             </div>
 
             {/* Right Section - About us Button */}
-            <button onClick={openModal}>
+            <button onClick={openAboutUsModal}>
                 <h1 className="text-[16px] font-[600] bg-[#C6D7BA] px-5 py-2 rounded-md border border-gray-400">
                     About us
                 </h1>
             </button>
 
-            {/* Modal */}
-            {isModalOpen && (
+            {/* About us Modal */}
+            {isAboutUsModalOpen && (
                 <motion.div
-                className="fixed inset-0 flex justify-center items-center z-50"
-                style={{ backgroundColor: "", backdropFilter: "blur(10px)" }}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ type: "spring", stiffness: 100, damping: 25 }}
-            >
-                <motion.div
-                    className="w-[690px] h-[324px] text-center bg-white flex flex-col justify-center items-center border border-gray-200 rounded-2xl shadow-lg relative"
-                    variants={modalVariants}
-                    initial="hidden"
-                    animate="visible"
-                    exit="exit"
+                    className="fixed inset-0 flex justify-center items-center z-50"
+                    style={{ backgroundColor: "rgba(0, 0, 0, 0.5)", backdropFilter: "blur(10px)" }}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ type: "spring", stiffness: 100, damping: 25 }}
                 >
-                    {/* Back Button moved to top-5 right-5 */}
-                    <div
-                        className="flex items-center text-[18px] font-[500] text-gray-700 absolute top-5 left-5 cursor-pointer"
-                        onClick={closeModal}
+                    <motion.div
+                        className="w-[690px] h-[324px] text-center bg-white flex flex-col justify-center items-center border border-gray-200 rounded-2xl shadow-lg relative"
+                        variants={modalVariants}
+                        initial="hidden"
+                        animate="visible"
+                        exit="exit"
                     >
-                        <IoIosArrowRoundBack className="text-[28px] mr-1" />
-                        <h1>Back</h1>
-                    </div>
+                        {/* Back Button */}
+                        <div
+                            className="flex items-center text-[18px] font-[500] text-gray-700 absolute top-5 left-5 cursor-pointer"
+                            onClick={closeAboutUsModal}
+                        >
+                            <IoIosArrowRoundBack className="text-[28px] mr-1" />
+                            <h1>Back</h1>
+                        </div>
 
-                    <img
-                        src="https://res.cloudinary.com/dfsu0cuvb/image/upload/v1740756752/Objects_eszpyt.png"
-                        alt="Dedication"
-                    />
-                    <h1 className="text-[18px] font-[500] mt-2">
-                        This chatbot is dedicated to my cousin, who passed away. <br /> Please keep him in your prayers.
-                    </h1>
+                        <img
+                            src="https://res.cloudinary.com/dfsu0cuvb/image/upload/v1740756752/Objects_eszpyt.png"
+                            alt="Dedication"
+                        />
+                        <h1 className="text-[18px] font-[500] mt-2">
+                            About us content goes here.
+                        </h1>
+                    </motion.div>
                 </motion.div>
-            </motion.div>
             )}
         </div>
     );

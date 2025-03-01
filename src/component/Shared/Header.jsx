@@ -210,15 +210,24 @@ const Header = () => {
                         </div>
 
                         {/* Input Field */}
-                        <input
-                            type="text"
-                            name="message"
-                            placeholder={isInputActive ? "Ask me anything about health issues" : "Please provide patient details to start chatting"}
-                            value={inputText} // Controlled input
-                            onChange={(e) => setInputText(e.target.value)} // Update state on change
-                            className="flex-1 p-3 bg-[#F5F5F5] text-gray-600 border-none outline-none placeholder:text-gray-500"
-                            disabled={!isInputActive} // Disable if not active
-                        />
+                        <div className="relative flex-1">
+                            <input
+                                type="text"
+                                name="message"
+                                placeholder={isInputActive ? "Ask me anything about health issues" : "Please provide patient details to start chatting"}
+                                value={inputText} // Controlled input
+                                onChange={(e) => setInputText(e.target.value)} // Update state on change
+                                className="flex-1 p-3 bg-[#F5F5F5] text-gray-600 border-none outline-none placeholder:text-gray-500 w-full"
+                                disabled={!isInputActive} // Disable if not active
+                            />
+                            {/* Hover Tooltip for Disabled Input */}
+                            {!isInputActive && (
+                                <div className="absolute inset-0 flex items-center justify-center bg-[#F5F5F5] opacity-0 hover:opacity-100 transition-opacity duration-300">
+                                    <LuTriangleAlert className="text-xl text-red-600" />
+                                    <span className="ml-2 text-red-600 text-sm">Please provide patient details to enable chat.</span>
+                                </div>
+                            )}
+                        </div>
 
                         {/* Send Button */}
                         <div className="bg-[#F5F5F5] rounded-r-full p-3 mr-2 flex items-center">
