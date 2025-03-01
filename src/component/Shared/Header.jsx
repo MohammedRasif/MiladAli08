@@ -54,10 +54,10 @@ const Header = () => {
     const handleSendMessage = (event) => {
         event.preventDefault();
         if (!isInputActive) return; // Prevent sending messages if input is not active
-
+    
         const input = event.target.elements.message;
         const userMessage = input.value.trim();
-
+    
         if (userMessage) {
             // Add user message immediately
             const newMessages = [
@@ -65,13 +65,16 @@ const Header = () => {
                 { text: userMessage, sender: "user" },
             ];
             setMessages(newMessages);
-            input.value = ""; // Clear input field
+            setInputText(""); // Clear input state
             setIsLoading(true); // Start loading
             setHasSentMessage(true); // Hide notification and welcome message
-
+    
             // Simulate AI response with a delay
             setTimeout(() => {
-                const aiResponse = { text: "This is a default AI response.This is a default AI response.This is a default AI response.This is a default AI response.This is a default AI response.This is a default AI response.This is a default AI response.This is a default AI response.This is a default AI response.This is a default AI response.This is a default AI response.", sender: "ai" };
+                const aiResponse = { 
+                    text: "This is a default AI response. This is a default AI response. This is a default AI response. This is a default AI response. This is a default AI response. This is a default AI response. This is a default AI response. This is a default AI response. This is a default AI response. This is a default AI response. This is a default AI response.", 
+                    sender: "ai" 
+                };
                 setMessages((prevMessages) => [...prevMessages, aiResponse]);
                 setIsLoading(false); // Stop loading
             }, 1000); // 1-second delay for simulation
@@ -153,97 +156,96 @@ const Header = () => {
 
                 {/* Chat Messages (Scrollable, No Images, 100px Side Padding) */}
                 <div
-    ref={chatContainerRef}
-    className="flex-1 space-y-4 p-4"
-    style={{ maxHeight: "calc(100vh - 150px)", paddingLeft: "100px", paddingRight: "100px", overflowY: "hidden" }}
->
-    {messages.map((msg, index) => (
-        <div key={index} className={`flex ${msg.sender === "user" ? "justify-end" : "justify-start"}`}>
-            <div
-                className={`px-4 py-3 rounded-lg ${msg.sender === "user" ? "bg-gray-200 text-black max-w-[66%]" : "text-black w-full"}`}
-                style={{
-                    whiteSpace: "normal", // Allows line breaks
-                    wordBreak: "break-word", // Breaks long words
-                    overflow: "hidden", // Hides overflow beyond container
-                    maxWidth: msg.sender === "user" ? "66%" : "100%", // Maintains width limit
-                }}
-            >
-                {msg.text}
-            </div>
-        </div>
-    ))}
+                    ref={chatContainerRef}
+                    className="flex-1 space-y-4 p-4"
+                    style={{ maxHeight: "calc(100vh - 150px)", paddingLeft: "100px", paddingRight: "100px", overflowY: "hidden" }}
+                >
+                    {messages.map((msg, index) => (
+                        <div key={index} className={`flex ${msg.sender === "user" ? "justify-end" : "justify-start"}`}>
+                            <div
+                                className={`px-4 py-3 rounded-lg ${msg.sender === "user" ? "bg-gray-200 text-black max-w-[66%]" : "text-black w-full"}`}
+                                style={{
+                                    whiteSpace: "normal", // Allows line breaks
+                                    wordBreak: "break-word", // Breaks long words
+                                    overflow: "hidden", // Hides overflow beyond container
+                                    maxWidth: msg.sender === "user" ? "66%" : "100%", // Maintains width limit
+                                }}
+                            >
+                                {msg.text}
+                            </div>
+                        </div>
+                    ))}
 
-    {/* Loading Spinner for AI Response */}
-    {isLoading && (
-        <div className="flex justify-start">
-            <div className="flex items-center px-4 py-2 rounded-lg bg-gray-300 text-black">
-                <div className="w-5 h-5 border-2 border-gray-500 border-t-transparent rounded-full animate-spin"></div>
-                <span className="ml-2">Loading...</span>
-            </div>
-        </div>
-    )}
-</div>
+                    {/* Loading Spinner for AI Response */}
+                    {isLoading && (
+                        <div className="flex justify-start">
+                            <div className="flex items-center px-4 py-2 rounded-lg bg-gray-300 text-black">
+                                <div className="w-5 h-5 border-2 border-gray-500 border-t-transparent rounded-full animate-spin"></div>
+                                <span className="ml-2">Loading...</span>
+                            </div>
+                        </div>
+                    )}
+                </div>
 
                 {/* Fixed Chat Input Field */}
                 <form
-                    onSubmit={handleSendMessage}
-                    className="sticky bottom-0 w-full bg-white p-2 rounded-full shadow-md "
-                >
-                    <div className="relative flex items-center ">
-                        {/* File Upload Section with Background Color */}
-                        <div className="relative bg-[#F5F5F5] rounded-l-full p-3 ml-2 flex items-center">
-                            {/* Hidden File Input */}
-                            <input
-                                type="file"
-                                id="fileUpload"
-                                className="hidden"
-                                onChange={(event) => console.log(event.target.files[0])}
-                                disabled={!isInputActive} // Disable if not active
+                onSubmit={handleSendMessage}
+                className="sticky bottom-0 w-full bg-white p-2 rounded-full shadow-md"
+            >
+                <div className="relative flex items-center">
+                    {/* File Upload Section with Background Color */}
+                    <div className="relative bg-[#F5F5F5] rounded-l-full p-3 ml-2 flex items-center">
+                        {/* Hidden File Input */}
+                        <input
+                            type="file"
+                            id="fileUpload"
+                            className="hidden"
+                            onChange={(event) => console.log(event.target.files[0])}
+                            disabled={!isInputActive} // Disable if not active
+                        />
+
+                        {/* Clickable Image */}
+                        <label htmlFor="fileUpload" className="cursor-pointer">
+                            <img
+                                src="https://res.cloudinary.com/dfsu0cuvb/image/upload/v1740749111/iconoir_attachment_qfdm9b.png"
+                                className="h-[20px] cursor-pointer"
+                                alt="Upload File"
                             />
-
-                            {/* Clickable Image */}
-                            <label htmlFor="fileUpload" className="cursor-pointer">
-                                <img
-                                    src="https://res.cloudinary.com/dfsu0cuvb/image/upload/v1740749111/iconoir_attachment_qfdm9b.png"
-                                    className="h-[20px] cursor-pointer"
-                                    alt="Upload File"
-                                />
-                            </label>
-                        </div>
-
-                        {/* Input Field */}
-                        <div className="relative flex-1">
-                            <input
-                                type="text"
-                                name="message"
-                                placeholder={isInputActive ? "Ask me anything about health issues" : "Please provide patient details to start chatting"}
-                                value={inputText} // Controlled input
-                                onChange={(e) => setInputText(e.target.value)} // Update state on change
-                                className="flex-1 p-3 bg-[#F5F5F5] text-gray-600 border-none outline-none placeholder:text-gray-500 w-full"
-                                disabled={!isInputActive} // Disable if not active
-                            />
-                            {/* Hover Tooltip for Disabled Input */}
-                            {!isInputActive && (
-                                <div className="absolute inset-0 flex items-center justify-center bg-[#F5F5F5] opacity-0 hover:opacity-100 transition-opacity duration-300">
-                                    <LuTriangleAlert className="text-xl text-red-600" />
-                                    <span className="ml-2 text-red-600 text-sm">Please provide patient details to enable chat.</span>
-                                </div>
-                            )}
-                        </div>
-
-                        {/* Send Button */}
-                        <div className="bg-[#F5F5F5] rounded-r-full p-3 mr-2 flex items-center">
-                            <button
-                                type="submit"
-                                className={`cursor-pointer ${inputText.trim() === "" || !isInputActive ? "text-gray-400" : "text-[#006400]"
-                                    }`}
-                                disabled={!isInputActive} // Disable if not active
-                            >
-                                <FiSend className="w-6 h-6" />
-                            </button>
-                        </div>
+                        </label>
                     </div>
-                </form>
+
+                    {/* Input Field */}
+                    <div className="relative flex-1">
+                        <input
+                            type="text"
+                            name="message"
+                            placeholder={isInputActive ? "Ask me anything about health issues" : "Please provide patient details to start chatting"}
+                            value={inputText} // Controlled input
+                            onChange={(e) => setInputText(e.target.value)} // Update state on change
+                            className="flex-1 p-3 bg-[#F5F5F5] text-gray-600 border-none outline-none placeholder:text-gray-500 w-full"
+                            disabled={!isInputActive} // Disable if not active
+                        />
+                        {/* Hover Tooltip for Disabled Input */}
+                        {!isInputActive && (
+                            <div className="absolute inset-0 flex items-center justify-center bg-[#F5F5F5] opacity-0 hover:opacity-100 transition-opacity duration-300">
+                                <LuTriangleAlert className="text-xl text-red-600" />
+                                <span className="ml-2 text-red-600 text-sm">Please provide patient details to enable chat.</span>
+                            </div>
+                        )}
+                    </div>
+
+                    {/* Send Button */}
+                    <div className="bg-[#F5F5F5] rounded-r-full p-3 mr-2 flex items-center">
+                        <button
+                            type="submit"
+                            className={`cursor-pointer ${inputText.trim() === "" || !isInputActive ? "text-gray-400" : "text-[#006400]"}`}
+                            disabled={!isInputActive}
+                        >
+                            <FiSend className="w-6 h-6" />
+                        </button>
+                    </div>
+                </div>
+            </form>
             </div>
         </div>
     );
