@@ -97,7 +97,7 @@ const Navbar = () => {
             {isAboutUsModalOpen && (
                 <motion.div
                     className="fixed inset-0 flex justify-center items-center z-50"
-                    style={{ backgroundColor: "rgba(0, 0, 0, 0.5)", backdropFilter: "blur(10px)" }}
+                    style={{ backgroundColor: "rgba(0, 0, 0, 0.2)", backdropFilter: "blur(10px)" }}
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}

@@ -5,16 +5,16 @@ import { NavLink, useNavigate } from "react-router-dom";
 
 const PatientDetailsForm = () => {
     const [formData, setFormData] = useState({
-        name: "",
+        full_name: "", // Use full_name instead of name
         height: "",
         weight: "",
         gender: "",
         blood_group: "",
         age: "",
-        previous_allergies: "",
+        medical_history: "", // Use medical_history instead of previous_allergies
     });
 
-    const navigate = useNavigate(); // Corrected variable name
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -24,18 +24,56 @@ const PatientDetailsForm = () => {
         }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         console.log("Form submitted:", formData);
 
-        // Save form data to localStorage
-        localStorage.setItem("patientDetails", JSON.stringify(formData));
+        // Prepare the data to match the expected format
+        const postData = {
+            full_name: formData.full_name,
+            age: parseInt(formData.age, 10),
+            height: parseFloat(formData.height).toFixed(2),
+            weight: parseFloat(formData.weight).toFixed(2),
+            gender: formData.gender,
+            blood_group: formData.blood_group,
+            medical_history: formData.medical_history,
+        };
 
-        // Navigate to the home page
-        navigate("/");
+        try {
+            // Send the data to the server
+            const response = await fetch("http://192.168.10.131:8002/api/v1/patient/details/create", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(postData),
+            });
 
-        // Optionally, you can show a success message or modal here
-        alert("Patient details saved successfully!");
+            // Log the full response object
+            console.log("Full Response Object:", response);
+            console.log("Response Status:", response.status); // Log status code
+            console.log("Response Headers:", response.headers); // Log headers
+            console.log("Response OK:", response.ok); // Log whether response is ok
+
+            if (!response.ok) {
+                throw new Error(`Network response was not ok. Status: ${response.status}`);
+            }
+
+            const result = await response.json();
+            console.log("Success - Parsed Result:", result);
+
+            // Save form data to localStorage
+            localStorage.setItem("patientDetails", JSON.stringify(formData));
+
+            // Navigate to the home page
+            navigate("/");
+
+            // Show a success message
+            // alert("Patient details saved successfully!");
+        } catch (error) {
+            console.error("Error:", error.message); // Log the error message
+            // alert("An error occurred while saving patient details. Please try again.");
+        }
     };
 
     // Animation variants for the form
@@ -44,7 +82,7 @@ const PatientDetailsForm = () => {
         visible: {
             y: 0,
             opacity: 1,
-            transition: { type: "spring", stiffness: 50, damping: 10, duration: 1.5 }, // More bouncy
+            transition: { type: "spring", stiffness: 50, damping: 10, duration: 1.5 },
         },
     };
 
@@ -70,12 +108,12 @@ const PatientDetailsForm = () => {
                         <label className="block text-sm font-medium text-gray-700">Name</label>
                         <input
                             type="text"
-                            name="name"
-                            value={formData.name}
+                            name="full_name" // Use full_name instead of name
+                            value={formData.full_name}
                             onChange={handleChange}
                             placeholder="Enter here"
                             className="mt-1 block w-full p-2 border border-gray-300 bg-[#F7F7F7] rounded-md focus:ring-2 focus:ring-green-500"
-                            required // Ensure the field is required
+                            required
                         />
                     </div>
 
@@ -90,7 +128,7 @@ const PatientDetailsForm = () => {
                                 onChange={handleChange}
                                 placeholder="Enter here"
                                 className="mt-1 block w-full p-2 border border-gray-300 rounded-md bg-[#F7F7F7] focus:ring-2 focus:ring-green-500"
-                                required // Ensure the field is required
+                                required
                             />
                         </div>
                         <div className="flex-1">
@@ -102,7 +140,7 @@ const PatientDetailsForm = () => {
                                 onChange={handleChange}
                                 placeholder="Enter here"
                                 className="mt-1 block w-full p-2 border border-gray-300 rounded-md bg-[#F7F7F7] focus:ring-2 focus:ring-green-500"
-                                required // Ensure the field is required
+                                required
                             />
                         </div>
                     </div>
@@ -118,7 +156,7 @@ const PatientDetailsForm = () => {
                                 onChange={handleChange}
                                 placeholder="Enter here"
                                 className="mt-1 block w-full p-2 border border-gray-300 rounded-md bg-[#F7F7F7] focus:ring-2 focus:ring-green-500"
-                                required // Ensure the field is required
+                                required
                             />
                         </div>
                         <div className="flex-1">
@@ -130,7 +168,7 @@ const PatientDetailsForm = () => {
                                 onChange={handleChange}
                                 placeholder="Enter here"
                                 className="mt-1 block w-full p-2 border bg-[#F7F7F7] border-gray-300 rounded-md focus:ring-2 focus:ring-green-500"
-                                required // Ensure the field is required
+                                required
                             />
                         </div>
                         <div className="flex-1">
@@ -142,17 +180,17 @@ const PatientDetailsForm = () => {
                                 onChange={handleChange}
                                 placeholder="Enter here"
                                 className="mt-1 block w-full p-2 border bg-[#F7F7F7] border-gray-300 rounded-md focus:ring-2 focus:ring-green-500"
-                                required // Ensure the field is required
+                                required
                             />
                         </div>
                     </div>
 
                     {/* Medical History Field */}
                     <div>
-                        <label className="block text-sm font-medium text-gray-700">Previous Allergies (Optional)</label>
+                        <label className="block text-sm font-medium text-gray-700">Medical History (Optional)</label>
                         <textarea
-                            name="previous_allergies"
-                            value={formData.previous_allergies}
+                            name="medical_history" // Use medical_history instead of previous_allergies
+                            value={formData.medical_history}
                             onChange={handleChange}
                             placeholder="Type here"
                             className="mt-1 block w-full p-2 border border-gray-300 bg-[#F7F7F7] rounded-md focus:ring-2 focus:ring-green-500"

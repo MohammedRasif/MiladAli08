@@ -30,12 +30,12 @@ const Disclaimer = () => {
 
     return (
         <motion.div
-            className="fixed inset-0 flex justify-center items-center z-50"
-            style={{ backgroundColor: "rgba(0, 0, 0, 0.5)", backdropFilter: "blur(10px)" }}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ type: "spring", stiffness: 100, damping: 25 }}
+        className="fixed inset-0 flex justify-center items-center z-50"
+        style={{ backgroundColor: "rgba(0, 0, 0, 0.2)", backdropFilter: "blur(10px)" }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ type: "spring", stiffness: 100, damping: 25 }}
         >
             <motion.div
                 className="w-[690px] h-[324px] text-center bg-white flex flex-col justify-center items-center border border-gray-200 rounded-2xl shadow-lg relative"

@@ -15,6 +15,17 @@ const Header = () => {
     const [isInputActive, setIsInputActive] = useState(false); // State to control input functionality
     const [showNotification, setShowNotification] = useState(true); // State to control notification visibility
     const [hasSentMessage, setHasSentMessage] = useState(false); // State to track if a message has been sent
+    const [fileName, setFileName] = useState(null); // State to store the uploaded file name
+
+    // Handle file input change
+    const handleFileChange = (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            setFileName(file.full_name); // Set the file name
+        } else {
+            setFileName(null); // Reset if no file is selected
+        }
+    };
 
     useEffect(() => {
         const checkLocalStorage = () => {
@@ -23,11 +34,11 @@ const Header = () => {
             if (patientDetails) {
                 try {
                     const parsedDetails = JSON.parse(patientDetails);
-                    if (parsedDetails && parsedDetails.name) {
-                        setPatientName(parsedDetails.name);
+                    if (parsedDetails && parsedDetails.full_name) {
+                        setPatientName(parsedDetails.full_name);
                         setShowNotification(false);
                         setIsInputActive(true); // Enable input if patientDetails exists and has a name
-                        console.log("Input activated, patientName:", parsedDetails.name); // Debug log
+                        console.log("Input activated, patientName:", parsedDetails.full_name); // Debug log
                     } else {
                         setIsInputActive(false);
                         console.log("No valid name in patientDetails");
@@ -54,10 +65,10 @@ const Header = () => {
     const handleSendMessage = (event) => {
         event.preventDefault();
         if (!isInputActive) return; // Prevent sending messages if input is not active
-    
+
         const input = event.target.elements.message;
         const userMessage = input.value.trim();
-    
+
         if (userMessage) {
             // Add user message immediately
             const newMessages = [
@@ -68,12 +79,12 @@ const Header = () => {
             setInputText(""); // Clear input state
             setIsLoading(true); // Start loading
             setHasSentMessage(true); // Hide notification and welcome message
-    
+
             // Simulate AI response with a delay
             setTimeout(() => {
-                const aiResponse = { 
-                    text: "This is a default AI response. This is a default AI response. This is a default AI response. This is a default AI response. This is a default AI response. This is a default AI response. This is a default AI response. This is a default AI response. This is a default AI response. This is a default AI response. This is a default AI response.", 
-                    sender: "ai" 
+                const aiResponse = {
+                    text: "This is a default AI response. This is a default AI response. This is a default AI response. This is a default AI response. This is a default AI response. This is a default AI response. This is a default AI response. This is a default AI response. This is a default AI response. This is a default AI response. This is a default AI response.",
+                    sender: "ai"
                 };
                 setMessages((prevMessages) => [...prevMessages, aiResponse]);
                 setIsLoading(false); // Stop loading
@@ -91,7 +102,7 @@ const Header = () => {
     return (
         <div className="flex relative overflow-hidden">
             {/* Sidebar */}
-            <div className={`relative transition-all duration-300 bg-white shadow-2xl rounded-2xl p-2 ${isExpanded ? "w-[427px]" : "w-[50px]"}`}>
+            <div className={`relative transition-all duration-300 bg-white shadow-2xl rounded-2xl p-2 hidden md:block ${isExpanded ? "w-[427px]" : "w-[50px]"} `}>
                 <button onClick={toggleSidebar} className="top-2 right-2 absolute">
                     {isExpanded ? (
                         <FiChevronLeft className="text-2xl mt-20 bg-[#006400] text-white rounded-full" />
@@ -157,8 +168,13 @@ const Header = () => {
                 {/* Chat Messages (Scrollable, No Images, 100px Side Padding) */}
                 <div
                     ref={chatContainerRef}
-                    className="flex-1 space-y-4 p-4"
-                    style={{ maxHeight: "calc(100vh - 150px)", paddingLeft: "100px", paddingRight: "100px", overflowY: "hidden" }}
+                    className="flex-1 space-y-4 p-4 "
+                    style={{
+                        maxHeight: "calc(100vh - 150px)",
+                        paddingLeft: "100px",
+                        paddingRight: "100px",
+                        overflowY: "auto" // Changed to auto for scrollbar visibility
+                    }}
                 >
                     {messages.map((msg, index) => (
                         <div key={index} className={`flex ${msg.sender === "user" ? "justify-end" : "justify-start"}`}>
@@ -189,63 +205,69 @@ const Header = () => {
 
                 {/* Fixed Chat Input Field */}
                 <form
-                onSubmit={handleSendMessage}
-                className="sticky bottom-0 w-full bg-white p-2 rounded-full shadow-md"
-            >
-                <div className="relative flex items-center">
-                    {/* File Upload Section with Background Color */}
-                    <div className="relative bg-[#F5F5F5] rounded-l-full p-3 ml-2 flex items-center">
-                        {/* Hidden File Input */}
-                        <input
-                            type="file"
-                            id="fileUpload"
-                            className="hidden"
-                            onChange={(event) => console.log(event.target.files[0])}
-                            disabled={!isInputActive} // Disable if not active
-                        />
-
-                        {/* Clickable Image */}
-                        <label htmlFor="fileUpload" className="cursor-pointer">
-                            <img
-                                src="https://res.cloudinary.com/dfsu0cuvb/image/upload/v1740749111/iconoir_attachment_qfdm9b.png"
-                                className="h-[20px] cursor-pointer"
-                                alt="Upload File"
+                    onSubmit={handleSendMessage}
+                    className="sticky bottom-0 w-full bg-white p-2 rounded-full shadow-md"
+                >
+                    <div className="relative flex items-center">
+                        {/* File Upload Section with Background Color */}
+                        <div className="relative bg-[#F5F5F5] rounded-l-full p-3 ml-2 flex items-center">
+                            {/* Hidden File Input */}
+                            <input
+                                type="file"
+                                id="fileUpload"
+                                className="hidden"
+                                onChange={handleFileChange} // Handle file selection
+                                disabled={!isInputActive} // Disable if not active
                             />
-                        </label>
-                    </div>
 
-                    {/* Input Field */}
-                    <div className="relative flex-1">
-                        <input
-                            type="text"
-                            name="message"
-                            placeholder={isInputActive ? "Ask me anything about health issues" : "Please provide patient details to start chatting"}
-                            value={inputText} // Controlled input
-                            onChange={(e) => setInputText(e.target.value)} // Update state on change
-                            className="flex-1 p-3 bg-[#F5F5F5] text-gray-600 border-none outline-none placeholder:text-gray-500 w-full"
-                            disabled={!isInputActive} // Disable if not active
-                        />
-                        {/* Hover Tooltip for Disabled Input */}
-                        {!isInputActive && (
-                            <div className="absolute inset-0 flex items-center justify-center bg-[#F5F5F5] opacity-0 hover:opacity-100 transition-opacity duration-300">
-                                <LuTriangleAlert className="text-xl text-red-600" />
-                                <span className="ml-2 text-red-600 text-sm">Please provide patient details to enable chat.</span>
-                            </div>
-                        )}
-                    </div>
+                            {/* Clickable Image */}
+                            <label htmlFor="fileUpload" className="cursor-pointer flex items-center">
+                                <img
+                                    src="https://res.cloudinary.com/dfsu0cuvb/image/upload/v1740749111/iconoir_attachment_qfdm9b.png"
+                                    className="h-[20px] cursor-pointer"
+                                    alt="Upload File"
+                                />
+                                {/* Display file name if a file is selected */}
+                                {fileName && (
+                                    <span className="ml-2 text-sm text-gray-600 truncate max-w-[100px]">
+                                        {fileName}
+                                    </span>
+                                )}
+                            </label>
+                        </div>
 
-                    {/* Send Button */}
-                    <div className="bg-[#F5F5F5] rounded-r-full p-3 mr-2 flex items-center">
-                        <button
-                            type="submit"
-                            className={`cursor-pointer ${inputText.trim() === "" || !isInputActive ? "text-gray-400" : "text-[#006400]"}`}
-                            disabled={!isInputActive}
-                        >
-                            <FiSend className="w-6 h-6" />
-                        </button>
+                        {/* Input Field */}
+                        <div className="relative flex-1">
+                            <input
+                                type="text"
+                                name="message"
+                                placeholder={isInputActive ? "Ask me anything about health issues" : "Please provide patient details to start chatting"}
+                                value={inputText} // Controlled input
+                                onChange={(e) => setInputText(e.target.value)} // Update state on change
+                                className="flex-1 p-3 bg-[#F5F5F5] text-gray-600 border-none outline-none placeholder:text-gray-500 w-full"
+                                disabled={!isInputActive} // Disable if not active
+                            />
+                            {/* Hover Tooltip for Disabled Input */}
+                            {!isInputActive && (
+                                <div className="absolute inset-0 flex items-center justify-center bg-[#F5F5F5] opacity-0 hover:opacity-100 transition-opacity duration-300">
+                                    <LuTriangleAlert className="text-xl text-red-600" />
+                                    <span className="ml-2 text-red-600 text-sm">Please provide patient details to enable chat.</span>
+                                </div>
+                            )}
+                        </div>
+
+                        {/* Send Button */}
+                        <div className="bg-[#F5F5F5] rounded-r-full p-3 mr-2 flex items-center">
+                            <button
+                                type="submit"
+                                className={`cursor-pointer ${inputText.trim() === "" || !isInputActive ? "text-gray-400" : "text-[#006400]"}`}
+                                disabled={!isInputActive}
+                            >
+                                <FiSend className="w-6 h-6" />
+                            </button>
+                        </div>
                     </div>
-                </div>
-            </form>
+                </form>
             </div>
         </div>
     );
