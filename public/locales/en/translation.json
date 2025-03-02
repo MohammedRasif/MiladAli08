@@ -1,0 +1,26 @@
+{
+    "E-Hospital": "E-Hospital",
+    "Home": "Home",
+    "Disclaimer": "Disclaimer",
+    "Patient Details": "Patient Details",
+    "English": "English",
+    "العربية": "Arabic",
+    "About us": "About us",
+    "Back": "Back",
+    "About us content goes here.": "About us content goes here.",
+    "Hi": "Hi",
+    "I’m your AI agent from": "I’m your AI agent from",
+    "Ask me anything about your health issues": "Ask me anything that you want to know about your health issues",
+    "This is an AI-based health support system. Please consult your doctor for medical advice.":
+      "This is an AI-based health support system. Please consult your doctor for medical advice.",
+    "Got It": "Got It",
+    "Hi, {{name}}!!": "Hi, {{name}}!!",
+    "How can I help you today?": "How can I help you today?",
+    "Loading...": "Loading...",
+    "Failed to get a response from the AI. Please try again.":
+      "Failed to get a response from the AI. Please try again.",
+    "Ask me anything about health issues": "Ask me anything about health issues",
+    "Please provide patient details to start chatting": "Please provide patient details to start chatting",
+    "Please provide patient details to enable chat.": "Please provide patient details to enable chat.",
+    "Upload File": "Upload File",
+  }

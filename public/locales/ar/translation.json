@@ -1,0 +1,26 @@
+{
+    "E-Hospital": "مستشفى إلكتروني",
+    "Home": "الرئيسية",
+    "Disclaimer": "إخلاء المسؤولية",
+    "Patient Details": "تفاصيل المريض",
+    "English": "الإنجليزية",
+    "العربية": "العربية",
+    "About us": "معلومات عنا",
+    "Back": "رجوع",
+    "About us content goes here.": "محتوى معلومات عنا يذهب هنا.",
+    "Hi": "مرحبًا",
+    "I’m your AI agent from": "أنا وكيلك الذكي من",
+    "Ask me anything about your health issues": "اسألني أي شيء تريد معرفته عن مشاكلك الصحية",
+    "This is an AI-based health support system. Please consult your doctor for medical advice.":
+      "هذا نظام دعم صحي قائم على الذكاء الاصطناعي. يرجى استشارة طبيبك للحصول على نصيحة طبية.",
+    "Got It": "فهمت",
+    "Hi, {{name}}!!": "مرحبًا، {{name}}!!",
+    "How can I help you today?": "كيف يمكنني مساعدتك اليوم؟",
+    "Loading...": "جارٍ التحميل...",
+    "Failed to get a response from the AI. Please try again.":
+      "فشل في الحصول على رد من الذكاء الاصطناعي. يرجى المحاولة مرة أخرى.",
+    "Ask me anything about health issues": "اسألني أي شيء عن المشاكل الصحية",
+    "Please provide patient details to start chatting": "يرجى تقديم تفاصيل المريض لبدء الدردشة",
+    "Please provide patient details to enable chat.": "يرجى تقديم تفاصيل المريض لتفعيل الدردشة",
+    "Upload File": "رفع ملف"
+  }

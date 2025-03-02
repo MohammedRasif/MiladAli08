@@ -7,6 +7,7 @@ import PatientDetails from "./component/Shared/PatientDetails.jsx";
 import Roots from "./Root/Roots.jsx";  // ✅ Import the correct file
 import Home from "./component/Shared/Home.jsx";  // ✅ Import the correct file
 import Disclaimer from "./component/Shared/Disclaimer.jsx";
+import "./i18n.js"
 
 const router = createBrowserRouter([
   {
@@ -32,6 +33,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")).render(
   <React.StrictMode>
+   
     <RouterProvider router={router} />
+    
   </React.StrictMode>
 );
