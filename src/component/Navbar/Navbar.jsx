@@ -441,12 +441,12 @@ const Navbar = () => {
       <div className="relative">
         <button
           onClick={toggleLanguage}
-          className="flex items-center justify-between border border-gray-300 rounded-full px-2 py-1 w-[140px] h-[40px] relative overflow-hidden shadow-md hover:shadow-lg transition-all duration-300 bg-white"
+          className="flex items-center justify-between border border-gray-300  rounded-full px-2 py-1 w-[140px] h-[40px] relative overflow-hidden shadow-md hover:shadow-lg transition-all duration-300 bg-white"
           aria-label={`Switch to ${isEnglish ? "Arabic" : "English"} language`}
         >
           {/* Arabic option */}
           <span
-            className={`z-10 transition-all duration-300 text-sm font-medium ${!isEnglish ? "text-white" : "text-gray-600"
+            className={`z-10 transition-all duration-300 text-sm font-medium ${!isEnglish ? "text-white pl-3 " : "text-gray-600"
               }`}
           >
             عربي
@@ -454,7 +454,7 @@ const Navbar = () => {
 
           {/* Toggle indicator */}
           <motion.div
-            className="absolute top-1 h-[32px] rounded-full z-0 bg-green-600"
+            className="absolute top-1 h-[32px] rounded-full z-0 bg-green-600 "
             animate={{
               left: isEnglish ? "calc(50% - 2px)" : "2px",
               right: isEnglish ? "2px" : "calc(50% - 2px)",
@@ -464,7 +464,7 @@ const Navbar = () => {
 
           {/* English option */}
           <span
-            className={`z-10 transition-all duration-300 text-sm font-medium ${isEnglish ? "text-white" : "text-gray-600"
+            className={`z-10 transition-all duration-300 text-sm font-medium ${isEnglish ? "text-white mr-1" : "text-gray-600"
               }`}
           >
             English

@@ -37,9 +37,24 @@ const PatientDetailsForm = () => {
     }
   };
 
+  const fetchUserIP = async () => {
+    try {
+      const response = await fetch("https://api.ipify.org?format=json");
+      const data = await response.json();
+      return data.ip; // Return the IP address
+    } catch (error) {
+      console.error("Error fetching IP address:", error);
+      return null; // Return null if there's an error
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Form submitted:", formData);
+
+    // Fetch the user's IP address
+    const userIP = await fetchUserIP();
+    console.log(userIP);
 
     const postData = {
       full_name: formData.full_name,
@@ -51,6 +66,7 @@ const PatientDetailsForm = () => {
       medical_history: formData.medical_history,
       diabetes: formData.diabetes,
       high_blood_pressure: formData.high_blood_pressure,
+      ip_address: userIP || "Unknown", // Include the user's IP address
     };
 
     try {
@@ -109,8 +125,7 @@ const PatientDetailsForm = () => {
       >
         <NavLink
           to="/"
-          className={`flex items-center text-[18px] font-[500] text-gray-700 ${i18n.language === "ar" ? "justify-end" : "justify-start"
-            }`}
+          className={`flex items-center text-[18px] font-[500] text-gray-700 `}
         >
           <IoIosArrowRoundBack
             className={`text-[28px] ${i18n.language === "ar" ? "ml-1 transform rotate-180" : "mr-1"}`}
@@ -135,7 +150,7 @@ const PatientDetailsForm = () => {
           </div>
 
           {/* Height and Weight Fields */}
-          <div className={`flex space-x-4 ${i18n.language === "ar" ? "space-x-reverse" : ""}`}>
+          <div className={`flex space-x-4`}>
             <div className="flex-1">
               <label className="block text-sm font-medium text-gray-700">{t("Height")}</label>
               <input
@@ -163,7 +178,7 @@ const PatientDetailsForm = () => {
           </div>
 
           {/* Gender, Blood Group, and Age Fields */}
-          <div className={`flex space-x-4 ${i18n.language === "ar" ? "space-x-reverse" : ""}`}>
+          <div className={`flex space-x-4 `}>
             <div className="flex-1">
               <label className="block text-sm font-medium text-gray-700">{t("Gender")}</label>
               <input
