@@ -431,7 +431,7 @@ const Navbar = () => {
         </NavLink>
 
         <button onClick={openAboutUsModal}>
-          <h1 className="text-[16px] font-[600] bg-[#C6D7BA] px-5 py-2 rounded-md border border-gray-400">
+          <h1 className="text-[16px] font-[600] bg-[#C6D7BA] px-5 py-2 rounded-md border border-gray-400 ml-10">
             {t("About us")}
           </h1>
         </button>

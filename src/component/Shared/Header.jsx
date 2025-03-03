@@ -15,7 +15,7 @@
 //     // useEffect(() => {
 //     //     document.body.dir = i18n.language === "ar" ? "rtl" : "ltr";
 //     //   }, [i18n.language]);
-    
+
 //     //   const changeLanguage = (lng) => {
 //     //     i18n.changeLanguage(lng);
 //     //   };
@@ -186,7 +186,7 @@
 //                                 className="rotate-90 h-[300px] w-[100px] absolute top-80 ml-16 mt-14"
 //                             />
 //                             <h1 className="text-[40px] font=[700] roboto"> {t("Hi")}</h1>
-                     
+
 //                         </div>
 //                         <div className="mt-32 text-center text-[27px] font-[500]">
 //                             <h1>I’m your AI agent from</h1>
@@ -337,9 +337,6 @@
 // };
 
 // export default Header;
-
-
-
 import { useState, useRef, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { FaCloudUploadAlt } from "react-icons/fa";
@@ -351,9 +348,6 @@ import { NavLink } from "react-router-dom";
 const Header = () => {
   const { t, i18n } = useTranslation();
 
-  // Update document direction based on language
-
-
   const [isExpanded, setIsExpanded] = useState(true);
   const [messages, setMessages] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -364,6 +358,7 @@ const Header = () => {
   const [showNotification, setShowNotification] = useState(true);
   const [hasSentMessage, setHasSentMessage] = useState(false);
   const [fileName, setFileName] = useState(null);
+  const [isEnglish, setIsEnglish] = useState(false); // New state for language check
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -373,9 +368,11 @@ const Header = () => {
       setFileName(null);
     }
   };
+  console.log(messages);
 
   useEffect(() => {
     const checkLocalStorage = () => {
+      // Check patient details
       const patientDetails = localStorage.getItem("patientDetails");
       if (patientDetails) {
         try {
@@ -383,23 +380,33 @@ const Header = () => {
           if (parsedDetails && parsedDetails.full_name) {
             setPatientName(parsedDetails.full_name);
             setShowNotification(false);
-            setIsInputActive(true);
+            setIsInputActive(true); // Enable input only if full_name exists
           } else {
             setIsInputActive(false);
+            setPatientName("");
+            setShowNotification(true);
           }
         } catch (e) {
           console.error("Error parsing patientDetails:", e);
           setIsInputActive(false);
+          setPatientName("");
+          setShowNotification(true);
         }
       } else {
         setIsInputActive(false);
+        setPatientName("");
+        setShowNotification(true);
       }
+
+      // Check language preference and set isEnglish
+      const language = localStorage.getItem("language") || i18n.language; // Use 'language' key
+      setIsEnglish(language === "en"); // Set true for 'en', false for 'ar' or others
     };
 
     checkLocalStorage();
     window.addEventListener("storage", checkLocalStorage);
     return () => window.removeEventListener("storage", checkLocalStorage);
-  }, []);
+  }, [i18n.language]);
 
   const toggleSidebar = () => setIsExpanded(!isExpanded);
 
@@ -411,6 +418,7 @@ const Header = () => {
     const userMessage = input.value.trim();
 
     if (userMessage) {
+      // Add user's question as a message immediately
       const newMessages = [...messages, { text: userMessage, sender: "user" }];
       setMessages(newMessages);
       setInputText("");
@@ -427,6 +435,7 @@ const Header = () => {
           question: userMessage,
           pdf_file: fileName || "",
           unique_id: uniqueId,
+          english: isEnglish,
         };
 
         const response = await fetch("http://192.168.10.131:8002/api/v1/chat/bot", {
@@ -439,12 +448,14 @@ const Header = () => {
 
         const result = await response.json();
         if (result.success && result.data && result.data.length > 0) {
-          const aiResponse = {
-            text: result.data[0].answer,
-            sender: "ai",
-            question: userMessage,
-          };
-          setMessages((prevMessages) => [...prevMessages, aiResponse]);
+          // Map the API response to messages format
+          const newMessagesFromAPI = result.data.map((item) => [
+            { text: item.question, sender: "user" }, // User's question
+            { text: item.answer, sender: "ai" }, // AI's answer
+          ]).flat(); // Flatten the array to create a single list of messages
+
+          // Update the messages state with the new messages
+          setMessages((prevMessages) => [...prevMessages, ...newMessagesFromAPI]);
         } else {
           throw new Error("Invalid response format from API");
         }
@@ -453,7 +464,6 @@ const Header = () => {
         const errorMessage = {
           text: t("Failed to get a response from the AI. Please try again."),
           sender: "ai",
-          question: userMessage,
         };
         setMessages((prevMessages) => [...prevMessages, errorMessage]);
       } finally {
@@ -461,7 +471,6 @@ const Header = () => {
       }
     }
   };
-
   useEffect(() => {
     if (chatContainerRef.current) {
       chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
@@ -472,9 +481,8 @@ const Header = () => {
     <div className="flex relative overflow-hidden">
       {/* Sidebar */}
       <div
-        className={`relative transition-all duration-300 bg-white shadow-2xl rounded-2xl p-2 hidden md:block ${
-          isExpanded ? "w-[427px]" : "w-[50px]"
-        }`}
+        className={`relative transition-all duration-300 bg-white shadow-2xl rounded-2xl p-2 hidden md:block ${isExpanded ? "w-[427px]" : "w-[50px]"
+          }`}
       >
         <button onClick={toggleSidebar} className="top-2 right-2 absolute">
           {isExpanded ? (
@@ -545,9 +553,8 @@ const Header = () => {
           {messages.map((msg, index) => (
             <div key={index} className={`flex ${msg.sender === "user" ? "justify-end" : "justify-start"}`}>
               <div
-                className={`px-4 py-3 rounded-lg ${
-                  msg.sender === "user" ? "bg-gray-200 text-black max-w-[66%]" : "text-black w-full"
-                }`}
+                className={`px-4 py-3 rounded-lg ${msg.sender === "user" ? "bg-gray-200 text-black max-w-[66%]" : "text-black w-full"
+                  }`}
                 style={{
                   whiteSpace: "normal",
                   wordBreak: "break-word",
@@ -619,9 +626,8 @@ const Header = () => {
             <div className="bg-[#F5F5F5] rounded-r-full p-3 mr-2 flex items-center">
               <button
                 type="submit"
-                className={`cursor-pointer ${
-                  inputText.trim() === "" || !isInputActive ? "text-gray-400" : "text-[#006400]"
-                }`}
+                className={`cursor-pointer ${inputText.trim() === "" || !isInputActive ? "text-gray-400" : "text-[#006400]"
+                  }`}
                 disabled={!isInputActive}
               >
                 <FiSend className="w-6 h-6" />
