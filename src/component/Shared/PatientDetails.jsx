@@ -201,7 +201,8 @@ const PatientDetailsForm = () => {
                 className="h-5 w-5 border-gray-300 rounded accent-[#006400] checked:bg-[#006400] checked:text-white focus:ring-[#006400] cursor-pointer"
               />
               <label htmlFor="diabetes" className="px-4 py-2 bg-gray-100 border border-gray-300 rounded-md text-gray-700 cursor-pointer">
-                Diabetes
+               
+                {t("Diabetes")}
               </label>
             </div>
 
@@ -215,7 +216,8 @@ const PatientDetailsForm = () => {
                 className="h-5 w-5 border-gray-300 rounded accent-[#006400] checked:bg-[#006400] checked:text-white focus:ring-[#006400] cursor-pointer"
               />
               <label htmlFor="high_blood_pressure" className="px-4 py-2 bg-gray-100 border border-gray-300 rounded-md text-gray-700 cursor-pointer">
-                High blood pressure
+                
+                {t("High blood pressure")}
               </label>
             </div>
           </div>
