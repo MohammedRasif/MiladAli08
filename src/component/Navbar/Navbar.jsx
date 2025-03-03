@@ -16,7 +16,7 @@
 //       const changeLanguage = (lng) => {
 //         i18n.changeLanguage(lng);
 //       };
-    
+
 //     // Determine the active tab based on the current route
 //     const getActiveTab = () => {
 //         switch (location.pathname) {
@@ -96,7 +96,7 @@
 //                 </NavLink>
 
 //                 <header className="w-full max-w-4xl flex flex-col sm:flex-row sm:justify-between items-center mb-8 rtl:sm:flex-row-reverse">
-        
+
 //         <div className="space-x-2 rtl:space-x-reverse">
 //           <button
 //             onClick={() => changeLanguage("en")}
@@ -262,10 +262,10 @@
 //       </button>
 
 //         {/* Language Buttons */}
-    
+
 //       </div>
 
-   
+
 //       <div className="space-x-2">
 //           <button
 //             onClick={() => changeLanguage("en")}
@@ -320,9 +320,6 @@
 // export default Navbar;
 
 
-
-
-
 "use client";
 
 import { useEffect, useState } from "react";
@@ -341,7 +338,7 @@ const Navbar = () => {
   // Update document direction and sync isEnglish when language changes
   useEffect(() => {
     const handleLanguageChange = () => {
-    
+
       setIsEnglish(i18n.language === "en");
     };
 
@@ -408,8 +405,7 @@ const Navbar = () => {
         <NavLink
           to="/"
           className={({ isActive }) =>
-            `cursor-pointer px-4 py-2 rounded-md transition-all ${
-              activeTab === "Home" ? "bg-[#006400] text-white" : "bg-transparent text-black"
+            `cursor-pointer px-4 py-2 rounded-md transition-all ${activeTab === "Home" ? "bg-[#006400] text-white" : "bg-transparent text-black"
             }`
           }
         >
@@ -418,8 +414,7 @@ const Navbar = () => {
         <NavLink
           to="/disclaimer"
           className={({ isActive }) =>
-            `cursor-pointer px-4 py-2 rounded-md transition-all ${
-              activeTab === "Disclaimer" ? "bg-[#006400] text-white" : "bg-transparent text-black"
+            `cursor-pointer px-4 py-2 rounded-md transition-all ${activeTab === "Disclaimer" ? "bg-[#006400] text-white" : "bg-transparent text-black"
             }`
           }
         >
@@ -428,8 +423,7 @@ const Navbar = () => {
         <NavLink
           to="/patientDetails"
           className={({ isActive }) =>
-            `cursor-pointer px-4 py-2 rounded-md transition-all ${
-              activeTab === "Patient Details" ? "bg-[#006400] text-white" : "bg-transparent text-black"
+            `cursor-pointer px-4 py-2 rounded-md transition-all ${activeTab === "Patient Details" ? "bg-[#006400] text-white" : "bg-transparent text-black"
             }`
           }
         >
@@ -452,9 +446,8 @@ const Navbar = () => {
         >
           {/* Arabic option */}
           <span
-            className={`z-10 transition-all duration-300 text-sm font-medium ${
-              !isEnglish ? "text-white" : "text-gray-600"
-            }`}
+            className={`z-10 transition-all duration-300 text-sm font-medium ${!isEnglish ? "text-white" : "text-gray-600"
+              }`}
           >
             عربي
           </span>
@@ -471,9 +464,8 @@ const Navbar = () => {
 
           {/* English option */}
           <span
-            className={`z-10 transition-all duration-300 text-sm font-medium ${
-              isEnglish ? "text-white" : "text-gray-600"
-            }`}
+            className={`z-10 transition-all duration-300 text-sm font-medium ${isEnglish ? "text-white" : "text-gray-600"
+              }`}
           >
             English
           </span>
@@ -498,15 +490,13 @@ const Navbar = () => {
             exit="exit"
           >
             <div
-              className={`flex items-center text-[18px] font-[500] text-gray-700 absolute top-5 ${
-                i18n.language === "ar" ? "right-5" : "left-5"
-              } cursor-pointer`}
+              className={`flex items-center text-[18px] font-[500] text-gray-700 absolute top-5 ${i18n.language === "ar" ? "right-5" : "left-5"
+                } cursor-pointer`}
               onClick={closeAboutUsModal}
             >
               <IoIosArrowRoundBack
-                className={`text-[28px] ${
-                  i18n.language === "ar" ? "ml-1 transform rotate-180" : "mr-1"
-                }`}
+                className={`text-[28px] ${i18n.language === "ar" ? "ml-1 transform rotate-180" : "mr-1"
+                  }`}
               />
               <h1>{t("Back")}</h1>
             </div>

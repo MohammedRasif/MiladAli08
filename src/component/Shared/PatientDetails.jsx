@@ -313,7 +313,6 @@ const PatientDetailsForm = () => {
       }
 
       navigate("/");
-      alert(t("Patient details saved successfully!"));
     } catch (error) {
       console.error("Error:", error.message);
       alert(t("An error occurred while saving patient details. Please try again."));
@@ -342,9 +341,8 @@ const PatientDetailsForm = () => {
       >
         <NavLink
           to="/"
-          className={`flex items-center text-[18px] font-[500] text-gray-700 ${
-            i18n.language === "ar" ? "justify-end" : "justify-start"
-          }`}
+          className={`flex items-center text-[18px] font-[500] text-gray-700 ${i18n.language === "ar" ? "justify-end" : "justify-start"
+            }`}
         >
           <IoIosArrowRoundBack
             className={`text-[28px] ${i18n.language === "ar" ? "ml-1 transform rotate-180" : "mr-1"}`}
@@ -410,29 +408,29 @@ const PatientDetailsForm = () => {
                 required
               />
             </div>
-            <div className="flex-1">
-              <label className="block text-sm font-medium text-gray-700">{t("Blood Group")}</label>
+            <div className="flex items-center space-x-2 mt-6">
               <input
-                type="text"
-                name="blood_group"
-                value={formData.blood_group}
-                onChange={handleChange}
-                placeholder={t("Enter here")}
-                className="mt-1 block w-full p-2 border bg-[#F7F7F7] border-gray-300 rounded-md focus:ring-2 focus:ring-green-500"
-                required
+                type="checkbox"
+                id="diabetes"
+                name="diabetes"
+                className="h-5 w-5 border-gray-300 rounded accent-[#006400] checked:bg-[#006400] checked:text-white focus:ring-[#006400] cursor-pointer"
               />
+              <label htmlFor="diabetes" className="px-4 py-2 bg-gray-100 border border-gray-300 rounded-md text-gray-700 cursor-pointer">
+                Diabetes
+              </label>
             </div>
-            <div className="flex-1">
-              <label className="block text-sm font-medium text-gray-700">{t("Age")}</label>
+
+
+            <div className="flex items-center space-x-2 mt-6">
               <input
-                type="text"
-                name="age"
-                value={formData.age}
-                onChange={handleChange}
-                placeholder={t("Enter here")}
-                className="mt-1 block w-full p-2 border bg-[#F7F7F7] border-gray-300 rounded-md focus:ring-2 focus:ring-green-500"
-                required
+                type="checkbox"
+                id="diabetes"
+                name="diabetes"
+                className="h-5 w-5 border-gray-300 rounded accent-[#006400] checked:bg-[#006400] checked:text-white focus:ring-[#006400] cursor-pointer"
               />
+              <label htmlFor="diabetes" className="px-4 py-2 bg-gray-100 border border-gray-300 rounded-md text-gray-700 cursor-pointer">
+                High blood pressure
+              </label>
             </div>
           </div>
 
