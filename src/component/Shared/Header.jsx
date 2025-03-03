@@ -10,7 +10,7 @@ const Header = () => {
   const { t, i18n } = useTranslation();
 
   const [isExpanded, setIsExpanded] = useState(true);
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState([]); // Chat messages state
   const [isLoading, setIsLoading] = useState(false);
   const chatContainerRef = useRef(null);
   const [inputText, setInputText] = useState("");
@@ -20,17 +20,20 @@ const Header = () => {
   const [hasSentMessage, setHasSentMessage] = useState(false);
   const [fileName, setFileName] = useState(null);
   const [isEnglish, setIsEnglish] = useState(false);
+  const [file, setFile] = useState("")
 
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      setFileName(file.name);
-    } else {
-      setFileName(null);
-    }
-  };
-
+  // Load messages from localStorage when the component mounts
   useEffect(() => {
+    const savedMessages = localStorage.getItem("chatMessages");
+    if (savedMessages) {
+      try {
+        setMessages(JSON.parse(savedMessages)); // Load saved messages
+      } catch (e) {
+        console.error("Error parsing saved messages:", e);
+        setMessages([]); // Reset to empty array if parsing fails
+      }
+    }
+
     const checkLocalStorage = () => {
       const patientDetails = localStorage.getItem("patientDetails");
       if (patientDetails) {
@@ -66,15 +69,33 @@ const Header = () => {
     return () => window.removeEventListener("storage", checkLocalStorage);
   }, [i18n.language]);
 
+  // Save messages to localStorage whenever the messages state changes
+  useEffect(() => {
+    localStorage.setItem("chatMessages", JSON.stringify(messages));
+  }, [messages]);
+
+  const handleFileChange = (event) => {
+    const selectedFile = event.target.files[0];
+  
+    if (selectedFile) {
+      setFile(selectedFile); // Store the actual file
+      setFileName(selectedFile.name); // Store the file name
+    } else {
+      setFile(null);
+      setFileName(null);
+    }
+  };
+  
+
   const toggleSidebar = () => setIsExpanded(!isExpanded);
 
   const handleSendMessage = async (event) => {
     event.preventDefault();
     if (!isInputActive) return;
-
+  
     const input = event.target.elements.message;
     const userMessage = input.value.trim();
-
+  
     if (userMessage) {
       // Add user's question as a message immediately
       const newMessages = [...messages, { text: userMessage, sender: "user" }];
@@ -82,28 +103,33 @@ const Header = () => {
       setInputText("");
       setIsLoading(true);
       setHasSentMessage(true);
-
+  
       try {
         const patientDetails = JSON.parse(localStorage.getItem("patientDetails"));
         const uniqueId = patientDetails?.id;
-
+  
         if (!uniqueId) throw new Error("Unique ID not found in patientDetails");
-
-        const requestBody = {
-          question: userMessage,
-          pdf_file: fileName || "",
-          unique_id: uniqueId,
-          english: isEnglish,
-        };
-
+  
+        // Create FormData object\
+        console.log("isEnglish",isEnglish);
+        
+        const formData = new FormData();
+        formData.append("question", userMessage);
+        formData.append("unique_id", uniqueId);
+        formData.append("english", isEnglish);
+  
+        // Append file if available
+        if (file) {
+          formData.append("pdf_file", file); // 'file' should be the selected PDF file object
+        }
+  
         const response = await fetch("http://192.168.10.131:8002/api/v1/chat/bot", {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(requestBody),
+          body: formData, // No need to set headers; fetch will automatically handle multipart data
         });
-
+  
         if (!response.ok) throw new Error("Network response was not ok");
-
+  
         const result = await response.json();
         if (result.success && result.data && result.data.length > 0) {
           // Get the latest AI response
@@ -113,8 +139,8 @@ const Header = () => {
             sender: "ai",
             question: userMessage,
           };
-
-          // Append the AI response to the existing messages without filtering
+  
+          // Append the AI response to the existing messages
           setMessages((prevMessages) => [...prevMessages, aiResponse]);
         } else {
           throw new Error("Invalid response format from API");
@@ -132,6 +158,7 @@ const Header = () => {
       }
     }
   };
+  
 
   useEffect(() => {
     if (chatContainerRef.current) {
