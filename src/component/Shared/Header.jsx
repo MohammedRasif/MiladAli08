@@ -24,20 +24,7 @@ const Header = () => {
 
   // Refs
   const chatContainerRef = useRef(null);
-  const fileInputRef = useRef(null); // Added ref for file input
-
-  // Memoized functions
-  const fetchUserIP = useCallback(async () => {
-    try {
-      const response = await fetch("https://api.ipify.org?format=json");
-      const data = await response.json();
-      console.log("IP:", data.ip);
-      return data.ip;
-    } catch (error) {
-      console.error("Error fetching IP:", error);
-      return null;
-    }
-  }, []);
+  const fileInputRef = useRef(null);
 
   const fetchChatData = useCallback(async (id) => {
     try {
@@ -58,34 +45,14 @@ const Header = () => {
     }
   }, []);
 
-  const handleCheckIp = useCallback(async () => {
-    try {
-      const ip_address = await fetchUserIP();
-      if (!ip_address) throw new Error("Could not fetch IP");
-
-      const response = await fetch("https://www.backend.e-clinic.ai/api/v1/patient/check/ip-address", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ip_address }),
-      });
-
-      if (!response.ok) throw new Error(`Server error: ${response.status}`);
-      const result = await response.json();
-      console.log("IP Check Response:", result);
-
-      localStorage.setItem("unique_id", result.unique_id);
-      if (result.unique_id) {
-        setIsInputActive(true);
-        await fetchChatData(result.unique_id);
-      } else {
-        setShowNotification(false);
-        navigate("/patientDetails");
-      }
-    } catch (error) {
-      console.error("Error checking IP:", error);
-      navigate("/patientDetails");
+  const handleCheck = () => {
+    const uniqueId = localStorage.getItem("unique_id");
+    if (uniqueId) {
+      navigate("/"); // Navigate to home if unique_id exists
+    } else {
+      navigate("/patientDetails"); // Navigate to patientDetails if unique_id doesn't exist
     }
-  }, [fetchUserIP, fetchChatData, navigate]);
+  };
 
   // Handle file change
   const handleFileChange = (event) => {
@@ -114,22 +81,27 @@ const Header = () => {
       const uniqueId = localStorage.getItem("unique_id");
       if (!uniqueId) throw new Error("Unique ID not found");
 
+      const language = localStorage.getItem("language"); // Fetch language from localStorage
+
       const formData = new FormData();
       formData.append("question", userMessage || "File uploaded");
       formData.append("unique_id", uniqueId);
-      formData.append("english", isEnglish);
+      formData.append("english", language); // Send the raw language value
       if (file) formData.append("pdf_file", file);
+
+      console.log("Language sent:", language);
 
       const response = await fetch("https://www.backend.e-clinic.ai/api/v1/chat/bot", {
         method: "POST",
         body: formData,
       });
+      console.log(formData);
 
       if (!response.ok) throw new Error("Network response was not ok");
       const result = await response.json();
 
       if (result.success && result.data?.length > 0) {
-        await fetchChatData(uniqueId); // Refresh chat list
+        await fetchChatData(uniqueId);
       } else {
         throw new Error("Invalid API response");
       }
@@ -143,7 +115,7 @@ const Header = () => {
       setIsLoading(false);
       setFile(null);
       setFileName(null);
-      if (fileInputRef.current) fileInputRef.current.value = ""; // Reset file input
+      if (fileInputRef.current) fileInputRef.current.value = "";
     }
   };
 
@@ -160,8 +132,14 @@ const Header = () => {
       fetchChatData(id);
     }
 
-    const language = localStorage.getItem("language") ;
-    setIsEnglish(language);
+    // Set Arabic ("ar") as the default language if not present in localStorage
+    const savedLanguage = localStorage.getItem("language");
+    if (!savedLanguage) {
+      localStorage.setItem("language", "ar"); // Set "ar" in localStorage if not present
+    }
+    const initialLanguage = savedLanguage || "ar"; // Use saved language or "ar"
+    i18n.changeLanguage(initialLanguage); // Apply the initial language
+    setIsEnglish(initialLanguage === "en"); // Update isEnglish state
   }, [fetchChatData, i18n.language]);
 
   // Save messages to localStorage
@@ -177,54 +155,56 @@ const Header = () => {
   }, [messages]);
 
   return (
-    <div className="flex relative overflow-hidden">
+    <div className="flex relative overflow-hidden h-screen">
       {/* Sidebar */}
       <div
-        className={`relative transition-all duration-300 bg-white shadow-2xl rounded-2xl p-2 hidden md:block ${
-          isExpanded ? "w-[427px]" : "w-[50px]"
+        className={`absolute md:relative transition-all duration-300 bg-white shadow-2xl rounded-2xl p-2 z-10 hidden md:block ${
+          isExpanded ? "w-[90vw] md:w-[427px]" : "w-[40px] md:w-[50px]"
         }`}
       >
         <button onClick={() => setIsExpanded(!isExpanded)} className="top-2 right-2 absolute">
           {isExpanded ? (
-            <FiChevronLeft className="text-2xl mt-20 bg-[#81db58] text-white rounded-full" />
+            <FiChevronLeft className="text-xl md:text-2xl mt-10 md:mt-20 bg-[#81db58] text-white rounded-full p-1" />
           ) : (
-            <FiChevronRight className="text-2xl mt-20 bg-[#81db58] text-white rounded-full" />
+            <FiChevronRight className="text-xl md:text-2xl mt-10 md:mt-20 bg-[#81db58] text-white rounded-full p-1" />
           )}
         </button>
         {isExpanded && (
-          <div className="mt-44">
-            <div className="flex ml-[10px]">
+          <div className="px-2 md:px-0">
+            <div className="flex flex-col md:flex-row items-center ml-[10px]">
               <img
                 src="https://res.cloudinary.com/dfsu0cuvb/image/upload/v1741106696/Blue_Green_White_Simple_Modern_Medical_Logo-removebg-preview_r3wqv9.png"
-                className="h-[350px] w-[350px] relative z-10 mt-10"
+                className="h-[200px] md:h-[350px] w-[200px] md:w-[350px] relative z-10 mt-6 md:mt-44"
                 alt=""
               />
-              {/* <img
-                src="https://res.cloudinary.com/dfsu0cuvb/image/upload/v1740743595/Ellipse_1386_kidxgy.png"
-                alt=""
-                className="rotate-90 h-[300px] w-[100px] absolute top-80 ml-16 mt-14"
-              /> */}
-              <h1 className="text-[40px]  font-[700] roboto -ml-10 ">{t("Hi")}</h1>
+              <h1 className="text-[28px] md:text-[40px] font-[700] roboto md:-ml-10">
+                {t("Hi")}
+              </h1>
             </div>
-            <div className="mt-32 text-center text-[23px] font-[500]">
-              <h1 className="py-2">{t("I’m your AI agent from")}</h1>
-              <h1 className="text-[#006400] py-2">{t("E-Hospital")}</h1>
+            <div className="mt-8 md:mt-32 text-center text-[18px] md:text-[23px] font-[500]">
+              <h1 className="py-1 md:py-2">{t("I’m your AI agent from")}</h1>
+              <h1 className="text-[#006400] py-1 md:py-2">{t("E-Hospital")}</h1>
             </div>
-            <p className="text-center text-[16px] w-[90%]">{t("Ask me anything about your health issues")}</p>
+            <p className="text-center text-[14px] md:text-[16px] w-[90%] mx-auto">
+              {t("Ask me anything about your health issues")}
+            </p>
           </div>
         )}
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col p-4 relative h-screen overflow-hidden pt-20 bg-gray-100 px-64">
+      <div className="flex-1 flex flex-col p-2 md:p-4 relative h-screen overflow-hidden pt-16 md:pt-20 bg-gray-100 px-2 md:px-28 lg:px-64">
         {showNotification && (
-          <div className="flex items-center justify-center w-full h-screen absolute top-0 left-0">
-            <div className="w-[690px] h-[324px] text-center bg-white flex flex-col justify-center items-center border border-gray-200 rounded-2xl shadow-lg">
-              <LuTriangleAlert className="text-7xl font-[500] text-red-700 mb-5" />
-              <h1 className="text-[18px] font-[500]">
+          <div className="flex items-center justify-center w-full h-screen absolute top-0 left-0 px-2">
+            <div className="w-full max-w-[90vw] md:w-[690px] h-auto md:h-[324px] text-center bg-white flex flex-col justify-center items-center border border-gray-200 rounded-2xl shadow-lg p-4 md:p-0">
+              <LuTriangleAlert className="text-5xl md:text-7xl font-[500] text-red-700 mb-3 md:mb-5" />
+              <h1 className="text-[16px] md:text-[18px] font-[500] px-2">
                 {t("This is an AI-based health support system. Please consult your doctor for medical advice.")}
               </h1>
-              <button onClick={handleCheckIp} className="text-white bg-[#81db58] rounded-md px-4 mt-5">
+              <button
+                onClick={handleCheck}
+                className="text-white bg-[#81db58] rounded-md px-3 md:px-4 mt-3 md:mt-5 text-sm md:text-base"
+              >
                 {t("Got It")}
               </button>
             </div>
@@ -232,70 +212,76 @@ const Header = () => {
         )}
 
         {messages.length === 0 && (
-          <div className="text-[24px] text-center font-[500] absolute inset-0 flex items-center justify-center mt-[600px]">
+          <div className="text-[18px] md:text-[24px] text-center font-[500] absolute inset-0 flex items-center justify-center mt-[450px] md:mt-[600px] px-2">
             <h1>{t("How can I help you today?")}</h1>
           </div>
         )}
 
         <div
           ref={chatContainerRef}
-          className="flex-1 space-y-4 p-4"
-          style={{ maxHeight: "calc(100vh - 150px)", padding: "0 100px", overflowY: "auto" }}
+          className="flex-1 space-y-4 p-2 md:p-4 overflow-y-auto"
+          style={{ maxHeight: "calc(100vh - 120px)", padding: "0 10px md:0 100px" }}
         >
           {messages.map((msg, index) => (
-            <div key={index} className={`flex flex-col w-full pb-10 `}>
+            <div key={index} className="flex flex-col w-full pb-6 md:pb-10">
               <div
-                className={`px-4 py-3 rounded-lg ${msg.question == "question" ? "bg-gray-200 text-black flex items-end justify-end w-full" : " text-black flex items-end justify-end w-full"
-                  }`}
+                className={`px-3 md:px-4 py-2 md:py-3 rounded-lg ${
+                  msg.question === "question"
+                    ? "bg-gray-200 text-black flex items-end justify-end w-full"
+                    : "text-black flex items-end justify-end w-full"
+                }`}
                 style={{
                   whiteSpace: "normal",
                   wordBreak: "break-word",
                   overflow: "hidden",
-                  maxWidth: msg.question === "question" ? "66%" : "100%",
+                  maxWidth: msg.question === "question" ? "80%" : "100%",
                 }}
               >
-                <div className=" text-black max-w-[66%] bg-gray-200 px-4 py-2 rounded-md">
-
-                {msg.text ||msg.question || msg.pdf_name  }
+                <div className="text-black max-w-[80%] md:max-w-[66%] bg-gray-200 px-3 md:px-4 py-2 rounded-md">
+                  {msg.text || msg.question || msg.pdf_name}
                 </div>
               </div>
-              { msg.answer && (
-                
-              <div
-                className={`px-4 py-3 rounded-lg ${msg.question == "question" ? "bg-gray-200 text-black max-w-[66%]" : "text-black flex items-start justify-start w-full "
+              {msg.answer && (
+                <div
+                  className={`px-3 md:px-4 py-2 md:py-3 rounded-lg ${
+                    msg.question === "question"
+                      ? "bg-gray-200 text-black max-w-[80%] md:max-w-[66%]"
+                      : "text-black flex items-start justify-start w-full"
                   }`}
-                style={{
-                  whiteSpace: "normal",
-                  wordBreak: "break-word",
-                  overflow: "hidden",
-                  maxWidth: msg.question === "question" ? "66%" : "100%",
-                }}
-              >
-                <div >
-
-                <ReactMarkdown>{msg.answer}</ReactMarkdown>
+                  style={{
+                    whiteSpace: "normal",
+                    wordBreak: "break-word",
+                    overflow: "hidden",
+                    maxWidth: msg.question === "question" ? "80%" : "100%",
+                  }}
+                >
+                  <div>
+                    <ReactMarkdown>{msg.answer}</ReactMarkdown>
+                  </div>
                 </div>
-              </div>
               )}
             </div>
           ))}
           {isLoading && (
             <div className="flex justify-start">
-              <div className="flex items-center px-4 py-2 rounded-lg bg-gray-300 text-black">
-                <div className="w-5 h-5 border-2 border-gray-500 border-t-transparent rounded-full animate-spin"></div>
-                <span className="ml-2">{t("Loading...")}</span>
+              <div className="flex items-center px-3 md:px-4 py-2 rounded-lg bg-gray-300 text-black">
+                <div className="w-4 md:w-5 h-4 md:h-5 border-2 border-gray-500 border-t-transparent rounded-full animate-spin"></div>
+                <span className="ml-2 text-sm md:text-base">{t("Loading...")}</span>
               </div>
             </div>
           )}
         </div>
 
-        <form onSubmit={handleSendMessage} className="sticky bottom-0 w-full bg-white p-2 rounded-full shadow-md">
+        <form
+          onSubmit={handleSendMessage}
+          className="sticky bottom-0 w-full bg-white p-1 md:p-2 rounded-full shadow-md"
+        >
           <div className="relative flex items-center">
-            <div className="bg-[#F5F5F5] rounded-l-full p-3 ml-2 flex items-center">
+            <div className="bg-[#F5F5F5] rounded-l-full p-2 md:p-3 ml-1 md:ml-2 flex items-center">
               <input
                 type="file"
                 id="fileUpload"
-                ref={fileInputRef} // Added ref
+                ref={fileInputRef}
                 className="hidden"
                 onChange={handleFileChange}
                 disabled={!isInputActive}
@@ -308,11 +294,13 @@ const Header = () => {
               >
                 <img
                   src="https://res.cloudinary.com/dfsu0cuvb/image/upload/v1740749111/iconoir_attachment_qfdm9b.png"
-                  className="h-[20px]"
+                  className="h-[16px] md:h-[20px]"
                   alt={t("Upload File")}
                 />
                 {fileName && (
-                  <span className="ml-2 text-sm text-gray-600 truncate max-w-[100px]">{fileName}</span>
+                  <span className="ml-1 md:ml-2 text-xs md:text-sm text-gray-600 truncate max-w-[80px] md:max-w-[100px]">
+                    {fileName}
+                  </span>
                 )}
               </label>
             </div>
@@ -328,14 +316,14 @@ const Header = () => {
                 }
                 value={inputText}
                 onChange={(e) => setInputText(e.target.value)}
-                className={`flex-1 p-3 bg-[#F5F5F5] text-gray-600 border-none outline-none placeholder:text-gray-500 w-full ${
+                className={`flex-1 p-2 md:p-3 bg-[#F5F5F5] text-gray-600 border-none outline-none placeholder:text-gray-500 w-full text-sm md:text-base ${
                   isInputActive ? "" : "opacity-50 cursor-not-allowed"
                 }`}
                 disabled={!isInputActive}
               />
             </div>
 
-            <div className="bg-[#F5F5F5] rounded-r-full p-3 mr-2 flex items-center">
+            <div className="bg-[#F5F5F5] rounded-r-full p-2 md:p-3 mr-1 md:mr-2 flex items-center">
               <button
                 type="submit"
                 className={`cursor-pointer ${
@@ -345,7 +333,7 @@ const Header = () => {
                 }`}
                 disabled={!isInputActive || (!inputText.trim() && !file)}
               >
-                <FiSend className="w-6 h-6" />
+                <FiSend className="w-5 md:w-6 h-5 md:h-6" />
               </button>
             </div>
           </div>

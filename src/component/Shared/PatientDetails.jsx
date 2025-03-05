@@ -16,6 +16,7 @@ const PatientDetailsForm = () => {
     reported_symptoms: "",
     additional_health_conditions: "",
     country: "",
+    family_history:"",
   });
 
   const navigate = useNavigate();
@@ -28,22 +29,6 @@ const PatientDetailsForm = () => {
       [name]: value,
     }));
   };
-
-  // const fetchUserIP = async () => {
-  //   try {
-  //     const response = await fetch("https://api.ipify.org?format=json");
-  //     const data = await response.json();
-  //     console.log("ip", data.ip);
-      
-  //     return data.ip;
-  //   } catch (error) {
-  //     console.error("Error fetching IP address:", error);
-  //     return null;
-  //   }
-  // };
-
- 
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -59,6 +44,7 @@ const PatientDetailsForm = () => {
       reported_symptoms: formData.reported_symptoms || "",
       additional_health_conditions: formData.additional_health_conditions || "",
       country: formData.country,
+      family_history:formData.family_history,
       // ip_address: await fetchUserIP() || "Unknown",
     };
 
@@ -133,6 +119,7 @@ const PatientDetailsForm = () => {
           reported_symptoms: data.reported_symptoms,
           additional_health_conditions: data.additional_health_conditions,
           country: data.country,
+          family_history:data.family_history,
         }
       )
      
@@ -148,10 +135,10 @@ const PatientDetailsForm = () => {
   }, []);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 pt-10" style={{ backdropFilter: "blur(5px)" }}>
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 pt-12" style={{ backdropFilter: "blur(5px)" }}>
       <motion.div
         className="max-w-lg mx-auto p-8 bg-white rounded-2xl shadow-2xl border border-gray-100"
-        style={{ width: "576px" }}
+        style={{ width: "540px" }}
         variants={formVariants}
         initial="hidden"
         animate="visible"
@@ -161,7 +148,7 @@ const PatientDetailsForm = () => {
           className="flex items-center text-[18px] font-semibold text-gray-700 hover:text-[#006400] transition duration-200"
         >
           <IoIosArrowRoundBack
-            className={`text-[28px] ${i18n.language === "ar" ? "ml-1 transform rotate-180" : "mr-1"}`}
+            className={`text-[28px] ${i18n.language === "ar" ? "ml-1 transform  mt-2" : "mr-1"}`}
           />
           <span>{t("Back")}</span>
         </NavLink>
@@ -310,14 +297,15 @@ const PatientDetailsForm = () => {
             />
           </div>
           <div className="w-full">
-              <label className="block text-sm font-semibold text-gray-700">(Optional) Allergies or Family History</label>
+              <label className="block text-sm font-semibold text-gray-700">{t("Allergies or Family History")}</label>
               <input
                 type="text"
-                name="country"
-            
+                name="family_history"
+                value={formData.family_history}
+                onChange={handleChange}
                 placeholder={t("Enter here")}
                 className="mt-2 block w-full p-[8px] border border-gray-300 bg-gray-50 rounded-lg focus:ring-2 focus:ring-[#006400] focus:border-transparent outline-none transition duration-200"
-                required
+                
               />
             </div>
           {/* Submit Button */}

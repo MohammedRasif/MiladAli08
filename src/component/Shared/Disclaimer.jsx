@@ -133,7 +133,7 @@ const Disclaimer = () => {
             onClick={closeModal}
           >
             <IoIosArrowRoundBack
-              className={`text-[28px] ${i18n.language === "ar" ? "ml-1 transform rotate-180" : "mr-1"}`}
+              className={`text-[28px] ${i18n.language === "ar" ? "ml-1 transform mt-2" : "mr-1"}`}
             />
             <h1>{t("Back")}</h1>
           </div>

@@ -38,6 +38,7 @@ const resources = {
       "Sex": "Sex",
       "Select Sex": "Select Sex",
       "Yes": "Yes",
+      "Allergies or Family History": "(Optional) Allergies or Family History",
       "No": "No",
       "Male": "Male",
       "Female": "Female",
@@ -116,6 +117,7 @@ const resources = {
       "High Blood Pressure": "ضغط دم مرتفع",
       "Select Pressure": "اختر الضغط",
       "Medical History (Optional)": "التاريخ الطبي (اختياري)",
+      "Allergies or Family History": "(اختياري) الحساسية أو التاريخ العائلي",
       "Enter here": "أدخل هنا",
       "Type here": "اكتب هنا",
       "Submit": "إرسال",
@@ -143,8 +145,8 @@ const resources = {
   },
 };
 
-// Get the saved language from localStorage, default to "en" if not found
-const savedLanguage = localStorage.getItem("language") || "en";
+// Get the saved language from localStorage, default to "ar" if not found
+const savedLanguage = localStorage.getItem("language") || "ar";
 
 i18n.use(initReactI18next).init({
   resources,
