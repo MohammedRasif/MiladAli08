@@ -56,7 +56,7 @@
 //         <div className="absolute z-30 flex items-center justify-between w-full bg-white px-5 py-3 roboto font-[600] text-[16px] border-b border-gray-200">
 //             {/* Logo Section */}
 //             <div className="flex items-center space-x-2">
-//                 <div className="bg-[#006400] w-8 h-8 rounded-full border-2 border-[#D9D9D9]"></div>
+//                 <div className="bg-[#81db58] w-8 h-8 rounded-full border-2 border-[#D9D9D9]"></div>
 //                 <div>
 //                     <h1 className="text-lg font-bold">E-Hospital</h1>
 //                 </div>
@@ -68,7 +68,7 @@
 //                     to="/"
 //                     className={({ isActive }) =>
 //                         `cursor-pointer px-4 py-2 rounded-md transition-all ${
-//                             activeTab === "Home" ? "bg-[#006400] text-white" : "bg-transparent text-black"
+//                             activeTab === "Home" ? "bg-[#81db58] text-white" : "bg-transparent text-black"
 //                         }`
 //                     }
 //                 >
@@ -78,7 +78,7 @@
 //                     to="/disclaimer"
 //                     className={({ isActive }) =>
 //                         `cursor-pointer px-4 py-2 rounded-md transition-all ${
-//                             activeTab === "Disclaimer" ? "bg-[#006400] text-white" : "bg-transparent text-black"
+//                             activeTab === "Disclaimer" ? "bg-[#81db58] text-white" : "bg-transparent text-black"
 //                         }`
 //                     }
 //                 >
@@ -88,7 +88,7 @@
 //                     to="/patientDetails"
 //                     className={({ isActive }) =>
 //                         `cursor-pointer px-4 py-2 rounded-md transition-all ${
-//                             activeTab === "Patient Details" ? "bg-[#006400] text-white" : "bg-transparent text-black"
+//                             activeTab === "Patient Details" ? "bg-[#81db58] text-white" : "bg-transparent text-black"
 //                         }`
 //                     }
 //                 >
@@ -106,7 +106,7 @@
 //           </button>
 //           <button
 //             onClick={() => changeLanguage("ar")}
-//             className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
+//             className="px-4 py-2 bg-green-500 text-white rounded hover:bg-[#81db58]"
 //           >
 //             العربية
 //           </button>
@@ -218,7 +218,7 @@
 //     <div className="absolute z-30 flex items-center justify-between w-full bg-white px-5 py-3 roboto font-[600] text-[16px] border-b border-gray-200">
 //       {/* Logo Section */}
 //       <div className="flex items-center space-x-2">
-//         <div className="bg-[#006400] w-8 h-8 rounded-full border-2 border-[#D9D9D9]"></div>
+//         <div className="bg-[#81db58] w-8 h-8 rounded-full border-2 border-[#D9D9D9]"></div>
 //         <h1 className="text-lg font-bold">{t("E-Hospital")}</h1>
 //       </div>
 
@@ -228,7 +228,7 @@
 //           to="/"
 //           className={({ isActive }) =>
 //             `cursor-pointer px-4 py-2 rounded-md transition-all ${
-//               activeTab === "Home" ? "bg-[#006400] text-white" : "bg-transparent text-black"
+//               activeTab === "Home" ? "bg-[#81db58] text-white" : "bg-transparent text-black"
 //             }`
 //           }
 //         >
@@ -238,7 +238,7 @@
 //           to="/disclaimer"
 //           className={({ isActive }) =>
 //             `cursor-pointer px-4 py-2 rounded-md transition-all ${
-//               activeTab === "Disclaimer" ? "bg-[#006400] text-white" : "bg-transparent text-black"
+//               activeTab === "Disclaimer" ? "bg-[#81db58] text-white" : "bg-transparent text-black"
 //             }`
 //           }
 //         >
@@ -248,7 +248,7 @@
 //           to="/patientDetails"
 //           className={({ isActive }) =>
 //             `cursor-pointer px-4 py-2 rounded-md transition-all ${
-//               activeTab === "Patient Details" ? "bg-[#006400] text-white" : "bg-transparent text-black"
+//               activeTab === "Patient Details" ? "bg-[#81db58] text-white" : "bg-transparent text-black"
 //             }`
 //           }
 //         >
@@ -275,7 +275,7 @@
 //           </button>
 //           <button
 //             onClick={() => changeLanguage("ar")}
-//             className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
+//             className="px-4 py-2 bg-green-500 text-white rounded hover:bg-[#81db58]"
 //           >
 //             {t("العربية")}
 //           </button>
@@ -396,8 +396,9 @@ const Navbar = () => {
     <div className="absolute z-30 flex items-center justify-between w-full bg-white px-5 py-3 roboto font-[600] text-[16px] border-b border-gray-200">
       {/* Logo Section */}
       <div className="flex items-center space-x-2 space-x-reverse">
-        <div className="bg-[#006400] w-8 h-8 rounded-full border-2 border-[#D9D9D9]"></div>
-        <h1 className="text-lg font-bold">{t("E-Hospital")}</h1>
+        <img src="https://res.cloudinary.com/dfsu0cuvb/image/upload/v1741104055/image_2025_03_04T15_57_39_367Z_ybfvoe.png" className="h-10 pl-5" alt="" />
+        {/* <div className="bg-[#81db58] w-8 h-8 rounded-full border-2 border-[#D9D9D9]"></div>
+        <h1 className="text-lg font-bold">{t("E-Hospital")}</h1> */}
       </div>
 
       {/* Navigation Tabs */}
@@ -405,7 +406,7 @@ const Navbar = () => {
         <NavLink
           to="/"
           className={({ isActive }) =>
-            `cursor-pointer px-4 py-2 rounded-md transition-all ${activeTab === "Home" ? "bg-[#006400] text-white" : "bg-transparent text-black"
+            `cursor-pointer px-4 py-2 rounded-md transition-all ${activeTab === "Home" ? "bg-[#81db58] text-white" : "bg-transparent text-black"
             }`
           }
         >
@@ -414,7 +415,7 @@ const Navbar = () => {
         <NavLink
           to="/disclaimer"
           className={({ isActive }) =>
-            `cursor-pointer px-4 py-2 rounded-md transition-all ${activeTab === "Disclaimer" ? "bg-[#006400] text-white" : "bg-transparent text-black"
+            `cursor-pointer px-4 py-2 rounded-md transition-all ${activeTab === "Disclaimer" ? "bg-[#81db58] text-white" : "bg-transparent text-black"
             }`
           }
         >
@@ -423,7 +424,7 @@ const Navbar = () => {
         <NavLink
           to="/patientDetails"
           className={({ isActive }) =>
-            `cursor-pointer px-4 py-2 rounded-md transition-all ${activeTab === "Patient Details" ? "bg-[#006400] text-white" : "bg-transparent text-black"
+            `cursor-pointer px-4 py-2 rounded-md transition-all ${activeTab === "Patient Details" ? "bg-[#81db58] text-white" : "bg-transparent text-black"
             }`
           }
         >
@@ -454,7 +455,7 @@ const Navbar = () => {
 
           {/* Toggle indicator */}
           <motion.div
-            className="absolute top-1 h-[32px] rounded-full z-0 bg-green-600 "
+            className="absolute top-1 h-[32px] rounded-full z-0 bg-[#81db58] "
             animate={{
               left: isEnglish ? "calc(50% - 2px)" : "2px",
               right: isEnglish ? "2px" : "calc(50% - 2px)",
@@ -483,14 +484,14 @@ const Navbar = () => {
           transition={{ type: "spring", stiffness: 100, damping: 25 }}
         >
           <motion.div
-            className="w-[690px] h-[324px] text-center bg-white flex flex-col justify-center items-center border border-gray-200 rounded-2xl shadow-lg relative"
+            className="w-[690px] h-[350px] text-center bg-white flex flex-col justify-center items-center border border-gray-200 rounded-2xl shadow-lg relative"
             variants={modalVariants}
             initial="hidden"
             animate="visible"
             exit="exit"
           >
             <div
-              className={`flex items-center text-[18px] font-[500] text-gray-700 absolute top-5 ${i18n.language === "ar" ? "right-5" : "left-5"
+              className={`flex items-center text-[18px] font-[500] text-gray-700 absolute -top-20 ${i18n.language === "ar" ? "left-5" : "left-5"
                 } cursor-pointer`}
               onClick={closeAboutUsModal}
             >
@@ -500,11 +501,49 @@ const Navbar = () => {
               />
               <h1>{t("Back")}</h1>
             </div>
-            <img
+            {/* <img
               src="https://res.cloudinary.com/dfsu0cuvb/image/upload/v1740756752/Objects_eszpyt.png"
               alt="Dedication"
-            />
-            <h1 className="text-[18px] font-[500] mt-2">{t("About us content goes here.")}</h1>
+            /> */}
+          <div className="max-w-3xl mx-auto p-6 bg-white shadow-lg rounded-lg mt-10">
+      <h1 className="text-3xl font-bold text-blue-600 text-center">
+        {t("welcome_title")}
+      </h1>
+      <p className="mt-4 text-lg text-center">{t("welcome_description")}</p>
+
+      <p className="mt-4 text-gray-700">{t("platform_purpose")}</p>
+
+      <div className="mt-6">
+        <h2 className="text-xl font-semibold text-blue-500">
+          {t("what_we_offer")}
+        </h2>
+        <ul className="mt-2 space-y-2 text-gray-700">
+          <li className="flex items-center">
+            <span className="text-green-500 text-xl mr-2">✅</span>
+            {t("symptom_checker")}
+          </li>
+          <li className="flex items-center">
+            <span className="text-green-500 text-xl mr-2">✅</span>
+            {t("report_analysis")}
+          </li>
+          <li className="flex items-center">
+            <span className="text-green-500 text-xl mr-2">✅</span>
+            {t("health_assistant_24_7")}
+          </li>
+        </ul>
+      </div>
+
+      <div className="mt-6 p-4 bg-yellow-100 border-l-4 border-yellow-500">
+        <p className="text-gray-800 font-semibold">
+          ⚠️ {t("disclaimer_note")}
+        </p>
+      </div>
+
+      <p className="mt-6 text-center text-gray-700">{t("contact_us")}</p>
+      <p className="text-center text-blue-600 font-semibold">
+        📩 {t("contact_email")}
+      </p>
+    </div>
           </motion.div>
         </motion.div>
       )}

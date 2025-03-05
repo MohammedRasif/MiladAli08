@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IoIosArrowRoundBack } from "react-icons/io";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -7,75 +7,70 @@ import i18n from "../../i18n"; // Assuming this is your i18n config file
 
 const PatientDetailsForm = () => {
   const [formData, setFormData] = useState({
-    full_name: "",
-    height: "",
-    weight: "",
-    gender: "",
-    blood_group: "",
     age: "",
-    medical_history: "",
-    diabetes: false,
-    high_blood_pressure: false,
+    sex: "",
+    diabetes: "",
+    high_blood_pressure: "",
+    taking_medications: "",
+    list_of_medications: "",
+    reported_symptoms: "",
+    additional_health_conditions: "",
+    country: "",
   });
 
   const navigate = useNavigate();
   const { t } = useTranslation();
 
   const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-
-    if (type === "checkbox") {
-      setFormData((prevData) => ({
-        ...prevData,
-        [name]: checked,
-      }));
-    } else {
-      setFormData((prevData) => ({
-        ...prevData,
-        [name]: value,
-      }));
-    }
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
-  const fetchUserIP = async () => {
-    try {
-      const response = await fetch("https://api.ipify.org?format=json");
-      const data = await response.json();
-      return data.ip; // Return the IP address
-    } catch (error) {
-      console.error("Error fetching IP address:", error);
-      return null; // Return null if there's an error
-    }
-  };
+  // const fetchUserIP = async () => {
+  //   try {
+  //     const response = await fetch("https://api.ipify.org?format=json");
+  //     const data = await response.json();
+  //     console.log("ip", data.ip);
+      
+  //     return data.ip;
+  //   } catch (error) {
+  //     console.error("Error fetching IP address:", error);
+  //     return null;
+  //   }
+  // };
+
+ 
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
 
-    // Fetch the user's IP address
-    const userIP = await fetchUserIP();
-    console.log(userIP);
-
-    const postData = {
-      full_name: formData.full_name,
+    // Transform form data to match API structure
+    const transformedData = {
       age: parseInt(formData.age, 10),
-      height: parseFloat(formData.height).toFixed(2),
-      weight: parseFloat(formData.weight).toFixed(2),
-      gender: formData.gender,
-      blood_group: formData.blood_group,
-      medical_history: formData.medical_history,
-      diabetes: formData.diabetes,
-      high_blood_pressure: formData.high_blood_pressure,
-      ip_address: userIP || "Unknown", // Include the user's IP address
+      sex: formData.sex,
+      diabetes: formData.diabetes === "Yes",
+      high_blood_pressure: formData.high_blood_pressure === "Yes",
+      taking_medications: formData.taking_medications === "Yes",
+      medications: formData.list_of_medications || "",
+      reported_symptoms: formData.reported_symptoms || "",
+      additional_health_conditions: formData.additional_health_conditions || "",
+      country: formData.country,
+      // ip_address: await fetchUserIP() || "Unknown",
     };
 
+    console.log("Form submitted data:", transformedData); // Log the submitted data
+
     try {
-      const response = await fetch("http://192.168.10.131:8002/api/v1/patient/details/create", {
+      const response = await fetch("https://www.backend.e-clinic.ai/api/v1/patient/details/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(postData),
+        body: JSON.stringify(transformedData),
       });
 
       if (!response.ok) {
@@ -85,18 +80,23 @@ const PatientDetailsForm = () => {
       const result = await response.json();
       console.log("Success - Parsed Result:", result);
 
-      const uniqueId = result.unique_id; // Assuming the API returns 'unique_id'
+      const uniqueId = result.unique_id;
       if (uniqueId) {
         const updatedPatientDetails = {
-          ...formData,
+          ...transformedData,
           id: uniqueId,
         };
-        localStorage.setItem("patientDetails", JSON.stringify(updatedPatientDetails));
+        localStorage.setItem("unique_id",uniqueId)
         console.log("Saved to localStorage with unique_id:", updatedPatientDetails);
       } else {
         console.warn("No unique_id found in API response");
-        localStorage.setItem("patientDetails", JSON.stringify(formData));
+        localStorage.setItem("patientDetails", JSON.stringify(transformedData));
       }
+
+      // Construct URL with form data
+      const queryParams = new URLSearchParams(transformedData).toString();
+      const url = `http://your-api-endpoint.com/patient?${queryParams}`;
+      console.log("Generated URL:", url);
 
       navigate("/");
     } catch (error) {
@@ -113,11 +113,44 @@ const PatientDetailsForm = () => {
       transition: { type: "spring", stiffness: 50, damping: 10, duration: 1.5 },
     },
   };
+  
+
+  const Fetchpatient = async()=>{
+    const id = localStorage.getItem("unique_id")
+    try {
+      const response = await fetch(`https://www.backend.e-clinic.ai/api/v1/patient/info/${id}`);
+      const data = await response.json();
+     
+      
+      setFormData(
+        {
+          age: data.age,
+          sex: data.sex,
+          diabetes: data.diabetes,
+          high_blood_pressure: data.high_blood_pressure,
+          taking_medications: data.taking_medications,
+          list_of_medications: data.list_of_medications,
+          reported_symptoms: data.reported_symptoms,
+          additional_health_conditions: data.additional_health_conditions,
+          country: data.country,
+        }
+      )
+     
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      return null;
+    }
+  }
+
+  useEffect(() => {
+    
+    Fetchpatient()
+  }, []);
 
   return (
-    <div className="min-h-screen flex items-center justify-center" style={{ backdropFilter: "blur(10px)" }}>
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 pt-10" style={{ backdropFilter: "blur(5px)" }}>
       <motion.div
-        className="max-w-lg mx-auto p-6 bg-white rounded-lg shadow-2xl"
+        className="max-w-lg mx-auto p-8 bg-white rounded-2xl shadow-2xl border border-gray-100"
         style={{ width: "576px" }}
         variants={formVariants}
         initial="hidden"
@@ -125,119 +158,172 @@ const PatientDetailsForm = () => {
       >
         <NavLink
           to="/"
-          className={`flex items-center text-[18px] font-[500] text-gray-700 `}
+          className="flex items-center text-[18px] font-semibold text-gray-700 hover:text-[#006400] transition duration-200"
         >
           <IoIosArrowRoundBack
             className={`text-[28px] ${i18n.language === "ar" ? "ml-1 transform rotate-180" : "mr-1"}`}
           />
-          <h1>{t("Back")}</h1>
+          <span>{t("Back")}</span>
         </NavLink>
 
-        <h2 className="text-[24px] text-center font-semibold mb-4">{t("Patient Details")}</h2>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          {/* Name Field */}
+        <h2 className="text-2xl text-center font-bold text-gray-800 mb-6 mt-4">{t("Patient Details")}</h2>
+
+        <form onSubmit={handleSubmit} className="space-y-3">
+          {/* Age Field */}
+          <div className="flex items-center space-x-3">
+            <div className="w-full">
+              <label className="block text-sm font-semibold text-gray-700">{t("Age")}</label>
+              <input
+                type="number"
+                name="age"
+                value={formData.age}
+                onChange={handleChange}
+                placeholder={t("Enter here")}
+                className="mt-2 block w-full p-[8px] border border-gray-300 bg-gray-50 rounded-lg focus:ring-2 focus:ring-[#006400] focus:border-transparent outline-none transition duration-200"
+                required
+                min="0"
+              />
+            </div>
+
+            {/* Sex Field */}
+            <div className="w-full">
+              <label className="block text-sm font-semibold text-gray-700">{t("Sex")}</label>
+              <select
+                name="sex"
+                value={formData.sex}
+                onChange={handleChange}
+                className="mt-2 block w-full p-[8px] border border-gray-300 bg-gray-50 rounded-lg focus:ring-2 focus:ring-[#006400] focus:border-transparent outline-none transition duration-200 appearance-none"
+                required
+              >
+                <option value="" disabled>{t("Select Sex")}</option>
+                <option value="Male">{t("Male")}</option>
+                <option value="Female">{t("Female")}</option>
+              </select>
+            </div>
+
+           
+          </div>
+
+          {/* Diabetes Field */}
+          <div className="flex items-center space-x-3">
+            {/* High Blood Pressure Field */}
+            
+
+            <div className="w-full">
+              <label className="block text-sm font-semibold text-gray-700">{t("Are They Taking Any Medications?")}</label>
+              <select
+                name="taking_medications"
+                value={formData.taking_medications}
+                onChange={handleChange}
+                className="mt-2 block w-full p-[8px] border border-gray-300 bg-gray-50 rounded-lg focus:ring-2 focus:ring-[#006400] focus:border-transparent outline-none transition duration-200 appearance-none"
+                required
+              >
+                <option value="" disabled>{t("Select")}</option>
+                <option value="Yes">{t("Yes")}</option>
+                <option value="No">{t("No")}</option>
+              </select>
+            </div>
+          </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700">{t("Name")}</label>
+            <label className="block text-sm font-semibold text-gray-700">{t("List of Medications (if any)")}</label>
             <input
               type="text"
-              name="full_name"
-              value={formData.full_name}
+              name="list_of_medications"
+              value={formData.list_of_medications}
               onChange={handleChange}
               placeholder={t("Enter here")}
-              className="mt-1 block w-full p-2 border border-gray-300 bg-[#F7F7F7] rounded-md focus:ring-2 focus:ring-green-500"
-              required
+              className="mt-2 block w-full p-[8px] border border-gray-300 bg-gray-50 rounded-lg focus:ring-2 focus:ring-[#006400] focus:border-transparent outline-none transition duration-200"
             />
           </div>
-
-          {/* Height and Weight Fields */}
-          <div className={`flex space-x-4`}>
-            <div className="flex-1">
-              <label className="block text-sm font-medium text-gray-700">{t("Height")}</label>
-              <input
-                type="text"
-                name="height"
-                value={formData.height}
-                onChange={handleChange}
-                placeholder={t("Enter here")}
-                className="mt-1 block w-full p-2 border border-gray-300 rounded-md bg-[#F7F7F7] focus:ring-2 focus:ring-green-500"
-                required
-              />
-            </div>
-            <div className="flex-1">
-              <label className="block text-sm font-medium text-gray-700">{t("Weight")}</label>
-              <input
-                type="text"
-                name="weight"
-                value={formData.weight}
-                onChange={handleChange}
-                placeholder={t("Enter here")}
-                className="mt-1 block w-full p-2 border border-gray-300 rounded-md bg-[#F7F7F7] focus:ring-2 focus:ring-green-500"
-                required
-              />
-            </div>
-          </div>
-
-          {/* Gender, Blood Group, and Age Fields */}
-          <div className={`flex space-x-4 `}>
-            <div className="flex-1">
-              <label className="block text-sm font-medium text-gray-700">{t("Gender")}</label>
-              <input
-                type="text"
-                name="gender"
-                value={formData.gender}
-                onChange={handleChange}
-                placeholder={t("Enter here")}
-                className="mt-1 block w-full p-2 border border-gray-300 rounded-md bg-[#F7F7F7] focus:ring-2 focus:ring-green-500"
-                required
-              />
-            </div>
-            <div className="flex items-center space-x-2 mt-6">
-              <input
-                type="checkbox"
-                id="diabetes"
-                name="diabetes"
-                checked={formData.diabetes}
-                onChange={handleChange}
-                className="h-5 w-5 border-gray-300 rounded accent-[#006400] checked:bg-[#006400] checked:text-white focus:ring-[#006400] cursor-pointer"
-              />
-              <label htmlFor="diabetes" className="px-4 py-2 bg-gray-100 border border-gray-300 rounded-md text-gray-700 cursor-pointer">
-               
-                {t("Diabetes")}
-              </label>
-            </div>
-
-            <div className="flex items-center space-x-2 mt-6">
-              <input
-                type="checkbox"
-                id="high_blood_pressure"
+          <div className="flex items-center space-x-3">
+          <div className="w-1/2">
+              <label className="block text-sm font-semibold text-gray-700">{t("High Blood Pressure")}</label>
+              <select
                 name="high_blood_pressure"
-                checked={formData.high_blood_pressure}
+                value={formData.high_blood_pressure}
                 onChange={handleChange}
-                className="h-5 w-5 border-gray-300 rounded accent-[#006400] checked:bg-[#006400] checked:text-white focus:ring-[#006400] cursor-pointer"
+                className="mt-2 block w-full p-[8px] border border-gray-300 bg-gray-50 rounded-lg focus:ring-2 focus:ring-[#006400] focus:border-transparent outline-none transition duration-200 appearance-none"
+                required
+              >
+                <option value="" disabled>{t("Select Pressure")}</option>
+                <option value="Yes">{t("Yes")}</option>
+                <option value="No">{t("No")}</option>
+              </select>
+            </div>
+
+          <div className="w-1/2">
+              <label className="block text-sm font-semibold text-gray-700">{t("Diabetes")}</label>
+              <select
+                name="diabetes"
+                value={formData.diabetes}
+                onChange={handleChange}
+                className="mt-2 block w-full p-[8px] border border-gray-300 bg-gray-50 rounded-lg focus:ring-2 focus:ring-[#006400] focus:border-transparent outline-none transition duration-200 appearance-none"
+                required
+              >
+                <option value="" disabled>{t("Select Diabetes")}</option>
+                <option value="Yes">{t("Yes")}</option>
+                <option value="No">{t("No")}</option>
+              </select>
+            </div>
+          </div>
+          <div className="flex items-center space-x-3">
+            {/* Additional Health Conditions Field */}
+            <div className="w-1/2">
+              <label className="block text-sm font-semibold text-gray-700">{t("Health Conditions (if any)")}</label>
+              <input
+                type="text"
+                name="additional_health_conditions"
+                value={formData.additional_health_conditions}
+                onChange={handleChange}
+                placeholder={t("Enter here")}
+                className="mt-2 block w-full p-[8px] border border-gray-300 bg-gray-50 rounded-lg focus:ring-2 focus:ring-[#006400] focus:border-transparent outline-none transition duration-200"
               />
-              <label htmlFor="high_blood_pressure" className="px-4 py-2 bg-gray-100 border border-gray-300 rounded-md text-gray-700 cursor-pointer">
-                
-                {t("High blood pressure")}
-              </label>
+            </div>
+
+            {/* Country Field */}
+            <div className="w-1/2">
+              <label className="block text-sm font-semibold text-gray-700">{t("Country")}</label>
+              <input
+                type="text"
+                name="country"
+                value={formData.country}
+                onChange={handleChange}
+                placeholder={t("Enter here")}
+                className="mt-2 block w-full p-[8px] border border-gray-300 bg-gray-50 rounded-lg focus:ring-2 focus:ring-[#006400] focus:border-transparent outline-none transition duration-200"
+                required
+              />
             </div>
           </div>
 
-          {/* Medical History Field */}
+          {/* List of Medications Field */}
+         
+
+          {/* Reported Symptoms Field */}
           <div>
-            <label className="block text-sm font-medium text-gray-700">{t("Medical History (Optional)")}</label>
+            <label className="block text-sm font-semibold text-gray-700">{t("Reported Symptoms")}</label>
             <textarea
-              name="medical_history"
-              value={formData.medical_history}
+              name="reported_symptoms"
+              value={formData.reported_symptoms}
               onChange={handleChange}
               placeholder={t("Type here")}
-              className="mt-1 block w-full p-2 border border-gray-300 bg-[#F7F7F7] rounded-md focus:ring-2 focus:ring-green-500"
+              className="mt-2 block w-full p-[8px] border border-gray-300 bg-gray-50 rounded-lg focus:ring-2 focus:ring-[#006400] focus:border-transparent outline-none transition duration-200"
             />
           </div>
-
+          <div className="w-full">
+              <label className="block text-sm font-semibold text-gray-700">(Optional) Allergies or Family History</label>
+              <input
+                type="text"
+                name="country"
+            
+                placeholder={t("Enter here")}
+                className="mt-2 block w-full p-[8px] border border-gray-300 bg-gray-50 rounded-lg focus:ring-2 focus:ring-[#006400] focus:border-transparent outline-none transition duration-200"
+                required
+              />
+            </div>
           {/* Submit Button */}
           <button
             type="submit"
-            className="w-full bg-[#006400] text-white p-2 rounded-md hover:bg-green-900 transition cursor-pointer"
+            className="w-full bg-[#81db58] text-white py-3 rounded-lg hover:bg-green-700 transition duration-300 font-semibold shadow-md hover:shadow-lg mt-6"
           >
             {t("Submit")}
           </button>

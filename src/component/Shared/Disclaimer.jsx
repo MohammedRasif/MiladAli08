@@ -82,7 +82,7 @@ import { motion } from "framer-motion";
 import { IoIosArrowRoundBack } from "react-icons/io";
 import { NavLink, useNavigate } from "react-router-dom";
 import { LuTriangleAlert } from "react-icons/lu";
-import { useTranslation } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 import i18n from "../../i18n"; // Assuming this is your i18n config file
 
 const Disclaimer = () => {
@@ -127,8 +127,8 @@ const Disclaimer = () => {
         <div className="flex items-center justify-center w-full h-full absolute top-0 left-0">
           {/* Back Button */}
           <div
-            className={`flex items-center text-[18px] font-[500] text-gray-700 absolute top-5 ${
-              i18n.language === "ar" ? "right-5" : "left-5"
+            className={`flex items-center text-[18px] font-[500] text-gray-700 absolute -top-10 ${
+              i18n.language === "ar" ? "left-5 mt-5" : "left-5"
             } cursor-pointer`}
             onClick={closeModal}
           >
@@ -137,15 +137,17 @@ const Disclaimer = () => {
             />
             <h1>{t("Back")}</h1>
           </div>
-          <div className="w-[690px] h-[324px] text-center bg-white flex flex-col justify-center items-center border border-gray-200 rounded-2xl shadow-lg">
-            <LuTriangleAlert className="text-7xl font-[500] text-red-700 mb-5" />
-            <h1 className="text-[18px] font-[500]">
-              {t("This is an AI-based health support system. Please consult your doctor for medical advice.")}
-            </h1>
-            <NavLink to="/">
-              <button className="text-white bg-[#006400] rounded-md px-4 mt-5">{t("Got It")}</button>
-            </NavLink>
-          </div>
+          <div className="w-[690px] px-10 py-10 text-center bg-white flex flex-col justify-center items-center border border-gray-200 rounded-2xl shadow-lg">
+      <LuTriangleAlert className="text-7xl font-[500] text-red-700 mb-5" />
+      <h1 className="text-[18px] font-[500]">
+        <Trans i18nKey="health assistant" />
+      </h1>
+      <NavLink to="/">
+        <button className="text-white bg-green-500 rounded-md px-4 mt-5">
+          {t("Got It")}
+        </button>
+      </NavLink>
+    </div>
         </div>
       </motion.div>
     </motion.div>
