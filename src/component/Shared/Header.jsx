@@ -257,15 +257,20 @@ const Header = () => {
         {isExpanded && (
           <div className="px-2 md:px-0" dir={i18n.language === "ar" ? "rtl" : "ltr"}>
             <div className="flex flex-col md:flex-row items-center ml-[10px]">
-              <img
-                src="https://res.cloudinary.com/dfsu0cuvb/image/upload/v1741106696/Blue_Green_White_Simple_Modern_Medical_Logo-removebg-preview_r3wqv9.png"
-                className="h-[200px] md:h-[350px] w-[200px] md:w-[350px] relative z-10 mt-6 md:mt-44"
-                alt=""
-              />
-              <h1 className="text-[28px] md:text-[40px] font-[700] roboto md:ml-[-40px]">
-                {t("Hi")}
-              </h1>
-            </div>
+                    <img
+                        src="https://res.cloudinary.com/dfsu0cuvb/image/upload/v1741106696/Blue_Green_White_Simple_Modern_Medical_Logo-removebg-preview_r3wqv9.png"
+                        className="h-[200px] md:h-[350px] w-[200px] md:w-[350px] relative z-10 mt-6 md:mt-44 -ml-[30px]"
+                        alt=""
+                    />
+                    <h1
+                        className={`text-[24px] md:text-[40px] font-[700] roboto md:ml-[-40px] ${
+                            i18n.language === "ar" ? "fixed right-3 top-36" : ""
+                        }`} // Apply fixed positioning only for Arabic
+                        dir={i18n.language === "ar" ? "rtl" : "ltr"} // Corrected direction
+                    >
+                        {t("Hi")}
+                    </h1>
+                </div>
             <div className="mt-8 md:mt-32 text-center text-[18px] md:text-[23px] font-[500]">
               <h1 className="py-1 md:py-2">{t("I’m your AI agent from")}</h1>
               <h1 className="text-[#81db58] py-1 md:py-2">{t("E-Hospital")}</h1>

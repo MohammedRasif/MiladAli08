@@ -12,7 +12,7 @@ const Disclaimer = () => {
   const { t } = useTranslation();
 
   // Update document direction based on language
- 
+
 
   // Modal animation variants
   const modalVariants = {
@@ -49,9 +49,8 @@ const Disclaimer = () => {
         <div className="flex items-center justify-center w-full h-full absolute top-0 left-0">
           {/* Back Button */}
           <div
-            className={`flex items-center text-[18px] font-[500] text-gray-700 absolute -top-10 ${
-              i18n.language === "ar" ? "left-5 mt-5" : "left-5"
-            } cursor-pointer`}
+            className={`flex items-center text-[18px] font-[500] text-gray-700 absolute -top-20 ${i18n.language === "ar" ? "left-5 mt-5" : "left-5"
+              } cursor-pointer`}
             onClick={closeModal}
           >
             <IoIosArrowRoundBack
@@ -60,16 +59,27 @@ const Disclaimer = () => {
             <h1>{t("Back")}</h1>
           </div>
           <div className="w-[690px] px-10 py-10 text-center bg-white flex flex-col justify-center items-center border border-gray-200 rounded-2xl shadow-lg">
-      <LuTriangleAlert className="text-7xl font-[500] text-red-700 mb-5" />
-      <h1 className="text-[18px] font-[500]">
-        <Trans i18nKey="health assistant" />
-      </h1>
-      <NavLink to="/">
-        <button className="text-white bg-green-500 rounded-md px-4 mt-5">
-          {t("Got It")}
-        </button>
-      </NavLink>
-    </div>
+            <LuTriangleAlert className="text-7xl font-[500] text-red-700 mb-5" />
+            <h1 className="text-[18px] font-[500] mb-4">
+              {t("Important Notice: E-Hospital Terms of Use", "تنبيه هام: شروط استخدام المشفى الإلكتروني الصحي")}
+            </h1>
+            <ul className="text-[16px] md:text-[18px] font-[500] px-2 text-left list-disc list-inside">
+              {[
+                t("health assistant.0", "هذا المساعد الصحي المدعوم بالذكاء الاصطناعي ليس طبيبًا مرخصًا ولا يقدم تشخيصات طبية رسمية أو علاجات."),
+                t("health assistant.1", "المعلومات المقدمة تعتمد على تحليل الذكاء الاصطناعي للأعراض والمعرفة الطبية العامة ويجب استخدامها لأغراض المعلومات فقط."),
+                t("health assistant.2", "استشر دائمًا طبيبًا مؤهلاً أو مقدم رعاية صحية للحصول على تشخيص وخطة علاج مناسبة."),
+                t("health assistant.3", "إذا كنت تعاني من أعراض شديدة أو متفاقمة أو طارئة، اطلب العناية الطبية الفورية أو قم بزيارة أقرب مستشفى."),
+                t("health assistant.4", "باستخدام هذه الخدمة، فإنك تقر بأنك تفهم هذه الشروط وتقبل أن الذكاء الاصطناعي لا يحل محل النصيحة الطبية المهنية.")
+              ].map((item, index) => (
+                <li key={index}>{item || `Point ${index + 1}`}</li>
+              ))}
+            </ul>
+            <NavLink to="/">
+              <button className="text-white bg-green-500 rounded-md px-4 mt-5 py-1">
+                {t("Got It")}
+              </button>
+            </NavLink>
+          </div>
         </div>
       </motion.div>
     </motion.div>
