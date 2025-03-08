@@ -239,7 +239,8 @@ const Header = () => {
       >
         <button
           onClick={() => setIsExpanded(!isExpanded)}
-          className={`absolute top-2 ${i18n.language === "ar" ? "right-2" : "left-2"}`}
+          className={`absolute top-2 ${i18n.language === "ar" ? "left-2" : "right-2"}`}
+          dir={i18n.language === "ar" ? "ltr": i18n.language === "en" ? "ltr" : "rtl"}
         >
           {isExpanded ? (
             <FiChevronLeft
@@ -277,7 +278,7 @@ const Header = () => {
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col p-2 md:p-4 relative h-screen overflow-hidden pt-16 md:pt-20 bg-gray-100 px-2 md:px-28 lg:px-64">
+      <div className="flex-1 flex flex-col p-2 md:p-4 relative h-screen overflow-hidden pt-16 md:pt-20 bg-gray-100 px-2 md:px-28 lg:px-20">
         {showNotification && (
           <div className="flex items-center justify-center w-full h-screen absolute top-0 left-0 px-2">
             <div className="w-full max-w-[90vw] md:w-[690px] h-auto md:h-[324px] text-center bg-white flex flex-col justify-center items-center border border-gray-200 rounded-2xl shadow-lg p-4 md:p-0">
@@ -362,7 +363,9 @@ const Header = () => {
           onSubmit={handleSendMessage}
           className="sticky bottom-0 w-full bg-white p-1 md:p-2 rounded-full shadow-md"
         >
-          <div className="relative flex items-center">
+          <div className="relative flex items-center"
+          dir={i18n.language === "ar" ? "ltr": i18n.language === "en" ? "ltr" : "ltr"}
+          >
             <div className="bg-[#F5F5F5] rounded-l-full p-2 md:p-3 ml-1 md:ml-2 flex items-center">
               <input
                 type="file"
