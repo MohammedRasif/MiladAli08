@@ -18,8 +18,8 @@ const resources = {
       "I’m your AI agent from": "A smarter way to check your symptoms, powered by ",
       "Ask me anything about your health issues": "Share your symptoms, and I’ll help you understand them better.",
       "This is an AI-based health support system. Please consult your doctor for medical advice.":
-        "This is an AI-based health support system. Please consult your doctor for medical advice.",
-      "Got It": "Got It",
+        "This system provides general guidance only, for specific medical inquiries please consult a specialist.",
+      "Got It": "Agreed",
       "Hi, {{name}}!!": "Hi, {{name}}!!",
       "How can I help you today?": "How can I help you today?",
       "Loading...": "Loading...",
@@ -88,8 +88,8 @@ const resources = {
       "I’m your AI agent from": "طريقة أكثر ذكاءً للتحقق من أعراضك، مدعومة من",
       "Ask me anything about your health issues": "اسألني أي شيء تريد معرفته عن مشاكلك الصحية",
       "This is an AI-based health support system. Please consult your doctor for medical advice.":
-        "هذا نظام دعم صحي قائم على الذكاء الاصطناعي. يرجى استشارة طبيبك للحصول على نصيحة طبية.",
-      "Got It": "فهمت",
+        "هذا النظام يوفر إرشادات عامة فقط، لاستفسارات طبية دقيقة يُرجى استشارة مختص",
+      "Got It": "موافق",
       "Hi, {{name}}!!": "مرحبًا، {{name}}!!",
       "How can I help you today?": "كيف يمكنني مساعدتك اليوم؟",
       "Loading...": "جارٍ التحميل...",

@@ -268,7 +268,7 @@ const Header = () => {
             </div>
             <div className="mt-8 md:mt-32 text-center text-[18px] md:text-[23px] font-[500]">
               <h1 className="py-1 md:py-2">{t("I’m your AI agent from")}</h1>
-              <h1 className="text-[#006400] py-1 md:py-2">{t("E-Hospital")}</h1>
+              <h1 className="text-[#81db58] py-1 md:py-2">{t("E-Hospital")}</h1>
             </div>
             <p className="text-center text-[14px] md:text-[16px] w-[90%] mx-auto">
               {t("Ask me anything about your health issues")}
@@ -288,7 +288,7 @@ const Header = () => {
               </h1>
               <button
                 onClick={handleCheck}
-                className="text-white bg-[#81db58] rounded-md px-3 md:px-4 mt-3 md:mt-5 text-sm md:text-base"
+                className="text-white bg-[#81db58] rounded-md px-3 py-1 md:px-4 mt-3 md:mt-5 text-sm md:text-base"
               >
                 {t("Got It")}
               </button>
@@ -350,7 +350,9 @@ const Header = () => {
             </div>
           ))}
           {isLoading && (
-            <div className="flex justify-start">
+            <div className="flex justify-start"
+            dir={i18n.language === "ar" ? "ltr": i18n.language === "en" ? "ltr" : "ltr"}
+            >
               <div className="flex items-center px-3 md:px-4 py-2 rounded-lg bg-gray-300 text-black">
                 <div className="w-4 md:w-5 h-4 md:h-5 border-2 border-gray-500 border-t-transparent rounded-full animate-spin"></div>
                 <span className="ml-2 text-sm md:text-base">{t("Loading...")}</span>
