@@ -76,7 +76,7 @@ const Navbar = () => {
       <div className="flex items-center space-x-2 space-x-reverse w-full md:w-auto justify-between md:justify-start">
         <img
           src="https://res.cloudinary.com/dfsu0cuvb/image/upload/v1741104055/image_2025_03_04T15_57_39_367Z_ybfvoe.png"
-          className="h-8 md:h-10 pl-3 md:pl-5"
+          className="h-8 md:h-10  md:pl-5"
           alt="Logo"
         />
         {/* Hamburger Menu for Mobile */}
@@ -161,7 +161,7 @@ const Navbar = () => {
           >
             English
           </span>
-        </button>
+        </button> 
       </div>
 
       {/* About Us Modal */}

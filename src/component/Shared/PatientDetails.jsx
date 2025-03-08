@@ -30,10 +30,71 @@ const PatientDetailsForm = () => {
     }));
   };
 
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+
+  //   // Transform form data to match API structure
+  //   const transformedData = {
+  //     age: parseInt(formData.age, 10),
+  //     sex: formData.sex,
+  //     diabetes: formData.diabetes === "Yes",
+  //     high_blood_pressure: formData.high_blood_pressure === "Yes",
+  //     taking_medications: formData.taking_medications === "Yes",
+  //     medications: formData.list_of_medications || "",
+  //     reported_symptoms: formData.reported_symptoms || "",
+  //     additional_health_conditions: formData.additional_health_conditions || "",
+  //     country: formData.country,
+  //     family_history:formData.family_history,
+  //     // ip_address: await fetchUserIP() || "Unknown",
+  //   };
+
+  //   console.log("Form submitted data:", transformedData); // Log the submitted data
+
+  //   try {
+  //     const response = await fetch("https://www.backend.e-clinic.ai/api/v1/patient/details/create", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify(transformedData),
+  //     });
+
+  //     if (!response.ok) {
+  //       throw new Error(`Network response was not ok. Status: ${response.status}`);
+  //     }
+
+  //     const result = await response.json();
+  //     console.log("Success - Parsed Result:", result);
+
+  //     const uniqueId = result.unique_id;
+  //     if (uniqueId) {
+  //       const updatedPatientDetails = {
+  //         ...transformedData,
+  //         id: uniqueId,
+  //       };
+  //       localStorage.setItem("unique_id",uniqueId)
+  //       console.log("Saved to localStorage with unique_id:", updatedPatientDetails);
+  //     } else {
+  //       console.warn("No unique_id found in API response");
+  //       localStorage.setItem("patientDetails", JSON.stringify(transformedData));
+  //     }
+
+  //     // Construct URL with form data
+  //     const queryParams = new URLSearchParams(transformedData).toString();
+  //     const url = `http://your-api-endpoint.com/patient?${queryParams}`;
+  //     console.log("Generated URL:", url);
+
+  //     navigate("/");
+  //   } catch (error) {
+  //     console.error("Error:", error.message);
+  //     alert(t("An error occurred while saving patient details. Please try again."));
+  //   }
+  // };
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Transform form data to match API structure
+  
     const transformedData = {
       age: parseInt(formData.age, 10),
       sex: formData.sex,
@@ -44,12 +105,11 @@ const PatientDetailsForm = () => {
       reported_symptoms: formData.reported_symptoms || "",
       additional_health_conditions: formData.additional_health_conditions || "",
       country: formData.country,
-      family_history:formData.family_history,
-      // ip_address: await fetchUserIP() || "Unknown",
+      family_history: formData.family_history,
     };
-
-    console.log("Form submitted data:", transformedData); // Log the submitted data
-
+  
+    console.log("Form submitted data:", transformedData);
+  
     try {
       const response = await fetch("https://www.backend.e-clinic.ai/api/v1/patient/details/create", {
         method: "POST",
@@ -58,35 +118,30 @@ const PatientDetailsForm = () => {
         },
         body: JSON.stringify(transformedData),
       });
-
+  
       if (!response.ok) {
         throw new Error(`Network response was not ok. Status: ${response.status}`);
       }
-
+  
       const result = await response.json();
       console.log("Success - Parsed Result:", result);
-
+  
       const uniqueId = result.unique_id;
       if (uniqueId) {
         const updatedPatientDetails = {
           ...transformedData,
           id: uniqueId,
         };
-        localStorage.setItem("unique_id",uniqueId)
+        localStorage.setItem("unique_id", uniqueId);
         console.log("Saved to localStorage with unique_id:", updatedPatientDetails);
       } else {
         console.warn("No unique_id found in API response");
         localStorage.setItem("patientDetails", JSON.stringify(transformedData));
       }
-
-      // Construct URL with form data
-      const queryParams = new URLSearchParams(transformedData).toString();
-      const url = `http://your-api-endpoint.com/patient?${queryParams}`;
-      console.log("Generated URL:", url);
-
+  
       navigate("/");
     } catch (error) {
-      console.error("Error:", error.message);
+      console.error("Error:", error.message); // Line 113
       alert(t("An error occurred while saving patient details. Please try again."));
     }
   };
