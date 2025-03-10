@@ -60,25 +60,31 @@ const Disclaimer = () => {
           </div>
           <div className="w-[690px] px-10 py-10 text-center bg-white flex flex-col justify-center items-center border border-gray-200 rounded-2xl shadow-lg">
             <LuTriangleAlert className="text-7xl font-[500] text-red-700 mb-5" />
-            <h1 className="text-[18px] font-[500] mb-4">
-              {t("Important Notice: E-Hospital Terms of Use", "تنبيه هام: شروط استخدام المشفى الإلكتروني الصحي")}
-            </h1>
+            {/* <h1 className="text-[18px] font-[500] mb-4">
+              {t("Important Notice: E-Clinic Terms of Use")}
+            </h1> */}
             <ul className="text-[16px] md:text-[18px] font-[500] px-2 text-left list-disc list-inside">
               {[
-                t("health assistant.0", "هذا المساعد الصحي المدعوم بالذكاء الاصطناعي ليس طبيبًا مرخصًا ولا يقدم تشخيصات طبية رسمية أو علاجات."),
-                t("health assistant.1", "المعلومات المقدمة تعتمد على تحليل الذكاء الاصطناعي للأعراض والمعرفة الطبية العامة ويجب استخدامها لأغراض المعلومات فقط."),
-                t("health assistant.2", "استشر دائمًا طبيبًا مؤهلاً أو مقدم رعاية صحية للحصول على تشخيص وخطة علاج مناسبة."),
-                t("health assistant.3", "إذا كنت تعاني من أعراض شديدة أو متفاقمة أو طارئة، اطلب العناية الطبية الفورية أو قم بزيارة أقرب مستشفى."),
-                t("health assistant.4", "باستخدام هذه الخدمة، فإنك تقر بأنك تفهم هذه الشروط وتقبل أن الذكاء الاصطناعي لا يحل محل النصيحة الطبية المهنية.")
+                t("health assistant 0"),
+                t("health assistant 1"),
+                t("health assistant 2"),
+                t("health assistant 3"),
+                t("health assistant 4")
               ].map((item, index) => (
-                <li key={index}>{item || `Point ${index + 1}`}</li>
+                <li key={index} className="text-[16px] md:text-[18px] font-[500] leading-relaxed">
+                  {item}
+                </li>
               ))}
             </ul>
+
             <NavLink to="/">
               <button className="text-white bg-green-500 rounded-md px-4 mt-5 py-1">
                 {t("Got It")}
               </button>
             </NavLink>
+            <div className="mt-4">
+
+            </div>
           </div>
         </div>
       </motion.div>

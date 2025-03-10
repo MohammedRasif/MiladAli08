@@ -51,15 +51,34 @@ const resources = {
       "Enter here": "Enter here",
       "Type here": "Type here",
       "Submit": "Submit",
-      translation: {
-        "Important Notice: E-Hospital Terms of Use": "Important Notice: E-Clinic Terms of Use",
-        "health_assistant_0": "This AI-powered health assistant is not a licensed medical professional and does not provide official medical diagnoses or treatments.",
-        "health_assistant_1": "The information provided is based on AI analysis of symptoms and general medical knowledge and should be used for informational purposes only.",
-        "health_assistant_2": "Always consult a qualified doctor or healthcare provider for a proper diagnosis and treatment plan.",
-        "health_assistant_3": "If you experience severe, worsening, or emergency symptoms, seek immediate medical attention or visit the nearest hospital.",
-        "health_assistant_4": "By using this service, you acknowledge that you understand these terms and accept that the AI does not replace professional medical advice.",
-        "Got It": "Agreed",
-      },
+
+
+      "Important Notice: E-Clinic Terms of Use": "Important Notice: E-Clinic Terms of Use",
+      "health assistant 0": "This AI-powered health assistant is not a licensed medical professional and does not provide official medical diagnoses or treatments.",
+      "health assistant 1": "The information provided is based on AI analysis of symptoms and general medical knowledge and should be used for informational purposes only.",
+      "health assistant 2": "Always consult a qualified doctor or healthcare provider for a proper diagnosis and treatment plan.",
+      "health assistant 3": "If you experience severe, worsening, or emergency symptoms, seek immediate medical attention or visit the nearest hospital.",
+      "health assistant 4": "By using this service, you acknowledge that you understand these terms and accept that the AI does not replace professional medical advice.",
+
+
+
+
+    
+        "e_clinic_title": "E-Clinic – Your Doctor at Hand!",
+        "e_clinic_intro": "Welcome to E-Clinic, your AI-powered health assistant designed to be your virtual doctor, providing instant medical guidance anytime, anywhere.",
+        "e_clinic_reason": "Why did we create E-Clinic? Because healthcare is a right for everyone! Our goal is to help people who cannot afford doctors or live in areas with limited medical services. With AI-powered diagnostics, we can assist you in understanding your symptoms and making informed health decisions.",
+        "services_title": "What services does E-Clinic offer?",
+        "service_diagnosis": "Disease diagnosis – Enter your symptoms and receive an instant medical analysis.",
+        "service_reports": "Medical report reading – Upload your test results and get an accurate medical interpretation.",
+        "service_tests": "Test and examination suggestions – Get recommendations for lab tests, X-rays, CT scans, and MRIs to better understand your health.",
+        "service_medications": "Appropriate medication suggestions – Receive recommendations for suitable medications, including generic names and available brands in your country, with proper usage instructions.",
+        "disclaimer_note": "This service is for informational purposes only and does not replace professional medical advice.",
+        "contact_us": "Contact us for any inquiries",
+        "prayer_message": "May Allah grant mercy and forgiveness to all deceased Muslims and bless everyone with good health.",
+  
+      
+
+
       "health assistant": "This AI-powered health assistant is not a licensed medical professional and does not provide official medical diagnoses or treatments. The information provided is based on AI analysis of symptoms and general medical knowledge and should be used for informational purposes only. Always consult a qualified doctor or healthcare provider for a proper diagnosis and treatment plan. If you experience severe, worsening, or emergency symptoms, seek immediate medical attention or visit the nearest hospital. By using this service, you acknowledge that you understand these terms and accept that the AI does not replace professional medical advice.",
       "Patient details saved successfully!": "Patient details saved successfully!",
       "An error occurred while saving patient details. Please try again.":
@@ -130,15 +149,35 @@ const resources = {
       "Enter here": "أدخل هنا",
       "Type here": "اكتب هنا",
       "Submit": "إرسال",
-      translation: {
-        "Important Notice: E-Hospital Terms of Use": "تنبيه هام: شروط استخدام العيادة الإلكترونية",
-        "health_assistant_0": "هذا المساعد الصحي المدعوم بالذكاء الاصطناعي ليس طبيبًا مرخصًا ولا يقدم تشخيصات طبية رسمية أو علاجات.",
-        "health_assistant_1": "المعلومات المقدمة تعتمد على تحليل الذكاء الاصطناعي للأعراض والمعرفة الطبية العامة ويجب استخدامها لأغراض المعلومات فقط.",
-        "health_assistant_2": "استشر دائمًا طبيبًا مؤهلاً أو مقدم رعاية صحية للحصول على تشخيص وخطة علاج مناسبة.",
-        "health_assistant_3": "إذا كنت تعاني من أعراض شديدة أو متفاقمة أو طارئة، اطلب العناية الطبية الفورية أو قم بزيارة أقرب مستشفى.",
-        "health_assistant_4": "باستخدام هذه الخدمة، فإنك تقر بأنك تفهم هذه الشروط وتقبل أن الذكاء الاصطناعي لا يحل محل النصيحة الطبية المهنية.",
-        "Got It": "موافق",
-      },
+
+      // "E-Hospital": "العيادة الإلكترونية",
+      "Important Notice: E-Clinic Terms of Use": "تنبيه هام: شروط استخدام العيادة الإلكترونية",
+      "health assistant 0": "هذا المساعد الصحي المدعوم بالذكاء الاصطناعي ليس طبيبًا مرخصًا ولا يقدم تشخيصات طبية رسمية أو علاجات.",
+      "health assistant 1": "المعلومات المقدمة تعتمد على تحليل الذكاء الاصطناعي للأعراض والمعرفة الطبية العامة ويجب استخدامها لأغراض المعلومات فقط.",
+      "health assistant 2": "استشر دائمًا طبيبًا مؤهلاً أو مقدم رعاية صحية للحصول على تشخيص وخطة علاج مناسبة.",
+      "health assistant 3": "إذا كنت تعاني من أعراض شديدة أو متفاقمة أو طارئة، اطلب العناية الطبية الفورية أو قم بزيارة أقرب مستشفى.",
+      "health assistant 4": "باستخدام هذه الخدمة، فإنك تقر بأنك تفهم هذه الشروط وتقبل أن الذكاء الاصطناعي لا يحل محل النصيحة الطبية المهنية.",
+      // "Got It": "موافق",
+
+
+
+
+
+
+        "e_clinic_title": "المشفى الإلكتروني – طبيبك بين يديك!",
+        "e_clinic_intro": "مرحبًا بك في المشفى الإلكتروني، مساعدك الصحي المدعوم بالذكاء الاصطناعي، المصمم ليكون طبيبك الافتراضي ويوفر لك إرشادات طبية فورية في أي وقت وأي مكان.",
+        "e_clinic_reason": "لماذا أنشأنا المشفى الإلكتروني؟ لأن الرعاية الصحية حق للجميع! هدفنا هو مساعدة الأشخاص الذين لا يستطيعون تحمل تكاليف الأطباء أو يعيشون في مناطق تعاني من نقص الخدمات الطبية. بفضل التشخيص الذكي، يمكننا مساعدتك على فهم أعراضك واتخاذ قرارات صحية أكثر وعيًا.",
+        "services_title": "الخدمات التي نقدمها بالمشفى الالكتروني؟",
+        "service_diagnosis": "تشخيص المرض – أدخل الأعراض واحصل على تحليل طبي فوري.",
+        "service_reports": "قراءة التقارير الطبية – حمل نتائج فحوصاتك واحصل على تفسير طبي دقيق.",
+        "service_tests": "اقتراح التحاليل الطبية والفحوصات – احصل على توصيات حول الفحوصات المخبرية أو صور الأشعة، CT scan و MRI لفهم حالتك الصحية بشكل أفضل.",
+        "service_medications": "اقتراح الأدوية المناسبة – توصيات حول الأدوية الملائمة لحالتك الصحية، تشمل الاسم العائلي للدواء والأسماء التجارية المتوفرة في بلدك، مع تعليمات الاستخدام المناسبة.",
+        "disclaimer_note": "هذه الخدمة هي لأغراض المعلومات فقط ولا تغني عن استشارة الطبيب المختص.",
+        "contact_us": "تواصل معنا لأي استفسارات",
+        "prayer_message": "نسأل الله الرحمة والمغفرة لجميع موتى المسلمين، وأن يمنّ بالصحة والعافية على الجميع",
+
+      
+
       "health assistant": "هذا المساعد الصحي المدعوم بالذكاء الاصطناعي ليس طبيبًا مرخصًا ولا يقدم تشخيصات طبية رسمية أو علاجات. المعلومات المقدمة تعتمد على تحليل الذكاء الاصطناعي للأعراض والمعرفة الطبية العامة ويجب استخدامها لأغراض المعلومات فقط. استشر دائمًا طبيبًا مؤهلاً أو مقدم رعاية صحية للحصول على تشخيص وخطة علاج مناسبة. إذا كنت تعاني من أعراض شديدة أو متفاقمة أو طارئة، اطلب العناية الطبية الفورية أو قم بزيارة أقرب مستشفى. باستخدام هذه الخدمة، فإنك تقر بأنك تفهم هذه الشروط وتقبل أن الذكاء الاصطناعي لا يحل محل النصيحة الطبية المهنية.",
       "Patient details saved successfully!": "تم حفظ تفاصيل المريض بنجاح!",
       "An error occurred while saving patient details. Please try again.":

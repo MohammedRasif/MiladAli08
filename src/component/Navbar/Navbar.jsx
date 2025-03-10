@@ -187,57 +187,97 @@ const Navbar = () => {
               <IoIosArrowRoundBack className="text-[24px] md:text-[28px] mr-1" />
               <h1>{t("Back")}</h1>
             </div>
-            <div className="max-w-full mx-auto p-4 md:p-6 bg-white rounded-lg mt-10">
-              <h1 className="text-2xl md:text-3xl font-bold text-blue-600 text-center">
-                المشفى الإلكتروني – طبيبك بين يديك!
+            <div className="max-w-full mx-auto p-4 md:p-6 bg-white rounded-lg mt-10"
+              dir={i18n.language === "ar" ? "ltr" : i18n.language === "en" ? "ltr" : "rtl"}
+            >
+              {/* Arabic Title */}
+              <h1 className="text-2xl md:text-3xl font-bold text-blue-600 text-center" dir={i18n.language === "ar" ? "ltr" : i18n.language === "en" ? "ltr" : "rtl"}>
+                {t("e_clinic_title")}
               </h1>
-              <p className="mt-3 text-base md:text-lg text-center">
-                مرحبًا بك في المشفى الإلكتروني، مساعدك الصحي المدعوم بالذكاء الاصطناعي، المصمم ليكون طبيبك الافتراضي ويوفر لك إرشادات طبية فورية في أي وقت وأي مكان.
+
+              {/* Arabic Intro */}
+              <p className="mt-3 text-base md:text-lg text-center" dir={i18n.language === "ar" ? "ltr" : i18n.language === "en" ? "ltr" : "rtl"}>
+                {t("e_clinic_intro")}
               </p>
 
-              <p className="mt-3 text-sm md:text-base text-gray-700">
-                لماذا أنشأنا المشفى الإلكتروني؟ لأن الرعاية الصحية حق للجميع! هدفنا هو مساعدة الأشخاص الذين لا يستطيعون تحمل تكاليف الأطباء أو يعيشون في مناطق تعاني من نقص الخدمات الطبية. بفضل التشخيص الذكي، يمكننا مساعدتك على فهم أعراضك واتخاذ قرارات صحية أكثر وعيًا.
+              {/* Arabic Reason */}
+              <p className="mt-3 text-sm md:text-base text-gray-700" dir={i18n.language === "ar" ? "ltr" : i18n.language === "en" ? "ltr" : "rtl"}>
+                {t("e_clinic_reason")}
               </p>
 
+              {/* Arabic Services Title */}
               <div className="mt-4 md:mt-6">
-                <h2 className="text-lg md:text-xl font-semibold text-blue-500">
-                  الخدمات التي نقدمها بالمشفى الالكتروني؟
+                <h2 className="text-lg md:text-xl font-semibold text-blue-500" dir={i18n.language === "ar" ? "ltr" : i18n.language === "en" ? "ltr" : "rtl"}>
+                  {t("services_title")}
                 </h2>
-                <ul className="mt-2 space-y-2 text-gray-700 text-sm md:text-base">
-                  <li className="flex items-center">
-                    <span className="text-green-500 text-lg md:text-xl mr-2">✅</span>
-                    تشخيص المرض – أدخل الأعراض واحصل على تحليل طبي فوري.
+
+                {/* Arabic Services List */}
+                <ul className="mt-2 space-y-2 text-gray-700 text-sm md:text-base" dir={i18n.language === "ar" ? "ltr" : i18n.language === "en" ? "ltr" : "rtl"}>
+                  <li
+                    className="flex " // Removed justify-end for consistency
+                    dir={i18n.language === "ar" ? "rtl" : "ltr"}
+                  >
+                    <span
+                      className={`text-green-500 text-lg md:text-xl ${i18n.language === "ar" ? "mr-2" : "ml-2"}`}
+                    >
+                      ✅
+                    </span>
+                    {t("service_diagnosis")}
                   </li>
-                  <li className="flex items-center">
-                    <span className="text-green-500 text-lg md:text-xl mr-2">✅</span>
-                    قراءة التقارير الطبية – حمل نتائج فحوصاتك واحصل على تفسير طبي دقيق.
+                  <li
+                    className="flex "
+                    dir={i18n.language === "ar" ? "rtl" : "ltr"}
+                  >
+                    <span
+                      className={`text-green-500 text-lg md:text-xl ${i18n.language === "ar" ? "mr-2" : "ml-2"}`}
+                    >
+                      ✅
+                    </span>
+                    {t("service_reports")}
                   </li>
-                  <li className="flex items-center">
-                    <span className="text-green-500 text-lg md:text-xl mr-2">✅</span>
-                    اقتراح التحاليل الطبية والفحوصات – احصل على توصيات حول الفحوصات المخبرية أو صور الأشعة، CT scan و MRI لفهم حالتك الصحية بشكل أفضل.
+                  <li
+                    className="flex "
+                    dir={i18n.language === "ar" ? "rtl" : "ltr"}
+                  >
+                    <span
+                      className={`text-green-500 text-lg md:text-xl ${i18n.language === "ar" ? "mr-2" : "ml-2"}`}
+                    >
+                      ✅
+                    </span>
+                    {t("service_tests")}
                   </li>
-                  <li className="flex items-center">
-                    <span className="text-green-500 text-lg md:text-xl mr-2">✅</span>
-                    اقتراح الأدوية المناسبة – توصيات حول الأدوية الملائمة لحالتك الصحية، تشمل الاسم العائلي للدواء والأسماء التجارية المتوفرة في بلدك، مع تعليمات الاستخدام المناسبة.
+                  <li
+                    className="flex "
+                    dir={i18n.language === "ar" ? "rtl" : "ltr"}
+                  >
+                    <span
+                      className={`text-green-500 text-lg md:text-xl ${i18n.language === "ar" ? "mr-2" : "ml-2"}`}
+                    >
+                      ✅
+                    </span>
+                    {t("service_medications")}
                   </li>
                 </ul>
               </div>
 
-              <div className="mt-4 md:mt-6 p-3 md:p-4 bg-yellow-100 border-l-4 border-yellow-500">
+              {/* Disclaimer Note */}
+              <div className="mt-4 md:mt-6 p-3 md:p-4 bg-yellow-100 border-l-4 border-yellow-500" dir={i18n.language === "ar" ? "ltr" : i18n.language === "en" ? "ltr" : "rtl"}>
                 <p className="text-gray-800 font-semibold text-sm md:text-base">
                   ⚠️ {t("disclaimer_note")}
                 </p>
               </div>
 
-              <p className="mt-4 md:mt-6 text-center text-gray-700 text-sm md:text-base">
-                تواصل معنا لأي استفسارات
+              {/* Contact Us */}
+              <p className="mt-4 md:mt-6 text-center text-gray-700 text-sm md:text-base" dir={i18n.language === "ar" ? "ltr" : i18n.language === "en" ? "ltr" : "rtl"}>
+                {t("contact_us")}
               </p>
               <p className="text-center text-blue-600 font-semibold text-sm md:text-base">
                 📩 info@e-clinic.ai
               </p>
 
-              <p className="mt-4 md:mt-6 text-center text-gray-700 text-sm md:text-base">
-                نسأل الله الرحمة والمغفرة لجميع موتى المسلمين، وأن يمنّ بالصحة والعافية على الجميع
+              {/* Prayer Message */}
+              <p className="mt-4 md:mt-6 text-center text-gray-700 text-sm md:text-base" dir={i18n.language === "ar" ? "ltr" : i18n.language === "en" ? "ltr" : "rtl"}>
+                {t("prayer_message")}
               </p>
             </div>
           </motion.div>

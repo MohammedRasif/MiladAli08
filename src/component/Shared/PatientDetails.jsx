@@ -138,7 +138,7 @@ const PatientDetailsForm = () => {
         console.warn("No unique_id found in API response");
         localStorage.setItem("patientDetails", JSON.stringify(transformedData));
       }
-  
+      localStorage.setItem("text", formData.reported_symptoms)
       navigate("/");
     } catch (error) {
       console.error("Error:", error.message); // Line 113
