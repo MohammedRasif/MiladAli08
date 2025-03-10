@@ -118,11 +118,14 @@ const Header = () => {
   }, []);
 
   const handleCheck = () => {
+    console.log("hello");
     const uniqueId = localStorage.getItem("unique_id");
     if (uniqueId) {
       navigate("/"); // Navigate to home if unique_id exists
+      console.log("hiii");
     } else {
       navigate("/patientDetails"); // Navigate to patientDetails if unique_id doesn't exist
+      console.log("heyyyy");
     }
   };
 

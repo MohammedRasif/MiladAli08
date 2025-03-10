@@ -40,53 +40,53 @@ const Disclaimer = () => {
       transition={{ type: "spring", stiffness: 100, damping: 25 }}
     >
       <motion.div
-        className="w-[690px] h-[324px] text-center bg-white flex flex-col justify-center items-center border border-gray-200 rounded-2xl shadow-lg relative"
+        className="w-[690px] h-[324px] text-center  flex flex-col justify-center items-center rounded-2xl shadow-lg relative"
         variants={modalVariants}
         initial="hidden"
         animate="visible"
         exit="exit"
       >
-        <div className="flex items-center justify-center w-full h-full absolute top-0 left-0">
+        <div className="flex items-center justify-center w-full h-full absolute top-0 left-0 p-4">
           {/* Back Button */}
           <div
-            className={`flex items-center text-[18px] font-[500] text-gray-700 absolute -top-20 ${i18n.language === "ar" ? "left-5 mt-5" : "left-5"
+            className={`flex items-center text-[16px] md:text-[18px] font-[500] text-gray-700 absolute -top-16 md:-top-20 lg:-mt-0 md:-mt-0 -mt-7 ${i18n.language === "ar" ? "left-5 mt-5" : "left-5"
               } cursor-pointer`}
             onClick={closeModal}
           >
             <IoIosArrowRoundBack
-              className={`text-[28px] ${i18n.language === "ar" ? "ml-1 transform mt-2" : "mr-1"}`}
+              className={`text-[24px] md:text-[28px] ${i18n.language === "ar" ? "ml-1 transform mt-1" : "mr-1"}`}
             />
             <h1>{t("Back")}</h1>
           </div>
-          <div className="w-[690px] px-10 py-10 text-center bg-white flex flex-col justify-center items-center border border-gray-200 rounded-2xl shadow-lg">
-            <LuTriangleAlert className="text-7xl font-[500] text-red-700 mb-5" />
-            {/* <h1 className="text-[18px] font-[500] mb-4">
-              {t("Important Notice: E-Clinic Terms of Use")}
-            </h1> */}
-            <ul className="text-[16px] md:text-[18px] font-[500] px-2 text-left list-disc list-inside">
+
+          {/* Modal Content */}
+          <div className="w-full max-w-[690px] px-6 md:px-10 py-6 md:py-10 text-center bg-white flex flex-col justify-center items-center border border-gray-200 rounded-2xl shadow-lg">
+            <LuTriangleAlert className="text-6xl md:text-7xl font-[500] text-red-700 mb-4 md:mb-5" />
+
+            {/* Terms List */}
+            <ul className="text-[14px] md:text-[16px] lg:text-[18px] font-[500] px-2 text-left list-disc list-inside">
               {[
                 t("health assistant 0"),
                 t("health assistant 1"),
                 t("health assistant 2"),
                 t("health assistant 3"),
-                t("health assistant 4")
+                t("health assistant 4"),
               ].map((item, index) => (
-                <li key={index} className="text-[16px] md:text-[18px] font-[500] leading-relaxed">
+                <li key={index} className="text-[14px] md:text-[16px] lg:text-[18px] font-[500] leading-relaxed">
                   {item}
                 </li>
               ))}
             </ul>
 
+            {/* Got It Button */}
             <NavLink to="/">
-              <button className="text-white bg-green-500 rounded-md px-4 mt-5 py-1">
+              <button className="text-white bg-green-500 rounded-md px-3 md:px-4 py-1 md:py-2 mt-4 md:mt-5 text-sm md:text-base">
                 {t("Got It")}
               </button>
             </NavLink>
-            <div className="mt-4">
-
-            </div>
           </div>
         </div>
+
       </motion.div>
     </motion.div>
   );

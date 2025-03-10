@@ -200,7 +200,7 @@ const PatientDetailsForm = () => {
       >
         <NavLink
           to="/"
-          className="flex items-center text-[18px] font-semibold text-gray-700 hover:text-[#006400] transition duration-200"
+          className="flex items-center text-[18px] font-semibold text-gray-700 hover:text-[#006400] transition duration-200  "
         >
           <IoIosArrowRoundBack
             className={`text-[28px] ${i18n.language === "ar" ? "ml-1 transform  mt-2" : "mr-1"}`}
@@ -293,7 +293,7 @@ const PatientDetailsForm = () => {
               </select>
             </div>
 
-          <div className="w-1/2">
+          <div className="w-1/2 lg:mt-0 md:mt-0 mt-5">
               <label className="block text-sm font-semibold text-gray-700">{t("Diabetes")}</label>
               <select
                 name="diabetes"

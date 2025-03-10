@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import { IoIosArrowRoundBack } from "react-icons/io";
@@ -13,6 +13,32 @@ const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { t } = useTranslation();
   const [isEnglish, setIsEnglish] = useState(false);
+  const menuRef = useRef(null); // Create a ref to track the menu div
+
+  // Effect to handle clicks outside the menu on small devices
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      // Check if menu is open, it's a small device (window.innerWidth < 768), and click is outside the menu
+      if (
+        isMobileMenuOpen &&
+        menuRef.current &&
+        !menuRef.current.contains(event.target) &&
+        window.innerWidth < 768 // Assuming md breakpoint is 768px
+      ) {
+        setIsMobileMenuOpen(false); // Close the menu
+      }
+    };
+
+    // Add event listener when menu is open
+    if (isMobileMenuOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    // Cleanup event listener
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isMobileMenuOpen, setIsMobileMenuOpen]); // Dependencies
 
   useEffect(() => {
     // Check localStorage for language, default to "ar" if not set
@@ -92,6 +118,7 @@ const Navbar = () => {
 
       {/* Navigation Tabs */}
       <div
+      ref={menuRef}
         className={`flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-3 w-full md:w-auto mt-2 md:mt-0 ${isMobileMenuOpen ? "block" : "hidden md:flex"
           }`}
       >
@@ -127,14 +154,14 @@ const Navbar = () => {
         </NavLink>
 
         <button onClick={openAboutUsModal} className="w-full md:w-auto">
-          <h1 className="text-[14px] md:text-[16px] font-[600] bg-[#C6D7BA] px-3 md:px-5 py-1 md:py-2 rounded-md border border-gray-400">
+          <h1 className="text-[14px] md:text-[16px] font-[600]  bg-[#C6D7BA] px-3 md:px-5 py-1 md:py-2 rounded-md border border-gray-400">
             {t("About us")}
           </h1>
         </button>
       </div>
 
       {/* Language Toggle */}
-      <div className=" md:mt-0 lg:mt-2 z-40 -mt-10"> {/* Removed -mt-10, added z-40 */}
+      <div className=" md:mt-0 lg:mt-2 z-40 mt-1 fixed md:static lg:static"> {/* Removed -mt-10, added z-40 */}
         <button
           onClick={toggleLanguage}
           className="flex items-center justify-between border border-gray-300 rounded-full px-2 py-1 w-[120px] md:w-[140px] h-[36px] md:h-[40px] relative overflow-hidden shadow-md hover:shadow-lg transition-all duration-300 bg-white"
