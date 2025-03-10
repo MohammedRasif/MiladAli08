@@ -134,7 +134,7 @@ const Navbar = () => {
       </div>
 
       {/* Language Toggle */}
-      <div className="md:mt-0 lg:mt-2 mt-2 z-40"> {/* Removed -mt-10, added z-40 */}
+      <div className=" md:mt-0 lg:mt-2 z-40 -mt-10"> {/* Removed -mt-10, added z-40 */}
         <button
           onClick={toggleLanguage}
           className="flex items-center justify-between border border-gray-300 rounded-full px-2 py-1 w-[120px] md:w-[140px] h-[36px] md:h-[40px] relative overflow-hidden shadow-md hover:shadow-lg transition-all duration-300 bg-white"
