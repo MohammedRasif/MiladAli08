@@ -7,7 +7,7 @@ const resources = {
     translation: {
       "E-Hospital": "E-Clinic",
       "Home": "Home",
-      "Disclaimer": "Disclaimer",
+      "Disclaimer": "Terms of use",
       "Patient Details": "Patient Details",
       "English": "English",
       "العربية": "Arabic",
@@ -54,27 +54,54 @@ const resources = {
 
 
       "Important Notice: E-Clinic Terms of Use": "Important Notice: E-Clinic Terms of Use",
+      "Welcome_to_out":"Welcome to our AI-powered health assistant. By using this service, you agree to the following terms:",
+      "Medical_Disclaimer":"Medical Disclaimer",
+
       "health assistant 0": "This AI-powered health assistant is not a licensed medical professional and does not provide official medical diagnoses or treatments.",
-      "health assistant 1": "The information provided is based on AI analysis of symptoms and general medical knowledge and should be used for informational purposes only.",
-      "health assistant 2": "Always consult a qualified doctor or healthcare provider for a proper diagnosis and treatment plan.",
+
+      "health assistant 1": "The information provided is based on AI analysis of symptoms and general medical knowledge and is for informational purposes only.",
+
+      "health assistant 2": "Always consult a qualified doctor or healthcare provider for an official diagnosis and treatment plan.",
+
       "health assistant 3": "If you experience severe, worsening, or emergency symptoms, seek immediate medical attention or visit the nearest hospital.",
-      "health assistant 4": "By using this service, you acknowledge that you understand these terms and accept that the AI does not replace professional medical advice.",
+      
+      "health assistant 4": "Neither the website, its owner, nor the technology used is responsible for any medical mistakes, misdiagnoses, or incorrect health assessments.",
+
+      "Data privacy":"Data Privacy & Storage",
+
+      "health assistant 5": "We temporarily store your conversation history to help improve our AI responses. This data is not linked to any personal identity.",
+
+      "health assistant 6": "All interactions are securely processed through OpenAI’s API.",
+      "health assistant 7": "We do not share or sell your data to third parties.",
+      "Acceptance of terms":"Acceptance of Terms",
+      "by useing this service":"By using this service, you acknowledge that you have read, understood, and agreed to these Terms of Use. If you do not agree with any part of these terms, please refrain from using our service.",
 
 
 
 
     
-        "e_clinic_title": "E-Clinic – Your Doctor at Hand!",
-        "e_clinic_intro": "Welcome to E-Clinic, your AI-powered health assistant designed to be your virtual doctor, providing instant medical guidance anytime, anywhere.",
-        "e_clinic_reason": "Why did we create E-Clinic? Because healthcare is a right for everyone! Our goal is to help people who cannot afford doctors or live in areas with limited medical services. With AI-powered diagnostics, we can assist you in understanding your symptoms and making informed health decisions.",
-        "services_title": "What services does E-Clinic offer?",
-        "service_diagnosis": "Disease diagnosis – Enter your symptoms and receive an instant medical analysis.",
-        "service_reports": "Medical report reading – Upload your test results and get an accurate medical interpretation.",
-        "service_tests": "Test and examination suggestions – Get recommendations for lab tests, X-rays, CT scans, and MRIs to better understand your health.",
-        "service_medications": "Appropriate medication suggestions – Receive recommendations for suitable medications, including generic names and available brands in your country, with proper usage instructions.",
-        "disclaimer_note": "This service is for informational purposes only and does not replace professional medical advice.",
-        "contact_us": "Contact us for any inquiries",
-        "prayer_message": "May Allah grant mercy and forgiveness to all deceased Muslims and bless everyone with good health.",
+        "e_clinic_title": "About Us – The E-Clinic",
+        "e_clinic_intro": "At The E-Clinic, we believe everyone deserves quality healthcare. We understand that high costs, a shortage of nearby doctors, and underdeveloped healthcare systems can limit access to proper care. That’s why we offer free, AI-driven health consultations to improve your medical awareness and help you make informed decisions.",
+        
+        "e_clinic_reason": "What We Offer",
+        "services_title": "AI Symptom Checker: Receive possible",
+        "service_diagnosis": "explanations for your symptoms using advanced AI analysis.",
+        "service_reports": "Medical Report Analysis: Upload your test results for AI-powered insights into your health.",
+
+        "service_tests": "24/7 Health Assistant: Get instant answers to your health questions anytime, anywhere.",
+
+        "service_medications": "Medical Test Recommendations: Get personalized advice on necessary tests—whether it's an MRI, CT scan, or X-ray.",
+
+        "disclaimer_note": "Care Plan & Medication Guidance: Access tailored care plans and medication recommendations to support your health journey.",
+
+        "contact_us": "Our Commitment",
+        "prayer_message": "Our AI health assistant provides helpful information but is not a substitute for professional medical advice. Always consult a licensed doctor for a proper diagnosis and treatment.",
+        "Get_in":"Get in Touch",
+        "For_question":"For questions or further inquiries, please contact us at:",
+        "Email":"📩 info@e-clinic.ai",
+
+
+        
   
       
 
@@ -150,31 +177,60 @@ const resources = {
       "Type here": "اكتب هنا",
       "Submit": "إرسال",
 
-      // "E-Hospital": "العيادة الإلكترونية",
-      "Important Notice: E-Clinic Terms of Use": "تنبيه هام: شروط استخدام العيادة الإلكترونية",
-      "health assistant 0": "هذا المساعد الصحي المدعوم بالذكاء الاصطناعي ليس طبيبًا مرخصًا ولا يقدم تشخيصات طبية رسمية أو علاجات.",
-      "health assistant 1": "المعلومات المقدمة تعتمد على تحليل الذكاء الاصطناعي للأعراض والمعرفة الطبية العامة ويجب استخدامها لأغراض المعلومات فقط.",
-      "health assistant 2": "استشر دائمًا طبيبًا مؤهلاً أو مقدم رعاية صحية للحصول على تشخيص وخطة علاج مناسبة.",
-      "health assistant 3": "إذا كنت تعاني من أعراض شديدة أو متفاقمة أو طارئة، اطلب العناية الطبية الفورية أو قم بزيارة أقرب مستشفى.",
-      "health assistant 4": "باستخدام هذه الخدمة، فإنك تقر بأنك تفهم هذه الشروط وتقبل أن الذكاء الاصطناعي لا يحل محل النصيحة الطبية المهنية.",
-      // "Got It": "موافق",
+
+        "Important Notice: E-Clinic Terms of Use": "تنبيه هام: شروط استخدام العيادة الإلكترونية",
+        "Welcome_to_out": "مرحبًا بك في مساعدنا الصحي المدعوم بالذكاء الاصطناعي. باستخدامك لهذه الخدمة، فإنك توافق على الشروط التالية:",
+        "Medical_Disclaimer": "إخلاء المسؤولية الطبية",
+      
+        "health assistant 0": "هذا المساعد الصحي المدعوم بالذكاء الاصطناعي ليس طبيبًا مرخصًا ولا يقدم تشخيصات طبية رسمية أو علاجات.",
+      
+        "health assistant 1": "المعلومات المقدمة تعتمد على تحليل الذكاء الاصطناعي للأعراض والمعرفة الطبية العامة ويجب استخدامها لأغراض المعلومات فقط.",
+      
+        "health assistant 2": "استشر دائمًا طبيبًا مؤهلاً أو مقدم رعاية صحية للحصول على تشخيص وخطة علاج مناسبة.",
+      
+        "health assistant 3": "إذا كنت تعاني من أعراض شديدة أو متفاقمة أو طارئة، اطلب العناية الطبية الفورية أو قم بزيارة أقرب مستشفى.",
+      
+        "health assistant 4": "لا تتحمل الموقع أو مالكه أو التقنية المستخدمة أي مسؤولية عن الأخطاء الطبية أو التشخيصات الخاطئة أو التقييمات الصحية غير الدقيقة.",
+      
+        "Data privacy": "خصوصية البيانات والتخزين",
+      
+        "health assistant 5": "نقوم بتخزين تاريخ محادثاتك مؤقتًا للمساعدة في تحسين استجابات الذكاء الاصطناعي لدينا. هذه البيانات غير مرتبطة بأي هوية شخصية.",
+      
+        "health assistant 6": "جميع التفاعلات تتم معالجتها بشكل آمن من خلال واجهة برمجة التطبيقات الخاصة بـ OpenAI.",
+      
+        "health assistant 7": "نحن لا نشارك أو نبيع بياناتك إلى أطراف ثالثة.",
+      
+        "Acceptance of terms": "قبول الشروط",
+      
+        "by useing this service": "باستخدامك لهذه الخدمة، فإنك تقر بأنك قد قرأت وفهمت ووافقت على هذه الشروط. إذا كنت لا توافق على أي جزء من هذه الشروط، يرجى الامتناع عن استخدام الخدمة.",
+     
+      
 
 
 
 
 
+       
+    
+        "e_clinic_title": "حولنا – المشفى الإلكتروني",
+        "e_clinic_intro": "في المشفى الإلكتروني، نؤمن بأن الجميع يستحقون رعاية صحية ذات جودة. نحن ندرك أن التكاليف المرتفعة، ونقص الأطباء في المناطق القريبة، وضعف أنظمة الرعاية الصحية قد تحد من الوصول إلى الرعاية الطبية المناسبة. لهذا السبب، نقدم استشارات صحية مجانية مدعومة بالذكاء الاصطناعي لزيادة وعيك الطبي ومساعدتك في اتخاذ قرارات صحية مستنيرة.",
+        
+        "e_clinic_reason": "ما الذي نقدمه؟",
+        "services_title": "فحص الأعراض بالذكاء الاصطناعي: احصل على",
+        "service_diagnosis": "تحليل متقدم للأعراض لتحديد التفسيرات المحتملة لحالتك الصحية.",
+        "service_reports": "تحليل التقارير الطبية: حمّل نتائج فحوصاتك للحصول على رؤى طبية مستندة إلى الذكاء الاصطناعي.",
+        "service_tests": "مساعد صحي على مدار الساعة: احصل على إجابات فورية على أسئلتك الصحية في أي وقت وأي مكان.",
+        "service_medications": "توصيات الفحوصات الطبية: احصل على إرشادات مخصصة حول الفحوصات اللازمة، سواء كانت أشعة مقطعية (CT Scan) أو رنين مغناطيسي (MRI) أو أشعة سينية (X-Ray).",
+        "disclaimer_note": "خطة رعاية وإرشادات دوائية: احصل على خطط رعاية مخصصة وتوصيات دوائية لدعم رحلتك الصحية.",
+        
+        "contact_us": "التزامنا",
+        "prayer_message": "مساعدنا الصحي بالذكاء الاصطناعي يوفر معلومات مفيدة ولكنه لا يعد بديلاً عن الاستشارة الطبية المتخصصة. استشر طبيبًا مرخصًا دائمًا للتشخيص والعلاج المناسب.",
+        
+        "Get_in": "تواصل معنا",
+        "For_question": "لأي استفسارات أو أسئلة، يرجى الاتصال بنا على:",
+        "Email": "📩 info@e-clinic.ai",
+    
 
-        "e_clinic_title": "المشفى الإلكتروني – طبيبك بين يديك!",
-        "e_clinic_intro": "مرحبًا بك في المشفى الإلكتروني، مساعدك الصحي المدعوم بالذكاء الاصطناعي، المصمم ليكون طبيبك الافتراضي ويوفر لك إرشادات طبية فورية في أي وقت وأي مكان.",
-        "e_clinic_reason": "لماذا أنشأنا المشفى الإلكتروني؟ لأن الرعاية الصحية حق للجميع! هدفنا هو مساعدة الأشخاص الذين لا يستطيعون تحمل تكاليف الأطباء أو يعيشون في مناطق تعاني من نقص الخدمات الطبية. بفضل التشخيص الذكي، يمكننا مساعدتك على فهم أعراضك واتخاذ قرارات صحية أكثر وعيًا.",
-        "services_title": "الخدمات التي نقدمها بالمشفى الالكتروني؟",
-        "service_diagnosis": "تشخيص المرض – أدخل الأعراض واحصل على تحليل طبي فوري.",
-        "service_reports": "قراءة التقارير الطبية – حمل نتائج فحوصاتك واحصل على تفسير طبي دقيق.",
-        "service_tests": "اقتراح التحاليل الطبية والفحوصات – احصل على توصيات حول الفحوصات المخبرية أو صور الأشعة، CT scan و MRI لفهم حالتك الصحية بشكل أفضل.",
-        "service_medications": "اقتراح الأدوية المناسبة – توصيات حول الأدوية الملائمة لحالتك الصحية، تشمل الاسم العائلي للدواء والأسماء التجارية المتوفرة في بلدك، مع تعليمات الاستخدام المناسبة.",
-        "disclaimer_note": "هذه الخدمة هي لأغراض المعلومات فقط ولا تغني عن استشارة الطبيب المختص.",
-        "contact_us": "تواصل معنا لأي استفسارات",
-        "prayer_message": "نسأل الله الرحمة والمغفرة لجميع موتى المسلمين، وأن يمنّ بالصحة والعافية على الجميع",
 
       
 

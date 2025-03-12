@@ -1,18 +1,14 @@
-
 import { useEffect } from "react";
 import { motion } from "framer-motion";
 import { IoIosArrowRoundBack } from "react-icons/io";
 import { NavLink, useNavigate } from "react-router-dom";
 import { LuTriangleAlert } from "react-icons/lu";
-import { Trans, useTranslation } from "react-i18next";
+import { useTranslation } from "react-i18next";
 import i18n from "../../i18n"; // Assuming this is your i18n config file
 
 const Disclaimer = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
-
-  // Update document direction based on language
-
 
   // Modal animation variants
   const modalVariants = {
@@ -40,53 +36,64 @@ const Disclaimer = () => {
       transition={{ type: "spring", stiffness: 100, damping: 25 }}
     >
       <motion.div
-        className="w-[690px] h-[324px] text-center  flex flex-col justify-center items-center rounded-2xl shadow-lg relative"
+        className="w-[90vw] max-w-[690px] h-auto max-h-[90vh] bg-white flex flex-col justify-start items-center border border-gray-200 rounded-2xl shadow-lg relative overflow-y-auto p-4 md:p-6"
         variants={modalVariants}
         initial="hidden"
         animate="visible"
         exit="exit"
       >
-        <div className="flex items-center justify-center w-full h-full absolute top-0 left-0 p-4">
-          {/* Back Button */}
-          <div
-            className={`flex items-center text-[16px] md:text-[18px] font-[500] text-gray-700 absolute -top-16 md:-top-20 lg:-mt-0 md:-mt-0 -mt-7 ${i18n.language === "ar" ? "left-5 mt-5" : "left-5"
-              } cursor-pointer`}
-            onClick={closeModal}
-          >
-            <IoIosArrowRoundBack
-              className={`text-[24px] md:text-[28px] ${i18n.language === "ar" ? "ml-1 transform mt-1" : "mr-1"}`}
-            />
-            <h1>{t("Back")}</h1>
-          </div>
+        <div
+  className={`flex items-center text-[18px] md:text-[22px] font-[600] text-gray-700 absolute top-4 ${i18n.language === "ar" ? "right-4 md:right-6 text-right" : "left-4 md:left-6 text-left"} cursor-pointer`}
+  onClick={closeModal}
+>
+  <IoIosArrowRoundBack
+    className={`text-[28px] md:text-[32px] ml-1 ${i18n.language === "ar" ? "rotate-180 mt-2" : ""}`}
+  />
+  <h1 className={`text-lg md:text-xl ${i18n.language === "ar" ? "mr-4" : "ml-2"}`}>
+    {t("Back")}
+  </h1>
+</div>
 
-          {/* Modal Content */}
-          <div className="w-full max-w-[690px] px-6 md:px-10 py-6 md:py-10 text-center bg-white flex flex-col justify-center items-center border border-gray-200 rounded-2xl shadow-lg">
-            <LuTriangleAlert className="text-6xl md:text-7xl font-[500] text-red-700 mb-4 md:mb-5" />
 
-            {/* Terms List */}
-            <ul className="text-[14px] md:text-[16px] lg:text-[18px] font-[500] px-2 text-left list-disc list-inside">
-              {[
-                t("health assistant 0"),
-                t("health assistant 1"),
-                t("health assistant 2"),
-                t("health assistant 3"),
-                t("health assistant 4"),
-              ].map((item, index) => (
-                <li key={index} className="text-[14px] md:text-[16px] lg:text-[18px] font-[500] leading-relaxed">
-                  {item}
-                </li>
-              ))}
+        <div
+          className={`w-full max-w-[690px] px-6 md:px-10 py-6 md:py-8 flex flex-col justify-start items-center rounded-2xl ${i18n.language === "ar" ? "text-right" : "text-left"}`}
+          dir={i18n.language === "ar" ? "rtl" : "ltr"}
+        >
+          <LuTriangleAlert className="text-5xl md:text-6xl font-[500] text-red-700 mb-3 md:mb-4" />
+
+          {/* Terms List */}
+          <div className="text-[12px] md:text-[14px] lg:text-[16px] font-[500] px-2 space-y-2">
+            <p>{t("Welcome_to_out")}</p>
+
+            <h3 className="font-bold text-base">{t("Medical_Disclaimer")}</h3>
+            <ul className="list-disc pl-6 space-y-1">
+              <li>{t("health assistant 0")}</li>
+              <li>{t("health assistant 1")}</li>
+              <li>{t("health assistant 2")}</li>
+              <li>{t("health assistant 3")}</li>
+              <li>{t("health assistant 4")}</li>
             </ul>
 
-            {/* Got It Button */}
-            <NavLink to="/">
-              <button className="text-white bg-green-500 rounded-md px-3 md:px-4 py-1 md:py-2 mt-4 md:mt-5 text-sm md:text-base">
-                {t("Got It")}
-              </button>
-            </NavLink>
-          </div>
-        </div>
+            <h3 className="font-bold text-base">{t("Data privacy")}</h3>
+            <ul className="list-disc pl-6 space-y-1">
+              <li>{t("health assistant 5")}</li>
+              <li>{t("health assistant 6")}</li>
+              <li>{t("health assistant 7")}</li>
+            </ul>
 
+            <h3 className="font-bold text-base">{t("Acceptance of terms")}</h3>
+            <div className="space-y-1">
+              <p>{t("by useing this service")}</p>
+            </div>
+          </div>
+
+          {/* Got It Button */}
+          <NavLink to="/">
+            <button className="text-white bg-green-500 rounded-md px-3 md:px-4 py-1 md:py-2 mt-3 md:mt-4 text-xs md:text-sm">
+              {t("Got It")}
+            </button>
+          </NavLink>
+        </div>
       </motion.div>
     </motion.div>
   );

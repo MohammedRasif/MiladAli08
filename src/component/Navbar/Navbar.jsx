@@ -102,11 +102,13 @@ const Navbar = () => {
     <div className="absolute z-30 flex flex-col md:flex-row items-center justify-between w-full bg-white px-3 py-2 md:px-5 md:py-3 roboto font-[600] text-[14px] md:text-[16px] border-b border-gray-200">
       {/* Logo Section */}
       <div className="flex items-center space-x-2 w-full md:w-auto justify-between md:justify-start">
-        <img
-          src="https://res.cloudinary.com/dfsu0cuvb/image/upload/v1741104055/image_2025_03_04T15_57_39_367Z_ybfvoe.png"
-          className="h-8 md:h-10 md:pl-5"
-          alt="Logo"
-        />
+        <NavLink to="/">
+          <img
+            src="https://res.cloudinary.com/dfsu0cuvb/image/upload/v1741104055/image_2025_03_04T15_57_39_367Z_ybfvoe.png"
+            className="h-8 md:h-10 md:pl-5"
+            alt="Logo"
+          />
+        </NavLink>
         {/* Hamburger Menu for Mobile */}
         <button
           className="md:hidden text-2xl p-2"
@@ -118,7 +120,7 @@ const Navbar = () => {
 
       {/* Navigation Tabs */}
       <div
-      ref={menuRef}
+        ref={menuRef}
         className={`flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-3 w-full md:w-auto mt-2 md:mt-0 ${isMobileMenuOpen ? "block" : "hidden md:flex"
           }`}
       >
@@ -201,110 +203,69 @@ const Navbar = () => {
           transition={{ type: "spring", stiffness: 100, damping: 25 }}
         >
           <motion.div
-            className="w-full max-w-[90vw] md:w-[690px] h-auto max-h-[90vh] text-center bg-white flex flex-col justify-start items-center border border-gray-200 rounded-2xl shadow-lg relative overflow-y-auto p-4 md:p-6"
+            className="w-full max-w-[90vw] md:w-[690px] h-auto max-h-[90vh] text-start bg-white flex flex-col justify-start items-center border border-gray-200 rounded-2xl shadow-lg relative overflow-y-auto p-4 md:p-6"
             variants={modalVariants}
             initial="hidden"
             animate="visible"
             exit="exit"
           >
             <div
-              className="flex items-center text-[16px] md:text-[18px] font-[500] text-gray-700 absolute top-4 left-4 md:left-5 cursor-pointer"
-              onClick={closeAboutUsModal}
+  className={`flex items-center text-[18px] md:text-[22px] font-[600] text-gray-700 absolute top-4 ${i18n.language === "ar" ? "right-4 md:right-6 text-right" : "left-4 md:left-6 text-left"} cursor-pointer`}
+  onClick={closeAboutUsModal}
+>
+  <IoIosArrowRoundBack
+    className={`text-[28px] md:text-[32px] ml-1 ${i18n.language === "ar" ? "rotate-180" : ""}`}
+  />
+  <h1 className={`text-lg md:text-xl ${i18n.language === "ar" ? "mr-4" : "ml-2"}`}>
+    {t("Back")}
+  </h1>
+</div>
+
+
+
+
+
+            <div
+              className="max-w-2xl mx-auto p-6 rounded-lg mt-10 "
+              dir={i18n.language === "ar" ? "rtl" : "ltr"}
             >
-              <IoIosArrowRoundBack className="text-[24px] md:text-[28px] mr-1" />
-              <h1>{t("Back")}</h1>
-            </div>
-            <div className="max-w-full mx-auto p-4 md:p-6 bg-white rounded-lg mt-10"
-              dir={i18n.language === "ar" ? "ltr" : i18n.language === "en" ? "ltr" : "rtl"}
-            >
-              {/* Arabic Title */}
-              <h1 className="text-2xl md:text-3xl font-bold text-blue-600 text-center" dir={i18n.language === "ar" ? "ltr" : i18n.language === "en" ? "ltr" : "rtl"}>
+              {/* Title */}
+              <h1 className="text-2xl md:text-3xl font-bold text-blue-600 text-center mb-4">
                 {t("e_clinic_title")}
               </h1>
 
-              {/* Arabic Intro */}
-              <p className="mt-3 text-base md:text-lg text-center" dir={i18n.language === "ar" ? "ltr" : i18n.language === "en" ? "ltr" : "rtl"}>
+              {/* Intro */}
+              <p className="text-base md:text-md text-gray-800 text-justify mb-4">
                 {t("e_clinic_intro")}
               </p>
 
-              {/* Arabic Reason */}
-              <p className="mt-3 text-sm md:text-base text-gray-700" dir={i18n.language === "ar" ? "ltr" : i18n.language === "en" ? "ltr" : "rtl"}>
+              {/* What We Offer */}
+              <h2 className="text-xl md:text-2xl font-semibold text-blue-500 mb-3">
                 {t("e_clinic_reason")}
-              </p>
+              </h2>
 
-              {/* Arabic Services Title */}
-              <div className="mt-4 md:mt-6">
-                <h2 className="text-lg md:text-xl font-semibold text-blue-500" dir={i18n.language === "ar" ? "ltr" : i18n.language === "en" ? "ltr" : "rtl"}>
-                  {t("services_title")}
-                </h2>
-
-                {/* Arabic Services List */}
-                <ul className="mt-2 space-y-2 text-gray-700 text-sm md:text-base" dir={i18n.language === "ar" ? "ltr" : i18n.language === "en" ? "ltr" : "rtl"}>
-                  <li
-                    className="flex " // Removed justify-end for consistency
-                    dir={i18n.language === "ar" ? "rtl" : "ltr"}
-                  >
-                    <span
-                      className={`text-green-500 text-lg md:text-xl ${i18n.language === "ar" ? "mr-2" : "ml-2"}`}
-                    >
-                      ✅
-                    </span>
-                    {t("service_diagnosis")}
-                  </li>
-                  <li
-                    className="flex "
-                    dir={i18n.language === "ar" ? "rtl" : "ltr"}
-                  >
-                    <span
-                      className={`text-green-500 text-lg md:text-xl ${i18n.language === "ar" ? "mr-2" : "ml-2"}`}
-                    >
-                      ✅
-                    </span>
-                    {t("service_reports")}
-                  </li>
-                  <li
-                    className="flex "
-                    dir={i18n.language === "ar" ? "rtl" : "ltr"}
-                  >
-                    <span
-                      className={`text-green-500 text-lg md:text-xl ${i18n.language === "ar" ? "mr-2" : "ml-2"}`}
-                    >
-                      ✅
-                    </span>
-                    {t("service_tests")}
-                  </li>
-                  <li
-                    className="flex "
-                    dir={i18n.language === "ar" ? "rtl" : "ltr"}
-                  >
-                    <span
-                      className={`text-green-500 text-lg md:text-xl ${i18n.language === "ar" ? "mr-2" : "ml-2"}`}
-                    >
-                      ✅
-                    </span>
-                    {t("service_medications")}
-                  </li>
-                </ul>
-              </div>
+              {/* Services List */}
+              <ul className="space-y-2 text-gray-700 text-base md:text-md list-disc list-inside">
+                <li>{t("service_diagnosis")}</li>
+                <li>{t("service_reports")}</li>
+                <li>{t("service_tests")}</li>
+                <li>{t("service_medications")}</li>
+              </ul>
 
               {/* Disclaimer Note */}
-              <div className="mt-4 md:mt-6 p-3 md:p-4 bg-yellow-100 border-l-4 border-yellow-500" dir={i18n.language === "ar" ? "ltr" : i18n.language === "en" ? "ltr" : "rtl"}>
-                <p className="text-gray-800 font-semibold text-sm md:text-base">
-                  ⚠️ {t("disclaimer_note")}
-                </p>
-              </div>
+              <p className="mt-4 text-gray-600 text-sm md:text-base">
+                {t("disclaimer_note")}
+              </p>
 
-              {/* Contact Us */}
-              <p className="mt-4 md:mt-6 text-center text-gray-700 text-sm md:text-base" dir={i18n.language === "ar" ? "ltr" : i18n.language === "en" ? "ltr" : "rtl"}>
+              {/* Contact Info */}
+              <h3 className="mt-6 text-lg md:text-xl font-semibold text-blue-500 text-center">
                 {t("contact_us")}
+              </h3>
+              <p className="text-center text-gray-800 text-base md:text-md">
+                {t("For_question")}
               </p>
-              <p className="text-center text-blue-600 font-semibold text-sm md:text-base">
+              <p className="text-center text-blue-600 font-semibold text-base md:text-md">
                 📩 info@e-clinic.ai
-              </p>
-
-              {/* Prayer Message */}
-              <p className="mt-4 md:mt-6 text-center text-gray-700 text-sm md:text-base" dir={i18n.language === "ar" ? "ltr" : i18n.language === "en" ? "ltr" : "rtl"}>
-                {t("prayer_message")}
               </p>
             </div>
           </motion.div>
