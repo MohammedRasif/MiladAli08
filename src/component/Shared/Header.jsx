@@ -6,6 +6,7 @@ import { LuTriangleAlert } from "react-icons/lu";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 import Tappable from 'react-tappable';
+import { BiCloudUpload } from "react-icons/bi";
 
 
 const Header = () => {
@@ -290,7 +291,7 @@ const Header = () => {
       <div className="flex-1 flex flex-col p-2 md:p-4 relative h-screen overflow-hidden pt-16 md:pt-20 bg-gray-100 px-2 md:px-28 lg:px-20">
         {showNotification && (
           <div className="flex items-center justify-center w-full  absolute  px-2 lg:mt-40 md:mt-96 mt-40 lg:-ml-20 md:-ml-20 -ml-2 ">
-            
+
             <div className="w-full max-w-[90vw] md:w-[690px] h-auto md:h-[324px] text-center bg-white flex flex-col justify-center items-center border border-gray-200 rounded-2xl shadow-lg p-4 md:p-0">
               <LuTriangleAlert className="text-5xl md:text-7xl font-[500] text-red-700 mb-3 md:mb-5" />
               <h1 className="text-[16px] md:text-[18px] font-[500] px-2">
@@ -370,12 +371,13 @@ const Header = () => {
 
         <form
           onSubmit={handleSendMessage}
-          className="sticky bottom-0 w-full bg-white p-1 md:p-2 rounded-full shadow-md"
+          className="sticky bottom-0 w-full bg-[#81db58] p-1 md:p-2 rounded-full shadow-md"
         >
-          <div className="relative flex items-center"
+          <div
+            className="relative flex items-center"
             dir={i18n.language === "ar" ? "ltr" : i18n.language === "en" ? "ltr" : "ltr"}
           >
-            <div className="bg-[#F5F5F5] rounded-l-full p-2 md:p-3 ml-1 md:ml-2 flex items-center">
+            <div className="bg-[#81db58] rounded-l-full p-2 md:p-3 ml-1 md:ml-2 flex items-center">
               <input
                 type="file"
                 id="fileUpload"
@@ -389,13 +391,12 @@ const Header = () => {
                 className={`cursor-pointer flex items-center ${isInputActive ? "" : "opacity-50 cursor-not-allowed"
                   }`}
               >
-                <img
-                  src="https://res.cloudinary.com/dfsu0cuvb/image/upload/v1740749111/iconoir_attachment_qfdm9b.png"
-                  className="h-[16px] md:h-[20px]"
+                <BiCloudUpload
+                  className="h-[30px] md:h-[33bqpx] w-[30px] md:w-[33px] text-white" // Icon stays white always
                   alt={t("Upload File")}
                 />
                 {fileName && (
-                  <span className="ml-1 md:ml-2 text-xs md:text-sm text-gray-600 truncate max-w-[80px] md:max-w-[100px]">
+                  <span className="ml-2 md:ml-3 text-sm md:text-base text-white truncate max-w-[120px] md:max-w-[150px]">
                     {fileName}
                   </span>
                 )}
@@ -413,22 +414,25 @@ const Header = () => {
                 }
                 value={inputText}
                 onChange={(e) => setInputText(e.target.value)}
-                className={`flex-1 p-2 md:p-3 bg-[#F5F5F5] text-gray-600 border-none outline-none placeholder:text-gray-500 w-full text-sm md:text-base ${isInputActive ? "" : "opacity-50 cursor-not-allowed"
+                className={`flex-1 p-2 md:p-3 bg-[#81db58] text-black font-bold border-none outline-none placeholder:text-gray-500 w-full text-sm md:text-base ${isInputActive ? "" : "opacity-50 cursor-not-allowed"
                   }`}
                 disabled={!isInputActive}
               />
             </div>
 
-            <div className="bg-[#F5F5F5] rounded-r-full p-2 md:p-3 mr-1 md:mr-2 flex items-center">
+            <div className="bg-[#81db58] rounded-r-full p-2 md:p-3 mr-1 md:mr-2 flex items-center">
               <button
                 type="submit"
                 className={`cursor-pointer ${isInputActive && (inputText.trim() || file)
-                  ? "text-[#006400]"
-                  : "text-gray-400 opacity-50 cursor-not-allowed"
+                    ? ""
+                    : "opacity-50 cursor-not-allowed"
                   }`}
                 disabled={!isInputActive || (!inputText.trim() && !file)}
               >
-                <FiSend className="w-5 md:w-6 h-5 md:h-6" />
+                <FiSend
+                  className="w-6 md:w-7 h-6 md:h-7 text-white" // Icon stays white always
+                  style={{ strokeWidth: "2.5" }} // Keeps the thicker look
+                />
               </button>
             </div>
           </div>

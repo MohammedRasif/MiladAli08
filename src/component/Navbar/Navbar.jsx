@@ -210,16 +210,16 @@ const Navbar = () => {
             exit="exit"
           >
             <div
-  className={`flex items-center text-[18px] md:text-[22px] font-[600] text-gray-700 absolute top-4 ${i18n.language === "ar" ? "right-4 md:right-6 text-right" : "left-4 md:left-6 text-left"} cursor-pointer`}
-  onClick={closeAboutUsModal}
->
-  <IoIosArrowRoundBack
-    className={`text-[28px] md:text-[32px] ml-1 ${i18n.language === "ar" ? "rotate-180" : ""}`}
-  />
-  <h1 className={`text-lg md:text-xl ${i18n.language === "ar" ? "mr-4" : "ml-2"}`}>
-    {t("Back")}
-  </h1>
-</div>
+              className={`flex items-center text-[18px] md:text-[22px] font-[600] text-gray-700 absolute top-4 ${i18n.language === "ar" ? "right-4 md:right-6 text-right" : "left-4 md:left-6 text-left"} cursor-pointer`}
+              onClick={closeAboutUsModal}
+            >
+              <IoIosArrowRoundBack
+                className={`text-[28px] md:text-[32px] ml-1 ${i18n.language === "ar" ? "rotate-180" : ""}`}
+              />
+              <h1 className={`text-lg md:text-xl ${i18n.language === "ar" ? "mr-4" : "ml-2"}`}>
+                {t("Back")}
+              </h1>
+            </div>
 
 
 
@@ -245,12 +245,13 @@ const Navbar = () => {
               </h2>
 
               {/* Services List */}
-              <ul className="space-y-2 text-gray-700 text-base md:text-md list-disc list-inside">
-                <li>{t("service_diagnosis")}</li>
-                <li>{t("service_reports")}</li>
-                <li>{t("service_tests")}</li>
-                <li>{t("service_medications")}</li>
-              </ul>
+              <div className="space-y-2 text-gray-700 text-base md:text-md list-disc list-inside">
+                <h1>{t("service_medications")}</h1>
+                <h1>{t("service_diagnosis")}</h1>
+                <h1>{t("service_reports")}</h1>
+                <h1>{t("service_tests")}</h1>
+
+              </div>
 
               {/* Disclaimer Note */}
               <p className="mt-4 text-gray-600 text-sm md:text-base">
