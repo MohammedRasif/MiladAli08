@@ -375,9 +375,13 @@ const Header = () => {
         >
           <div
             className="relative flex items-center"
-            dir={i18n.language === "ar" ? "ltr" : i18n.language === "en" ? "ltr" : "ltr"}
+            dir={i18n.language === "ar" ? "rtl" : "ltr"} // RTL for Arabic, LTR for English
           >
-            <div className="bg-[#81db58] rounded-l-full p-2 md:p-3 ml-1 md:ml-2 flex items-center">
+            {/* Upload Icon Section */}
+            <div
+              className={`bg-[#81db58] p-2 md:p-2 flex items-center ${i18n.language === "ar" ? "rounded-r-full mr-1 md:mr-2" : "rounded-l-full ml-1 md:ml-2"
+                }`}
+            >
               <input
                 type="file"
                 id="fileUpload"
@@ -392,35 +396,51 @@ const Header = () => {
                   }`}
               >
                 <BiCloudUpload
-                  className="h-[30px] md:h-[33bqpx] w-[30px] md:w-[33px] text-white" // Icon stays white always
-                  alt={t("Upload File")}
+                  className="h-[30px] md:h-[33px] w-[30px] md:w-[33px] text-white" // Icon stays white always
+                  alt={t(i18n.language === "ar" ? "رفع ملف" : "Upload File")} // Arabic or English
                 />
                 {fileName && (
-                  <span className="ml-2 md:ml-3 text-sm md:text-base text-white truncate max-w-[120px] md:max-w-[150px]">
+                  <span
+                    className={`text-sm md:text-base text-white truncate max-w-[120px] md:max-w-[150px] ${i18n.language === "ar" ? "mr-2 md:mr-3" : "ml-2 md:ml-3"
+                      }`}
+                  >
                     {fileName}
                   </span>
                 )}
               </label>
             </div>
 
+            {/* Input Field */}
             <div className="relative flex-1">
               <input
                 type="text"
                 name="message"
                 placeholder={
                   isInputActive
-                    ? t("Ask me anything about health issues")
-                    : t("Please provide patient details to start chatting")
+                    ? t(
+                      i18n.language === "ar"
+                        ? "اسألني أي شيء عن المشكلات الصحية" // Arabic
+                        : "Ask me anything about health issues" // English
+                    )
+                    : t(
+                      i18n.language === "ar"
+                        ? "يرجى تقديم تفاصيل المريض لبدء المحادثة" // Arabic
+                        : "Please provide patient details to start chatting" // English
+                    )
                 }
                 value={inputText}
                 onChange={(e) => setInputText(e.target.value)}
-                className={`flex-1 p-2 md:p-3 bg-[#81db58] text-black font-bold border-none outline-none placeholder:text-gray-500 w-full text-sm md:text-base ${isInputActive ? "" : "opacity-50 cursor-not-allowed"
-                  }`}
+                className={`flex-1 p-2 md:p-2 bg-[#81db58] text-black font-bold border-none outline-none placeholder:text-gray-500 w-full text-sm md:text-base ${i18n.language === "ar" ? "text-right" : "text-left"
+                  } ${isInputActive ? "" : "opacity-50 cursor-not-allowed"}`}
                 disabled={!isInputActive}
               />
             </div>
 
-            <div className="bg-[#81db58] rounded-r-full p-2 md:p-3 mr-1 md:mr-2 flex items-center">
+            {/* Send Button */}
+            <div
+              className={`bg-[#81db58] p-2 md:p-3 flex items-center ${i18n.language === "ar" ? "rounded-l-full ml-1 md:ml-2" : "rounded-r-full mr-1 md:mr-2"
+                }`}
+            >
               <button
                 type="submit"
                 className={`cursor-pointer ${isInputActive && (inputText.trim() || file)
