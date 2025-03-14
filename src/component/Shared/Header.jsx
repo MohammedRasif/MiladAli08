@@ -29,6 +29,7 @@ const Header = () => {
   const [isEnglish, setIsEnglish] = useState(false);
   const [file, setFile] = useState(null);
   const [text, setText] = useState("")
+  const [isChecked, setIsChecked] = useState(false);
 
 
   const handleFirstSendMessage = async (input) => {
@@ -290,18 +291,42 @@ const Header = () => {
       {/* Main Content */}
       <div className="flex-1 flex flex-col p-2 md:p-4 relative h-screen overflow-hidden pt-16 md:pt-20 bg-gray-100 px-2 md:px-28 lg:px-20">
         {showNotification && (
-          <div className="flex items-center justify-center w-full  absolute  px-2 lg:mt-40 md:mt-96 mt-40 lg:-ml-20 md:-ml-20 -ml-2 ">
-
+          <div className="flex items-center justify-center w-full absolute px-2 lg:mt-40 md:mt-96 mt-40 lg:-ml-20 md:-ml-20 -ml-2">
             <div className="w-full max-w-[90vw] md:w-[690px] h-auto md:h-[324px] text-center bg-white flex flex-col justify-center items-center border border-gray-200 rounded-2xl shadow-lg p-4 md:p-0">
               <LuTriangleAlert className="text-5xl md:text-7xl font-[500] text-red-700 mb-3 md:mb-5" />
               <h1 className="text-[16px] md:text-[18px] font-[500] px-2">
-                {t("This is an AI-based health support system. Please consult your doctor for medical advice.")}
+                {t("This system provides general guidance only, for specific medical inquiries please consult a specialist.")}
               </h1>
               <Tappable onTap={handleCheck}>
-                <button className="text-white bg-[#81db58] rounded-md px-3 py-1 md:px-4 mt-3 md:mt-5 text-sm md:text-base w-full max-w-[200px] md:max-w-none">
+                <button
+                  className={`text-white bg-[#81db58] rounded-md px-3 py-1 md:px-4 mt-3 md:mt-5 text-sm md:text-base w-full max-w-[200px] md:max-w-none ${!isChecked ? 'opacity-50 cursor-not-allowed' : ''}`}
+                  disabled={!isChecked} // Disable button if checkbox is not checked
+                >
                   {t("Got It")}
                 </button>
               </Tappable>
+              {/* Checkbox, shortened text, and Terms of Use on the same line */}
+              <div className="mt-3 md:mt-5 text-sm md:text-base  items-center justify-center space-x-2">
+                <div className="space-x-3">
+                  <input
+                    type="checkbox"
+                    className="h-4 w-4 border-2 border-gray-300 rounded accent-[#81db58] focus:ring-[#81db58] relative top-[2px]"
+                    checked={isChecked}
+                    onChange={(e) => setIsChecked(e.target.checked)} // Update state on checkbox change
+                  />
+                  <span className="text-gray-600">
+                    {t("By reviewing the")}
+                    <NavLink to="/disclaimer" className="text-blue-600 underline">
+                      {t("Terms of Use")}
+                    </NavLink>
+                    {t("I agree to proceed with this site")}
+                  </span>
+                </div>
+
+                {/* <a href="/terms-of-use" className="text-blue-600 underline">
+                  {t("Terms of Use")}
+                </a> */}
+              </div>
             </div>
           </div>
         )}
@@ -444,8 +469,8 @@ const Header = () => {
               <button
                 type="submit"
                 className={`cursor-pointer ${isInputActive && (inputText.trim() || file)
-                    ? ""
-                    : "opacity-50 cursor-not-allowed"
+                  ? ""
+                  : "opacity-50 cursor-not-allowed"
                   }`}
                 disabled={!isInputActive || (!inputText.trim() && !file)}
               >

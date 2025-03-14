@@ -36,23 +36,23 @@ const Disclaimer = () => {
       transition={{ type: "spring", stiffness: 100, damping: 25 }}
     >
       <motion.div
-        className="w-[90vw] max-w-[690px] h-auto max-h-[90vh] bg-white flex flex-col justify-start items-center border border-gray-200 rounded-2xl shadow-lg relative overflow-y-auto p-4 md:p-6"
+        className="w-[90vw] max-w-[800px] h-auto max-h-[90vh] bg-white flex flex-col justify-start items-center border border-gray-200 rounded-2xl shadow-lg relative overflow-y-auto p-4 md:p-6"
         variants={modalVariants}
         initial="hidden"
         animate="visible"
         exit="exit"
       >
         <div
-  className={`flex items-center text-[18px] md:text-[22px] font-[600] text-gray-700 absolute top-4 ${i18n.language === "ar" ? "right-4 md:right-6 text-right" : "left-4 md:left-6 text-left"} cursor-pointer`}
-  onClick={closeModal}
->
-  <IoIosArrowRoundBack
-    className={`text-[28px] md:text-[32px] ml-1 ${i18n.language === "ar" ? "rotate-180 mt-2" : ""}`}
-  />
-  <h1 className={`text-lg md:text-xl ${i18n.language === "ar" ? "mr-4" : "ml-2"}`}>
-    {t("Back")}
-  </h1>
-</div>
+          className={`flex items-center text-[18px] md:text-[22px] font-[600] text-gray-700 absolute top-4 ${i18n.language === "ar" ? "right-4 md:right-6 text-right" : "left-4 md:left-6 text-left"} cursor-pointer`}
+          onClick={closeModal}
+        >
+          <IoIosArrowRoundBack
+            className={`text-[28px] md:text-[32px] ml-1 ${i18n.language === "ar" ? "rotate-180 mt-2" : ""}`}
+          />
+          <h1 className={`text-lg md:text-xl ${i18n.language === "ar" ? "mr-4" : "ml-2"}`}>
+            {t("Back")}
+          </h1>
+        </div>
 
 
         <div

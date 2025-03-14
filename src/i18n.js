@@ -20,6 +20,7 @@ const resources = {
       "This is an AI-based health support system. Please consult your doctor for medical advice.":
         "This system provides general guidance only, for specific medical inquiries please consult a specialist.",
       "Got It": "Agreed",
+      "Terms of Use":"Terms of Use",
       "Hi, {{name}}!!": "Hi, {{name}}!!",
       "How can I help you today?": "How can I help you today?",
       "Loading...": "Loading...",
@@ -51,6 +52,8 @@ const resources = {
       "Enter here": "Enter here",
       "Type here": "Type here",
       "Submit": "Submit",
+      "By reviewing the":"By reviewing the ",
+      "I agree to proceed with this site":" I agree to proceed with this site.",
 
 
       "Important Notice: E-Clinic Terms of Use": "Important Notice: E-Clinic Terms of Use",
@@ -148,6 +151,7 @@ const resources = {
       "This is an AI-based health support system. Please consult your doctor for medical advice.":
         "المعلومات المقدمة هنا للإرشاد فقط، يُنصح بمراجعة طبيبك للحصول على استشارات موثوقة.",
       "Got It": "موافق",
+      "Terms of Use":"شروط الاستخدام",
       "Hi, {{name}}!!": "مرحبًا بكم في، {{name}}!!",
       "How can I help you today?": "كيف يمكنني مساعدتك اليوم؟",
       "Loading...": "جارٍ التحميل...",
@@ -179,6 +183,9 @@ const resources = {
       "Enter here": "أدخل هنا",
       "Type here": "اكتب هنا",
       "Submit": "إرسال",
+      "By reviewing the":"من خلال مراجعة ",
+      "I agree to proceed with this site":" أوافق على المضي قدمًا في هذا الموقع.",
+      "This system provides general guidance only, for specific medical inquiries please consult a specialist.":"يقدم هذا النظام إرشادات عامة فقط، وللاستفسارات الطبية المحددة يرجى استشارة أحد المتخصصين.",
 
 
       "Important Notice: E-Clinic Terms of Use": "تنبيه هام: شروط استخدام العيادة الإلكترونية",
