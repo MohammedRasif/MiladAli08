@@ -176,7 +176,29 @@ const resources = {
       // "email": "Email",
       // "enter_your_email": "Enter your email",
       "error_message_placeholder": "Error message placeholder",
-      "confirm": "CONFIRM"
+      "confirm": "CONFIRM",
+
+      // set new password
+      "create_new_password_instruction": "Create a new password.  Ensure it differs from the previous one.",
+      "set_new_password": "Set New Password",
+      "new_password": "New Password",
+      "confirm_new_password": "Confirm New Password",
+      "error_placeholder": "Error placeholder",
+      // "confirm_password": "Confirm Password"
+
+      //verification
+      "congratulations": "Congratulations!",
+      "enter_4_digit_code": "Please enter your 4-digit code.",
+      "verify": "VERIFY",
+      "not_received_email": "You have not received the email?",
+      "resend": "Resend",
+
+      //congratulation
+
+      "password_updated": "Your password has been updated,",
+      "change_password_regularly": "please change your password regularly to avoid this happening",
+      "congratulationss": "Congratulations",
+      "log_in": "Log In"
     },
   },
   ar: {
@@ -348,6 +370,28 @@ const resources = {
     //   "enter_your_email": "أدخل بريدك الإلكتروني",
       "error_message_placeholder": "عنصر نائب لرسالة الخطأ",
       "confirm": "تأكيد",
+
+      //set new password
+
+      "create_new_password_instruction": "أنشئ كلمة مرور جديدة.  تأكد أنها تختلف عن السابقة.",
+      "set_new_password": "تعيين كلمة مرور جديدة",
+      "new_password": "كلمة المرور الجديدة",
+      "confirm_new_password": "تأكيد كلمة المرور الجديدة",
+      "error_placeholder": "عنصر نائب للخطأ",
+      // "confirm_password": "تأكيد كلمة المرور"
+
+      //verification
+      "congratulations": "تهانينا!",
+      "enter_4_digit_code": "يرجى إدخال رمزك المكون من 4 أرقام.",
+      "verify": "تحقق",
+      "not_received_email": "لم تتلق البريد الإلكتروني؟",
+      "resend": "إعادة إرسال",
+
+      //congratulation
+      "password_updated": "تم تحديث كلمة المرور الخاصة بك،",
+      "change_password_regularly": "يرجى تغيير كلمة المرور بانتظام لتجنب حدوث ذلك",
+      "congratulationss": "تهانينا",
+      "log_in": "تسجيل الدخول"
     },
   },
 };
