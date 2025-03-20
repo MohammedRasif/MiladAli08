@@ -8,6 +8,7 @@ import Roots from "./Root/Roots.jsx";  // ✅ Import the correct file
 import Home from "./component/Shared/Home.jsx";  // ✅ Import the correct file
 import Disclaimer from "./component/Shared/Disclaimer.jsx";
 import "./i18n.js"
+import Login from "./component/Login/Login.jsx";
 
 const router = createBrowserRouter([
   {
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
       {
         path: "/disclaimer",  
         element: <Disclaimer />,
+      },
+      {
+        path: "/login",  
+        element: <Login />,
       },
     ],
   },

@@ -5,7 +5,7 @@ import Header from "../component/Shared/Header";
 const Roots = () => {
     return (      
         <div>
-            <Navbar />
+            {/* <Navbar /> */}
             
             <Outlet />  
         </div>
