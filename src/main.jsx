@@ -9,6 +9,7 @@ import Home from "./component/Shared/Home.jsx";  // ✅ Import the correct file
 import Disclaimer from "./component/Shared/Disclaimer.jsx";
 import "./i18n.js"
 import Login from "./component/Login/Login.jsx";
+import Register from "./component/Register/Register.jsx";
 
 const router = createBrowserRouter([
   {
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
       {
         path: "/login",  
         element: <Login />,
+      },
+      {
+        path: "/register",  
+        element: <Register />,
       },
     ],
   },
