@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 
 const SetNewPassword = () => {
+    const [showNewPassword, setShowNewPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
     return (
         <div className="min-h-screen flex items-center justify-center px-4 py-12 bg-gray-50">
             <div className="w-full max-w-6xl flex flex-col md:flex-row items-center gap-8">
@@ -14,9 +17,8 @@ const SetNewPassword = () => {
                     />
                 </div>
 
-
                 {/* Form Section */}
-                <div className="w-full md:w-1/2 ">
+                <div className="w-full md:w-1/2">
                     {/* Title */}
                     <p className="text-xl font-medium text-center mb-2 text-[#364636]">
                         Create a new password. <br />
@@ -34,12 +36,15 @@ const SetNewPassword = () => {
                             </label>
                             <div className="relative">
                                 <input
-                                    type="password"
-                                    className="w-full h-12 border border-gray-300 px-4 pr-10 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300"
+                                    type={showNewPassword ? "text" : "password"}
+                                    className="w-full h-12 border border-gray-300 px-4 pr-10 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                                     placeholder="****************"
                                 />
-                                <span className="absolute inset-y-0 right-3 flex items-center cursor-pointer">
-                                    <FaRegEyeSlash />
+                                <span
+                                    className="absolute inset-y-0 right-3 flex items-center cursor-pointer text-gray-500"
+                                    onClick={() => setShowNewPassword(!showNewPassword)}
+                                >
+                                    {showNewPassword ? <FaRegEye /> : <FaRegEyeSlash />}
                                 </span>
                             </div>
                         </div>
@@ -50,12 +55,15 @@ const SetNewPassword = () => {
                             </label>
                             <div className="relative">
                                 <input
-                                    type="password"
-                                    className="w-full h-12 border border-gray-300 px-4 pr-10 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300"
+                                    type={showConfirmPassword ? "text" : "password"}
+                                    className="w-full h-12 border border-gray-300 px-4 pr-10 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                                     placeholder="****************"
                                 />
-                                <span className="absolute inset-y-0 right-3 flex items-center cursor-pointer">
-                                    <FaRegEyeSlash />
+                                <span
+                                    className="absolute inset-y-0 right-3 flex items-center cursor-pointer text-gray-500"
+                                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                                >
+                                    {showConfirmPassword ? <FaRegEye /> : <FaRegEyeSlash />}
                                 </span>
                             </div>
                         </div>
@@ -66,7 +74,7 @@ const SetNewPassword = () => {
 
                     {/* Confirm Button */}
                     <button
-                        className="w-full h-12 mt-8 bg-[#81db58] hover:bg-green-400 text-[#FAF1E6] font-medium text-base rounded-full  transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                        className="w-full h-12 mt-8 bg-[#81db58] hover:bg-green-400 text-[#FAF1E6] font-medium text-base rounded-full transition-colors duration-200 focus:outline-none cursor-pointer focus:ring-2 focus:ring-blue-400"
                     >
                         Confirm Password
                     </button>

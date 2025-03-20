@@ -132,6 +132,24 @@ const resources = {
       "disclaimer_note": "Our AI health assistance helps users better understand their symptoms, but it is NOT a replacement for a licensed doctor.",
       "contact_us": "For questions or inquiries, contact us at:",
       "contact_email": "info@e-clinic.ai",
+
+
+
+
+
+
+
+
+
+      // login
+      "Login to Account":"Login to Account",
+      "Please enter your email and password to continue":"Please enter your email and password to continue",
+      "email":"Email",
+      "enter_your_email":"Enter your email",
+      "password":"Password",
+      "remember_me": "Remember me",
+      "forgot_password": "Forgot password?",
+      "sign_in": "SIGN IN"
     },
   },
   ar: {
@@ -266,6 +284,16 @@ const resources = {
       "disclaimer_note": "مساعدتنا الصحية بالذكاء الاصطناعي تساعد المستخدمين على فهم أعراضهم بشكل أفضل، لكنها ليست بديلاً عن طبيب مرخص.",
       "contact_us": "للأسئلة أو الاستفسارات، تواصلوا معنا على:",
       "contact_email": "info@e-clinic.ai",
+
+      // login
+      "Login to Account": "تسجيل الدخول إلى الحساب",
+      "Please enter your email and password to continue": "الرجاء إدخال بريدك الإلكتروني وكلمة المرور للمتابعة",
+      "email": "البريد الإلكتروني",
+      "enter_your_email": "أدخل بريدك الإلكتروني  ",
+      "password": "كلمة المرور",
+      "remember_me": "تذكرنى  ",
+      "forgot_password": "نسيت كلمة المرور؟",
+      "sign_in": "تسجيل الدخول",
     },
   },
 };
