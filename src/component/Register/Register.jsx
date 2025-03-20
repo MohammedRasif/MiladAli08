@@ -1,8 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 
 const Register = () => {
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        password: '',
+        confirmPassword: ''
+    });
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+    // Handle input changes
+    const handleChange = (e) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value
+        });
+    };
+
+    // Check if passwords match
+    const passwordsMatch = formData.password === formData.confirmPassword && formData.password !== '';
+
     return (
         <div className="min-h-screen flex items-center justify-center px-4 py-12 bg-gray-50">
             <div className="w-full max-w-6xl flex flex-col md:flex-row items-center gap-8">
@@ -22,12 +42,15 @@ const Register = () => {
                         Please fill in the details to register
                     </p>
 
-                    <form className="mt-8">
+                    <form className="mt-8" onSubmit={(e) => e.preventDefault()}>
                         {/* Name Field */}
                         <div>
                             <label className="text-base block mb-2">Full Name</label>
                             <input
                                 type="text"
+                                name="name"
+                                value={formData.name}
+                                onChange={handleChange}
                                 className="w-full h-12 border border-gray-400 rounded-md text-[#364636] pl-3 focus:outline-none focus:ring-2 focus:ring-green-500"
                                 placeholder="Enter your full name"
                             />
@@ -38,6 +61,9 @@ const Register = () => {
                             <label className="text-base block mb-2">Email</label>
                             <input
                                 type="email"
+                                name="email"
+                                value={formData.email}
+                                onChange={handleChange}
                                 className="w-full h-12 border border-gray-400 rounded-md text-[#364636] pl-3 focus:outline-none focus:ring-2 focus:ring-green-500"
                                 placeholder="Enter your email"
                             />
@@ -47,15 +73,19 @@ const Register = () => {
                         <div className="mt-6 relative">
                             <label className="text-base block mb-2">Password</label>
                             <input
-                                type="password"
+                                type={showPassword ? "text" : "password"}
+                                name="password"
+                                value={formData.password}
+                                onChange={handleChange}
                                 className="w-full h-12 border border-gray-400 rounded-md text-[#364636] pl-3 pr-10 focus:outline-none focus:ring-2 focus:ring-green-500"
                                 placeholder="Create a password"
                             />
                             <button
                                 type="button"
+                                onClick={() => setShowPassword(!showPassword)}
                                 className="absolute right-3 top-1/2 transform translate-y-1 text-gray-500"
                             >
-                                <FaEye size={20} />
+                                {showPassword ? <FaEyeSlash size={20} /> : <FaEye size={20} />}
                             </button>
                         </div>
 
@@ -63,19 +93,28 @@ const Register = () => {
                         <div className="mt-6 relative">
                             <label className="text-base block mb-2">Confirm Password</label>
                             <input
-                                type="password"
+                                type={showConfirmPassword ? "text" : "password"}
+                                name="confirmPassword"
+                                value={formData.confirmPassword}
+                                onChange={handleChange}
                                 className="w-full h-12 border border-gray-400 rounded-md text-[#364636] pl-3 pr-10 focus:outline-none focus:ring-2 focus:ring-green-500"
                                 placeholder="Confirm your password"
                             />
                             <button
                                 type="button"
+                                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                                 className="absolute right-3 top-1/2 transform translate-y-1 text-gray-500"
                             >
-                                <FaEye size={20} />
+                                {showConfirmPassword ? <FaEyeSlash size={20} /> : <FaEye size={20} />}
                             </button>
                         </div>
 
-                        {/* Terms Checkbox and Sign Up Button */}
+                        {/* Password Match Error */}
+                        {formData.confirmPassword && !passwordsMatch && (
+                            <p className="text-sm text-red-600 mt-2">Passwords do not match</p>
+                        )}
+
+                        {/* Terms Checkbox */}
                         <div className="mt-4 flex flex-col gap-3">
                             <div className="flex items-center">
                                 <input
@@ -92,7 +131,12 @@ const Register = () => {
                         {/* Submit Button */}
                         <button
                             type="submit"
-                            className="mt-8 w-full h-12 rounded-full text-base text-[#FAF1E6] bg-[#81db58] hover:bg-green-400 transition-colors duration-200"
+                            disabled={!passwordsMatch}
+                            className={`mt-8 w-full h-12 rounded-full text-base text-[#FAF1E6] transition-colors duration-200 cursor-pointer ${
+                                passwordsMatch 
+                                    ? 'bg-[#81db58] hover:bg-green-400' 
+                                    : 'bg-[#81db58] hover:bg-green-400'
+                            }`}
                         >
                             SIGN UP
                         </button>
