@@ -38,7 +38,7 @@ const ForgetPassword = () => {
 
                 {/* Form Section */}
                 <div className="w-full md:w-1/2" dir={isEnglish ? "ltr" : "rtl"}>
-                    <h1 className="text-3xl md:text-5xl font-medium text-[#364636] text-center">
+                    <h1 className="text-3xl md:text-4xl font-medium text-[#364636] text-center">
                         {t("forgot_password")}
                     </h1>
                     <form className="mt-8">

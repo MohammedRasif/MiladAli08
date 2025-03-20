@@ -42,7 +42,7 @@ const SetNewPassword = () => {
                 {/* Form Section */}
                 <div className="w-full md:w-1/2" dir={isEnglish ? "ltr" : "rtl"}>
                     {/* Title */}
-                    <h1 className="text-3xl md:text-5xl font-medium text-center mb-5 text-[#364636]">
+                    <h1 className="text-3xl md:text-4xl font-medium text-center mb-5 text-[#364636]">
                         {t("set_new_password")}
                     </h1>
                     <p className="text-xl font-medium text-center mb-2 text-[#364636]">
