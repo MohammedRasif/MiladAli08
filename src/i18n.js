@@ -149,7 +149,26 @@ const resources = {
       "password":"Password",
       "remember_me": "Remember me",
       "forgot_password": "Forgot password?",
-      "sign_in": "SIGN IN"
+      "sign_in": "SIGN IN",
+
+
+      // register
+
+      "create_an_account": "Create an Account",
+      "fill_in_details_to_register": "Please fill in the details to register",
+      "full_name": "Full Name",
+      "enter_your_full_name": "Enter your full name",
+      // "email": "Email",
+      // "enter_your_email": "Enter your email",
+      // "password": "Password",
+      "create_a_password": "Create a password",
+      "confirm_password": "Confirm Password",
+      "confirm_your_password": "Confirm your password",
+      "passwords_do_not_match": "Passwords do not match",
+      "agree_to_terms": "I agree to the terms and conditions",
+      "sign_up": "SIGN UP",
+      "already_have_account": "Already have an account?",
+      // "sign_in": "Sign In"
     },
   },
   ar: {
@@ -294,6 +313,24 @@ const resources = {
       "remember_me": "تذكرنى  ",
       "forgot_password": "نسيت كلمة المرور؟",
       "sign_in": "تسجيل الدخول",
+
+      // register
+
+      "create_an_account": "إنشاء حساب",
+      "fill_in_details_to_register": "يرجى ملء التفاصيل للتسجيل",
+      "full_name": "الاسم الكامل",
+      "enter_your_full_name": "أدخل اسمك الكامل",
+      // "email": "البريد الإلكتروني",
+      // "enter_your_email": "أدخل بريدك الإلكتروني",
+      // "password": "كلمة المرور",
+      "create_a_password": "أنشئ كلمة مرور",
+      "confirm_password": "تأكيد كلمة المرور",
+      "confirm_your_password": "تأكيد كلمة المرور الخاصة بك",
+      "passwords_do_not_match": "كلمات المرور غير متطابقة",
+      "agree_to_terms": "أوافق على الشروط والأحكام",
+      "sign_up": "التسجيل",
+      "already_have_account": "لديك حساب بالفعل؟",
+      // "sign_in": "تسجيل الدخول"
     },
   },
 };

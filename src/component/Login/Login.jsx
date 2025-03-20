@@ -96,7 +96,7 @@ const Login = () => {
                         {/* Submit Button */}
                         <button
                             type="submit"
-                            className="mt-8 w-full h-12 rounded-full text-base text-[#FAF1E6] bg-[#81db58] hover:bg-green-400 transition-colors duration-200"
+                            className="mt-8 w-full h-12 rounded-full text-base text-[#FAF1E6] bg-[#81db58] hover:bg-green-400 transition-colors duration-200 cursor-pointer"
                         >
                             {t("sign_in")}
                         </button>
