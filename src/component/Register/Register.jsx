@@ -13,8 +13,8 @@ const Register = () => {
         password: '',
         confirmPassword: ''
     });
-    const [showPassword, setShowPassword] = useState(false);
-    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const [showPassword, setShowPassword] = useState(true); // State for Password field visibility
+    const [showConfirmPassword, setShowConfirmPassword] = useState(true); // State for Confirm Password field visibility
 
     // Language setup and sync with localStorage
     useEffect(() => {
@@ -127,9 +127,9 @@ const Register = () => {
                             <button
                                 type="button"
                                 className={`absolute top-1/2 transform translate-y-1 text-gray-500 ${isEnglish ? "right-3" : "left-3"}`}
-                                onClick={() => setShowPassword(!showPassword)}
+                                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                             >
-                                {showPassword ? <FaEyeSlash size={20} /> : <FaEye size={20} />}
+                                {showConfirmPassword ? <FaEyeSlash size={20} /> : <FaEye size={20} />}
                             </button>
                         </div>
 
@@ -156,10 +156,11 @@ const Register = () => {
                         <button
                             type="submit"
                             disabled={!passwordsMatch}
-                            className={`mt-8 w-full h-12 rounded-full text-base text-[#FAF1E6] transition-colors duration-200 cursor-pointer ${passwordsMatch
-                                ? 'bg-[#81db58] hover:bg-green-400'
-                                : 'bg-[#81db58] hover:bg-green-400'
-                                }`}
+                            className={`mt-8 w-full h-12 rounded-full text-base text-[#FAF1E6] transition-colors duration-200 cursor-pointer ${
+                                passwordsMatch
+                                    ? 'bg-[#81db58] hover:bg-green-400'
+                                    : 'bg-[#81db58] hover:bg-green-400'
+                            }`}
                         >
                             {t("sign_up")}
                         </button>

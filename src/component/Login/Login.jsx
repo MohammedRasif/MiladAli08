@@ -100,6 +100,13 @@ const Login = () => {
                         >
                             {t("sign_in")}
                         </button>
+
+                        <p className="mt-4 text-sm text-center text-gray-700">
+                            {t("Don’t have account?")}{' '}
+                            <NavLink to="/register" className="text-red-600 hover:text-red-700">
+                                {t("sign_up")}
+                            </NavLink>
+                        </p>
                     </form>
                 </div>
             </div>

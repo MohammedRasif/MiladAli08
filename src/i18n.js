@@ -168,7 +168,15 @@ const resources = {
       "agree_to_terms": "I agree to the terms and conditions",
       "sign_up": "SIGN UP",
       "already_have_account": "Already have an account?",
-      // "sign_in": "Sign In"
+      "Don’t have account?":"Don’t have account?",
+      // "sign_in": "Sign In",
+
+      //forgetpassword
+      // "forgot_password": "Forgot Password",
+      // "email": "Email",
+      // "enter_your_email": "Enter your email",
+      "error_message_placeholder": "Error message placeholder",
+      "confirm": "CONFIRM"
     },
   },
   ar: {
@@ -313,6 +321,7 @@ const resources = {
       "remember_me": "تذكرنى  ",
       "forgot_password": "نسيت كلمة المرور؟",
       "sign_in": "تسجيل الدخول",
+      "sign_up": "اشتراك",
 
       // register
 
@@ -328,9 +337,17 @@ const resources = {
       "confirm_your_password": "تأكيد كلمة المرور الخاصة بك",
       "passwords_do_not_match": "كلمات المرور غير متطابقة",
       "agree_to_terms": "أوافق على الشروط والأحكام",
-      "sign_up": "التسجيل",
+      // "sign_up": "التسجيل",
+      "Don’t have account?":"ليس لديك حساب؟",
       "already_have_account": "لديك حساب بالفعل؟",
       // "sign_in": "تسجيل الدخول"
+
+
+    //  "forgot_password": "نسيت كلمة المرور",
+    //   "email": "البريد الإلكتروني",
+    //   "enter_your_email": "أدخل بريدك الإلكتروني",
+      "error_message_placeholder": "عنصر نائب لرسالة الخطأ",
+      "confirm": "تأكيد",
     },
   },
 };
