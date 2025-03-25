@@ -48,7 +48,7 @@ const Login = () => {
         setError(null);
 
         try {
-            const response = await fetch('https://www.backend.e-clinic.ai/api/v1/accounts/login/', {
+            const response = await fetch('http://192.168.10.131:3000/api/v1/accounts/login/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -71,6 +71,7 @@ const Login = () => {
 
             // Save access_token to localStorage
             localStorage.setItem('access_token', data.access_token);
+            localStorage.setItem('unique_id',data.unique_id)
 
             // Navigate to home page
             navigate('/');
@@ -170,7 +171,7 @@ const Login = () => {
                                 : 'bg-[#81db58] hover:bg-green-400 cursor-pointer'
                                 }`}
                         >
-                            {loading ? t("signing_in") : t("sign_in")}
+                            {loading ? t("sign_in") : t("sign_in")}
                         </button>
 
                         <p className="mt-4 text-sm text-center text-gray-700">

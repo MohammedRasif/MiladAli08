@@ -198,7 +198,9 @@ const resources = {
       "password_updated": "Your password has been updated,",
       "change_password_regularly": "please change your password regularly to avoid this happening",
       "congratulationss": "Congratulations",
-      "log_in": "Log In"
+      "log_in": "Log In",
+      "home":"Home",
+      "logout":"Logout"
     },
   },
   ar: {
@@ -288,7 +290,7 @@ const resources = {
 
 
 
-
+      "home":"بيت",
       "e_clinic_title": "من نحن",
       "e clinic": "من نحن؟ – المشفى الإلكتروني ",
       "e_clinic_intro": "في المشفى الإلكتروني، نؤمن بأن الجميع يستحقون رعاية صحية عالية الجودة. ندرك أن التكاليف المرتفعة، ونقص الأطباء في المناطق البعيدة، وضعف أنظمة الرعاية الصحية قد تحدّ من القدرة على الوصول إلى الرعاية الطبية المناسبة. لهذا السبب، نقدم استشارات صحية مجانية مدعومة بالذكاء الاصطناعي لزيادة وعيك الطبي ومساعدتك في اتخاذ قرارات صحية أفضل.",
@@ -391,7 +393,8 @@ const resources = {
       "password_updated": "تم تحديث كلمة المرور الخاصة بك،",
       "change_password_regularly": "يرجى تغيير كلمة المرور بانتظام لتجنب حدوث ذلك",
       "congratulationss": "تهانينا",
-      "log_in": "تسجيل الدخول"
+      "log_in": "تسجيل الدخول",
+      "logout":"تسجيل الخروج"
     },
   },
 };

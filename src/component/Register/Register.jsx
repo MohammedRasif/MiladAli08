@@ -77,6 +77,7 @@ const Register = () => {
             const data = await response.json();
             console.log('Registration successful:', data);
             localStorage.setItem('userEmail', formData.email);
+            localStorage.setItem('unique_id',data.unique_id)
             navigate('/verification_sign_up'); // Redirect to verification_sign_up route
         } catch (err) {
             setError(err.message || 'Registration failed. Please try again.');
@@ -180,7 +181,7 @@ const Register = () => {
                             <p className="text-sm text-red-600 mt-2">{error}</p>
                         )}
 
-                        <div className="mt-4 flex flex-col gap-3">
+                        {/* <div className="mt-4 flex flex-col gap-3">
                             <div className="flex items-center">
                                 <input
                                     type="checkbox"
@@ -192,13 +193,13 @@ const Register = () => {
                                     {t("agree_to_terms")}
                                 </label>
                             </div>
-                        </div>
+                        </div> */}
 
                         <button
                             type="submit"
                             disabled={!passwordsMatch || loading}
                             className={`mt-8 w-full h-12 rounded-full text-base text-[#FAF1E6] transition-colors duration-200 ${passwordsMatch && !loading
-                                ? 'bg-[#81db58] hover:bg-green-400 cursor-pointer'
+                                ? 'bg-[#81db58] hover:bg-green-400 '
                                 : 'bg-[#81db58] hover:bg-green-400 cursor-pointer'
                                 }`}
                         >

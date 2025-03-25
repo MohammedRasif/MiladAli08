@@ -15,6 +15,10 @@ import Verification from "./component/Shared/Verification.jsx";
 import SetNewPassword from "./component/Shared/SetNewPassword.jsx";
 import Congratulation from "./component/Shared/Congratulation.jsx";
 import VerificationSign from "./component/Shared/VerificationSign.jsx";
+import PrivateRoutes from "./Root/PrivateRoute.jsx";
+import VerificationRoute from "./Root/VerificationRoute.jsx";
+import SetNewPasswordRoute from "./Root/SetNewPasswordRoute.jsx";
+import RegisterVerification from "./Root/RegisterVerification.jsx";
 
 const router = createBrowserRouter([
   {
@@ -24,15 +28,15 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",  
-        element:<Home/>
+        element:<PrivateRoutes><Home/></PrivateRoutes>
       },
       {
         path: "/patientDetails",  
-        element: <PatientDetails />,
+        element: <PrivateRoutes><PatientDetails /></PrivateRoutes>,
       },
       {
         path: "/disclaimer",  
-        element: <Disclaimer />,
+        element: <PrivateRoutes><Disclaimer /></PrivateRoutes>,
       },
       {
         path: "/login",  
@@ -48,15 +52,15 @@ const router = createBrowserRouter([
       },
       {
         path: "/verification",  
-        element: <Verification />,
+        element: <VerificationRoute><Verification /></VerificationRoute>,
       },
       {
         path: "/setNewPassoword",  
-        element: <SetNewPassword />,
+        element: <SetNewPasswordRoute><SetNewPassword /></SetNewPasswordRoute>,
       },
       {
         path: "/verification_Sign_up",  
-        element: <VerificationSign />,
+        element: <RegisterVerification><VerificationSign /></RegisterVerification>,
       },
       {
         path: "/congratulation",  

@@ -106,8 +106,9 @@ const Verification = () => {
 
             const data = await response.json();
             console.log('Verification successful:', data);
+            localStorage.setItem('access_token', data.access_token);
+            localStorage.setItem('unique_id',data.unique_id)
 
-            // Navigate to /home on success
             navigate('/setNewPassoword');
         } catch (err) {
             setError(err.message || 'Verification failed. Please try again.');
@@ -166,11 +167,11 @@ const Verification = () => {
                             type="submit"
                             disabled={loading}
                             className={`w-full mt-8 h-12 rounded-full text-base text-[#FAF1E6] font-medium transition-colors duration-200 ${loading
-                                ? 'bg-gray-400 cursor-not-allowed'
+                                ? 'bg-[#81db58] hover:bg-green-400'
                                 : 'bg-[#81db58] hover:bg-green-400 cursor-pointer'
                                 }`}
                         >
-                            {loading ? t("verifying") : t("verify")}
+                            {loading ? t("verify") : t("verify")}
                         </button>
                     </form>
 

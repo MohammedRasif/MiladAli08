@@ -112,11 +112,11 @@ const ForgetPassword = () => {
                             type="submit"
                             disabled={loading}
                             className={`mt-8 w-full h-12 rounded-full text-base text-[#FAF1E6] uppercase transition-colors duration-200 ${loading
-                                ? 'bg-gray-400 cursor-not-allowed'
+                                ? 'bg-[#81db58] hover:bg-green-400'
                                 : 'bg-[#81db58] hover:bg-green-400 cursor-pointer'
                                 }`}
                         >
-                            {loading ? t("processing") : t("confirm")}
+                            {loading ? t("confirm") : t("confirm")}
                         </button>
                     </form>
                 </div>

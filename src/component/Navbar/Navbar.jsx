@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { IoIosArrowRoundBack } from "react-icons/io";
 import { useTranslation } from "react-i18next";
@@ -14,6 +14,42 @@ const Navbar = () => {
   const { t } = useTranslation();
   const [isEnglish, setIsEnglish] = useState(false);
   const menuRef = useRef(null); // Create a ref to track the menu div
+  const navigate = useNavigate(); // Navigation hook
+
+  // Handle logout functionality
+  const handleLogout = async () => {
+    const accessToken = localStorage.getItem('access_token'); // Get access_token from localStorage
+
+    if (!accessToken) {
+        // If no token, directly clear storage and redirect
+        localStorage.removeItem('access_token');
+        navigate('/login');
+        return;
+    }
+
+    try {
+        const response = await fetch('http://192.168.10.131:3000/api/v1/accounts/logout/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${accessToken}` // Send access_token in headers
+            }
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || 'Logout failed');
+        }
+
+        console.log('Logout successful');
+    } catch (err) {
+        console.error('Logout error:', err);
+    } finally {
+        // Always remove access_token from localStorage and redirect
+        localStorage.removeItem('access_token');
+        navigate('/login');
+    }
+}
 
   // Effect to handle clicks outside the menu on small devices
   useEffect(() => {
@@ -163,7 +199,14 @@ const Navbar = () => {
       </div>
 
       {/* Language Toggle */}
-      <div className=" md:mt-0 lg:mt-2 z-40 mt-1 fixed md:static lg:static"> {/* Removed -mt-10, added z-40 */}
+      <div className=" md:mt-0 lg:mt-2 z-40 mt-1 flex space-x-3 fixed md:static lg:static"> {/* Removed -mt-10, added z-40 */}
+
+      <button
+            className="text-md font-semibold bg-[#81db58] rounded-md px-4 py-2 cursor-pointer"
+            onClick={handleLogout}
+        >
+            {t("logout")}
+        </button>
         <button
           onClick={toggleLanguage}
           className="flex items-center justify-between border border-gray-300 rounded-full px-2 py-1 w-[120px] md:w-[140px] h-[36px] md:h-[40px] relative overflow-hidden shadow-md hover:shadow-lg transition-all duration-300 bg-white"

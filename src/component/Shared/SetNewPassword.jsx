@@ -1,31 +1,98 @@
 import React, { useEffect, useState } from 'react';
-import { FaEye, FaEyeSlash } from "react-icons/fa"; // Removed unused FaRegEye, FaRegEyeSlash
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { useNavigate } from "react-router-dom"; // Added useNavigate
 import { useTranslation } from "react-i18next";
 import i18n from "../../i18n";
 
 const SetNewPassword = () => {
-    const { t } = useTranslation(); // Hook to get the translation function
-    const [isEnglish, setIsEnglish] = useState(false); // State to track language
-    const [showNewPassword, setShowNewPassword] = useState(false); // State for New Password visibility
-    const [showConfirmPassword, setShowConfirmPassword] = useState(false); // State for Confirm Password visibility
+    const { t } = useTranslation();
+    const [isEnglish, setIsEnglish] = useState(false);
+    const [showNewPassword, setShowNewPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const [formData, setFormData] = useState({
+        newPassword: '',
+        confirmPassword: ''
+    });
+    const [error, setError] = useState(null); // State for error messages
+    const [loading, setLoading] = useState(false); // State for loading
+    const navigate = useNavigate(); // Added navigate hook
 
     // Language setup and sync with localStorage
     useEffect(() => {
         const savedLanguage = localStorage.getItem("language");
-        const initialLanguage = savedLanguage || "ar"; // Default to Arabic
-
-        i18n.changeLanguage(initialLanguage); // Set initial language
-        setIsEnglish(initialLanguage === "en"); // Update language state
+        const initialLanguage = savedLanguage || "ar";
+        i18n.changeLanguage(initialLanguage);
+        setIsEnglish(initialLanguage === "en");
 
         const handleLanguageChange = () => {
             setIsEnglish(i18n.language === "en");
         };
 
-        i18n.on("languageChanged", handleLanguageChange); // Listen for language changes
+        i18n.on("languageChanged", handleLanguageChange);
         return () => {
-            i18n.off("languageChanged", handleLanguageChange); // Cleanup
+            i18n.off("languageChanged", handleLanguageChange);
         };
     }, []);
+
+    // Handle input changes
+    const handleChange = (e) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value
+        });
+    };
+
+    // Handle form submission
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setLoading(true);
+        setError(null);
+
+        // Check if passwords match
+        if (formData.newPassword !== formData.confirmPassword) {
+            setError(t("passwords_do_not_match"));
+            setLoading(false);
+            return;
+        }
+
+        // Get access_token from localStorage
+        const accessToken = localStorage.getItem('access_token');
+
+        if (!accessToken) {
+            setError(t("no_access_token_found"));
+            setLoading(false);
+            return;
+        }
+
+        try {
+            const response = await fetch('http://192.168.10.131:3000/api/v1/accounts/reset-password/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${accessToken}` // Sending access_token in headers
+                },
+                body: JSON.stringify({
+                    new_password: formData.newPassword // Sending new_password
+                })
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.message || 'Password reset failed');
+            }
+
+            const data = await response.json();
+            console.log('Password reset successful:', data);
+
+            // Navigate to /congratulation route on success
+            navigate('/congratulation');
+        } catch (err) {
+            setError(err.message || 'Password reset failed. Please try again.');
+            console.error('Password reset error:', err);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     return (
         <div className="min-h-screen flex items-center justify-center px-4 py-12 bg-gray-50">
@@ -50,7 +117,7 @@ const SetNewPassword = () => {
                     </p>
 
                     {/* Password Fields */}
-                    <div className="space-y-6 mt-10">
+                    <form onSubmit={handleSubmit} className="space-y-6 mt-10">
                         <div>
                             <label htmlFor="new-password" className="block text-base font-normal mb-2">
                                 {t("new_password")}
@@ -58,8 +125,12 @@ const SetNewPassword = () => {
                             <div className="relative">
                                 <input
                                     type={showNewPassword ? "text" : "password"}
+                                    name="newPassword"
+                                    value={formData.newPassword}
+                                    onChange={handleChange}
                                     className="w-full h-12 border border-gray-300 px-4 pr-4 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                                     placeholder="****************"
+                                    required
                                 />
                                 <button
                                     type="button"
@@ -78,8 +149,12 @@ const SetNewPassword = () => {
                             <div className="relative">
                                 <input
                                     type={showConfirmPassword ? "text" : "password"}
+                                    name="confirmPassword"
+                                    value={formData.confirmPassword}
+                                    onChange={handleChange}
                                     className="w-full h-12 border border-gray-300 px-4 pr-4 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                                     placeholder="****************"
+                                    required
                                 />
                                 <button
                                     type="button"
@@ -90,19 +165,26 @@ const SetNewPassword = () => {
                                 </button>
                             </div>
                         </div>
-                    </div>
 
-                    {/* Error message placeholder */}
-                    <p className="text-red-500 text-sm mt-3 text-center hidden">
-                        {t("error_placeholder")}
-                    </p>
+                        {/* Error message */}
+                        {error && (
+                            <p className="text-red-500 text-sm mt-3 text-center">
+                                {error}
+                            </p>
+                        )}
 
-                    {/* Confirm Button */}
-                    <button
-                        className="w-full h-12 mt-8 bg-[#81db58] hover:bg-green-400 text-[#FAF1E6] font-medium text-base rounded-full transition-colors duration-200 focus:outline-none cursor-pointer focus:ring-2 focus:ring-blue-400"
-                    >
-                        {t("confirm_password")}
-                    </button>
+                        {/* Confirm Button */}
+                        <button
+                            type="submit"
+                            disabled={loading}
+                            className={`w-full h-12 mt-8 text-base text-[#FAF1E6] font-medium rounded-full transition-colors duration-200 ${loading
+                                ? 'bg-[#81db58] hover:bg-green-400'
+                                : 'bg-[#81db58] hover:bg-green-400 cursor-pointer'
+                                }`}
+                        >
+                            {loading ? t("confirm_password") : t("confirm_password")}
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>

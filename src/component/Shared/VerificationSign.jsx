@@ -170,11 +170,11 @@ const VerificationSign = () => {
                             type="submit"
                             disabled={loading}
                             className={`w-full mt-8 h-12 rounded-full text-base text-[#FAF1E6] font-medium transition-colors duration-200 ${loading
-                                ? 'bg-gray-400 cursor-not-allowed'
+                                ? 'bg-[#81db58] hover:bg-green-400'
                                 : 'bg-[#81db58] hover:bg-green-400 cursor-pointer'
                                 }`}
                         >
-                            {loading ? t("verifying") : t("verify")}
+                            {loading ? t("verify"): t("verify")}
                         </button>
                     </form>
 
