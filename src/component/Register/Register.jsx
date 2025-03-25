@@ -76,6 +76,7 @@ const Register = () => {
 
             const data = await response.json();
             console.log('Registration successful:', data);
+            localStorage.setItem('userEmail', formData.email);
             navigate('/verification_sign_up'); // Redirect to verification_sign_up route
         } catch (err) {
             setError(err.message || 'Registration failed. Please try again.');

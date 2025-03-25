@@ -1,31 +1,86 @@
 import React, { useEffect, useState } from 'react';
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import i18n from "../../i18n";
 
 const Login = () => {
-    const { t } = useTranslation(); // Hook to get the translation function
-    const [isEnglish, setIsEnglish] = useState(false); // State to track language
-    const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
+    const { t } = useTranslation();
+    const [isEnglish, setIsEnglish] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
+    const [formData, setFormData] = useState({
+        email: '',
+        password: ''
+    });
+    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
 
     // Language setup and sync with localStorage
     useEffect(() => {
         const savedLanguage = localStorage.getItem("language");
-        const initialLanguage = savedLanguage || "ar"; // Default to Arabic
-
-        i18n.changeLanguage(initialLanguage); // Set initial language
-        setIsEnglish(initialLanguage === "en"); // Update language state
+        const initialLanguage = savedLanguage || "ar";
+        i18n.changeLanguage(initialLanguage);
+        setIsEnglish(initialLanguage === "en");
 
         const handleLanguageChange = () => {
             setIsEnglish(i18n.language === "en");
         };
 
-        i18n.on("languageChanged", handleLanguageChange); // Listen for language changes
+        i18n.on("languageChanged", handleLanguageChange);
         return () => {
-            i18n.off("languageChanged", handleLanguageChange); // Cleanup
+            i18n.off("languageChanged", handleLanguageChange);
         };
     }, []);
+
+    // Handle input changes
+    const handleChange = (e) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value
+        });
+    };
+
+    // Handle form submission
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setLoading(true);
+        setError(null);
+
+        try {
+            const response = await fetch('https://www.backend.e-clinic.ai/api/v1/accounts/login/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email: formData.email,
+                    password: formData.password
+                })
+            });
+            console.log(response);
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.message || errorData.email || 'Login failed');
+                
+            }
+
+            const data = await response.json();
+            console.log('Login successful:', data);
+
+            // Save access_token to localStorage
+            localStorage.setItem('access_token', data.access_token);
+
+            // Navigate to home page
+            navigate('/');
+        } catch (err) {
+            setError(err.message || 'Login failed. Please try again.');
+            console.error('Login error:', err);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     return (
         <div className="min-h-screen flex items-center justify-center px-4 py-12 bg-gray-50">
@@ -48,14 +103,18 @@ const Login = () => {
                         {t("Please enter your email and password to continue")}
                     </p>
 
-                    <form className="mt-8">
+                    <form className="mt-8" onSubmit={handleSubmit}>
                         {/* Email Field */}
                         <div>
                             <label className="text-base block mb-2">{t("email")}</label>
                             <input
                                 type="email"
+                                name="email"
+                                value={formData.email}
+                                onChange={handleChange}
                                 className="w-full h-12 border border-gray-400 rounded-md text-[#364636] pl-3 pr-2 focus:outline-none focus:ring-2 focus:ring-green-500"
                                 placeholder={t("enter_your_email")}
+                                required
                             />
                         </div>
 
@@ -64,8 +123,12 @@ const Login = () => {
                             <label className="text-base block mb-2">{t("password")}</label>
                             <input
                                 type={showPassword ? "text" : "password"}
+                                name="password"
+                                value={formData.password}
+                                onChange={handleChange}
                                 className="w-full h-12 border border-gray-400 rounded-md text-[#364636] pl-3 pr-3 focus:outline-none focus:ring-2 focus:ring-green-500"
                                 placeholder="****************"
+                                required
                             />
                             <button
                                 type="button"
@@ -75,6 +138,11 @@ const Login = () => {
                                 {showPassword ? <FaEyeSlash size={20} /> : <FaEye size={20} />}
                             </button>
                         </div>
+
+                        {/* Error Message */}
+                        {error && (
+                            <p className="text-sm text-red-600 mt-4">{error}</p>
+                        )}
 
                         {/* Remember Me and Forgot Password */}
                         <div className="mt-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
@@ -96,9 +164,13 @@ const Login = () => {
                         {/* Submit Button */}
                         <button
                             type="submit"
-                            className="mt-8 w-full h-12 rounded-full text-base text-[#FAF1E6] bg-[#81db58] hover:bg-green-400 transition-colors duration-200 cursor-pointer"
+                            disabled={loading}
+                            className={`mt-8 w-full h-12 rounded-full text-base text-[#FAF1E6] transition-colors duration-200 ${loading
+                                ? 'bg-gray-400 cursor-not-allowed'
+                                : 'bg-[#81db58] hover:bg-green-400 cursor-pointer'
+                                }`}
                         >
-                            {t("sign_in")}
+                            {loading ? t("signing_in") : t("sign_in")}
                         </button>
 
                         <p className="mt-4 text-sm text-center text-gray-700">
