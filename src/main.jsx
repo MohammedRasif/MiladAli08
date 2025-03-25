@@ -14,6 +14,7 @@ import ForgetPassword from "./component/Shared/ForgetPassword.jsx";
 import Verification from "./component/Shared/Verification.jsx";
 import SetNewPassword from "./component/Shared/SetNewPassword.jsx";
 import Congratulation from "./component/Shared/Congratulation.jsx";
+import VerificationSign from "./component/Shared/VerificationSign.jsx";
 
 const router = createBrowserRouter([
   {
@@ -52,6 +53,10 @@ const router = createBrowserRouter([
       {
         path: "/setNewPassoword",  
         element: <SetNewPassword />,
+      },
+      {
+        path: "/verification_Sign_up",  
+        element: <VerificationSign />,
       },
       {
         path: "/congratulation",  
