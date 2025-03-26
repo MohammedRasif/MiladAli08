@@ -28,7 +28,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",  
-        element:<PrivateRoutes><Home/></PrivateRoutes>
+        element:<Home/>
       },
       {
         path: "/patientDetails",  

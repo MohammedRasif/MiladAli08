@@ -90,7 +90,7 @@ const Login = () => {
                 <div className="w-full md:w-1/2 flex justify-center">
                     <img
                         src="https://res.cloudinary.com/dfsu0cuvb/image/upload/v1741106696/Blue_Green_White_Simple_Modern_Medical_Logo-removebg-preview_r3wqv9.png"
-                        className="w-full max-w-[483px] h-auto"
+                        className="w-full max-w-[483px] h-auto hidden md:block"
                         alt="Login Image"
                     />
                 </div>
@@ -167,7 +167,7 @@ const Login = () => {
                             type="submit"
                             disabled={loading}
                             className={`mt-8 w-full h-12 rounded-full text-base text-[#FAF1E6] transition-colors duration-200 ${loading
-                                ? 'bg-gray-400 cursor-not-allowed'
+                                ? 'bg-[#81db58] hover:bg-green-400'
                                 : 'bg-[#81db58] hover:bg-green-400 cursor-pointer'
                                 }`}
                         >

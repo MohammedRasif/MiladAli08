@@ -77,7 +77,7 @@ const ForgetPassword = () => {
         <div className="min-h-screen flex items-center justify-center px-4 py-12 bg-gray-50">
             <div className="w-full max-w-6xl flex flex-col md:flex-row items-center gap-8">
                 {/* Image Section */}
-                <div className="w-full md:w-1/2 flex justify-center">
+                <div className="w-full md:w-1/2 flex justify-center hidden md:block">
                     <img
                         src="https://res.cloudinary.com/dfsu0cuvb/image/upload/v1741106696/Blue_Green_White_Simple_Modern_Medical_Logo-removebg-preview_r3wqv9.png"
                         className="w-full max-w-[483px] h-auto"

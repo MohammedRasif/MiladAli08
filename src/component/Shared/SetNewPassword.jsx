@@ -102,7 +102,7 @@ const SetNewPassword = () => {
                     <img
                         src="https://res.cloudinary.com/dfsu0cuvb/image/upload/v1741106696/Blue_Green_White_Simple_Modern_Medical_Logo-removebg-preview_r3wqv9.png"
                         className="w-full max-w-[483px] h-auto"
-                        alt="Set New Password Image"
+                        alt="Set New Password Image hidden md:block"
                     />
                 </div>
 

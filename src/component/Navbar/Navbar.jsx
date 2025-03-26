@@ -13,76 +13,80 @@ const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { t } = useTranslation();
   const [isEnglish, setIsEnglish] = useState(false);
-  const menuRef = useRef(null); // Create a ref to track the menu div
-  const navigate = useNavigate(); // Navigation hook
+  const menuRef = useRef(null);
+  const navigate = useNavigate();
 
-  // Handle logout functionality
   const handleLogout = async () => {
-    const accessToken = localStorage.getItem('access_token'); // Get access_token from localStorage
+    const accessToken = localStorage.getItem("access_token");
 
     if (!accessToken) {
-        // If no token, directly clear storage and redirect
-        localStorage.removeItem('access_token');
-        navigate('/login');
-        return;
+      localStorage.removeItem("access_token");
+      localStorage.removeItem("unique_id");
+      navigate("/login");
+      return;
     }
 
     try {
-        const response = await fetch('http://192.168.10.131:3000/api/v1/accounts/logout/', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${accessToken}` // Send access_token in headers
-            }
-        });
+      const response = await fetch("http://192.168.10.131:3000/api/v1/accounts/logout/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${accessToken}`,
+        },
+      });
 
-        if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(errorData.message || 'Logout failed');
-        }
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Logout failed");
+      }
 
-        console.log('Logout successful');
+      console.log("Logout successful");
     } catch (err) {
-        console.error('Logout error:', err);
+      console.error("Logout error:", err);
     } finally {
-        // Always remove access_token from localStorage and redirect
-        localStorage.removeItem('access_token');
-        navigate('/login');
+      localStorage.removeItem("access_token");
+      localStorage.removeItem("unique_id");
+      navigate("/login");
     }
-}
+  };
 
-  // Effect to handle clicks outside the menu on small devices
+  const handleLogin = () => {
+    navigate("/login");
+  };
+
+  const uniqueId = localStorage.getItem("unique_id");
+  const isLoggedIn = !!uniqueId;
+
+  const patientDetails = localStorage.getItem("patientDetails");
+
+  // Removed handlePatientDetailsClick function since it's no longer needed
+
   useEffect(() => {
     const handleClickOutside = (event) => {
-      // Check if menu is open, it's a small device (window.innerWidth < 768), and click is outside the menu
       if (
         isMobileMenuOpen &&
         menuRef.current &&
         !menuRef.current.contains(event.target) &&
-        window.innerWidth < 768 // Assuming md breakpoint is 768px
+        window.innerWidth < 768
       ) {
-        setIsMobileMenuOpen(false); // Close the menu
+        setIsMobileMenuOpen(false);
       }
     };
 
-    // Add event listener when menu is open
     if (isMobileMenuOpen) {
       document.addEventListener("mousedown", handleClickOutside);
     }
 
-    // Cleanup event listener
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [isMobileMenuOpen, setIsMobileMenuOpen]); // Dependencies
+  }, [isMobileMenuOpen]);
 
   useEffect(() => {
-    // Check localStorage for language, default to "ar" if not set
     const savedLanguage = localStorage.getItem("language");
-    const initialLanguage = savedLanguage || "ar"; // Default to "ar" if no saved language
-
-    i18n.changeLanguage(initialLanguage); // Set the initial language
-    setIsEnglish(initialLanguage === "en"); // Update state based on language
+    const initialLanguage = savedLanguage || "ar";
+    i18n.changeLanguage(initialLanguage);
+    setIsEnglish(initialLanguage === "en");
 
     const handleLanguageChange = () => {
       setIsEnglish(i18n.language === "en");
@@ -145,26 +149,20 @@ const Navbar = () => {
             alt="Logo"
           />
         </NavLink>
-        {/* Hamburger Menu for Mobile */}
-        <button
-          className="md:hidden text-2xl p-2"
-          onClick={toggleMobileMenu}
-        >
+        <button className="md:hidden text-2xl p-2" onClick={toggleMobileMenu}>
           ☰
         </button>
       </div>
 
-      {/* Navigation Tabs */}
+      {/* Navigation Tabs and Mobile Menu */}
       <div
         ref={menuRef}
-        className={`flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-3 w-full md:w-auto mt-2 md:mt-0 ${isMobileMenuOpen ? "block" : "hidden md:flex"
-          }`}
+        className={`flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-3 w-full md:w-auto mt-2 md:mt-0 ${isMobileMenuOpen ? "block" : "hidden md:flex"}`}
       >
         <NavLink
           to="/"
           className={({ isActive }) =>
-            `cursor-pointer px-3 py-1 md:px-4 md:py-2 rounded-md transition-all w-full md:w-auto text-center ${activeTab === "Home" ? "bg-[#81db58] text-white" : "bg-transparent text-black"
-            }`
+            `cursor-pointer px-3 py-1 md:px-4 md:py-2 rounded-md transition-all w-full md:w-auto text-center ${activeTab === "Home" ? "bg-[#81db58] text-white" : "bg-transparent text-black"}`
           }
           onClick={() => isMobileMenuOpen && setIsMobileMenuOpen(false)}
         >
@@ -173,8 +171,7 @@ const Navbar = () => {
         <NavLink
           to="/disclaimer"
           className={({ isActive }) =>
-            `cursor-pointer px-3 py-1 md:px-4 md:py-2 rounded-md transition-all w-full md:w-auto text-center ${activeTab === "Disclaimer" ? "bg-[#81db58] text-white" : "bg-transparent text-black"
-            }`
+            `cursor-pointer px-3 py-1 md:px-4 md:py-2 rounded-md transition-all w-full md:w-auto text-center ${activeTab === "Disclaimer" ? "bg-[#81db58] text-white" : "bg-transparent text-black"}`
           }
           onClick={() => isMobileMenuOpen && setIsMobileMenuOpen(false)}
         >
@@ -183,43 +180,73 @@ const Navbar = () => {
         <NavLink
           to="/patientDetails"
           className={({ isActive }) =>
-            `cursor-pointer px-3 py-1 md:px-4 md:py-2 rounded-md transition-all w-full md:w-auto text-center ${activeTab === "Patient Details" ? "bg-[#81db58] text-white" : "bg-transparent text-black"
-            }`
+            `cursor-pointer px-3 py-1 md:px-4 md:py-2 rounded-md transition-all w-full md:w-auto text-center ${activeTab === "Patient Details" ? "bg-[#81db58] text-white" : "bg-transparent text-black"} `
           }
-          onClick={() => isMobileMenuOpen && setIsMobileMenuOpen(false)}
         >
           {t("Patient Details")}
         </NavLink>
 
         <button onClick={openAboutUsModal} className="w-full md:w-auto">
-          <h1 className="text-[14px] md:text-[16px] font-[600]  bg-[#C6D7BA] px-3 md:px-5 py-1 md:py-2 rounded-md border border-gray-400">
+          <h1 className="text-[14px] md:text-[16px] font-[600] bg-[#C6D7BA] px-3 md:px-5 py-1 md:py-2 rounded-md border border-gray-400 text-center">
             {t("About us")}
           </h1>
         </button>
+
+        {/* Login/Logout and Language Toggle in Mobile Menu */}
+        <div className="flex flex-col space-y-2 w-full md:hidden">
+          <button
+            className="text-md font-semibold bg-[#81db58] rounded-md px-4 py-2 cursor-pointer w-full text-center text-white"
+            onClick={isLoggedIn ? handleLogout : handleLogin}
+          >
+            {isLoggedIn ? t("logout") : t("login")}
+          </button>
+          <button
+            onClick={toggleLanguage}
+            className="flex items-center justify-between border border-gray-300 rounded-full px-2 py-1 ml-20 w-[200px] h-[36px] relative overflow-hidden shadow-md hover:shadow-lg transition-all duration-300 bg-white"
+            aria-label={`Switch to ${isEnglish ? "Arabic" : "English"} language`}
+          >
+            <span
+              className={`z-10 transition-all duration-300 text-xs font-medium ${!isEnglish ? "text-white pl-2" : "text-gray-600"}`}
+            >
+              عربي
+            </span>
+            <motion.div
+              className="absolute top-1 h-[28px] rounded-full z-0 bg-[#81db58]"
+              animate={{
+                left: isEnglish ? "calc(50% - 2px)" : "2px",
+                right: isEnglish ? "2px" : "calc(50% - 2px)",
+              }}
+              transition={{ type: "spring", stiffness: 500, damping: 30 }}
+            />
+            <span
+              className={`z-10 transition-all duration-300 text-xs font-medium ${isEnglish ? "text-white mr-1" : "text-gray-600"}`}
+            >
+              English
+            </span>
+          </button>
+        </div>
       </div>
 
-      {/* Language Toggle */}
-      <div className=" md:mt-0 lg:mt-2 z-40 mt-1 flex space-x-3 fixed md:static lg:static"> {/* Removed -mt-10, added z-40 */}
-
-      <button
-            className="text-md font-semibold bg-[#81db58] rounded-md px-4 py-2 cursor-pointer"
-            onClick={handleLogout}
+      {/* Language Toggle and Login/Logout for Desktop */}
+      <div className="hidden md:flex space-x-3 mt-2 md:mt-0">
+        <button
+          className="text-md font-semibold bg-[#81db58] rounded-md px-4 py-2 cursor-pointer text-white"
+          onClick={isLoggedIn ? handleLogout : handleLogin}
         >
-            {t("logout")}
+          {isLoggedIn ? t("logout") : t("login")}
         </button>
         <button
           onClick={toggleLanguage}
-          className="flex items-center justify-between border border-gray-300 rounded-full px-2 py-1 w-[120px] md:w-[140px] h-[36px] md:h-[40px] relative overflow-hidden shadow-md hover:shadow-lg transition-all duration-300 bg-white"
+          className="flex items-center justify-between border border-gray-300 rounded-full px-2 py-1 w-[140px] h-[40px] relative overflow-hidden shadow-md hover:shadow-lg transition-all duration-300 bg-white"
           aria-label={`Switch to ${isEnglish ? "Arabic" : "English"} language`}
         >
           <span
-            className={`z-10 transition-all duration-300 text-xs md:text-sm font-medium ${!isEnglish ? "text-white pl-2 md:pl-3" : "text-gray-600"
-              }`}
+            className={`z-10 transition-all duration-300 text-sm font-medium ${!isEnglish ? "text-white pl-3" : "text-gray-600"}`}
           >
             عربي
           </span>
           <motion.div
-            className="absolute top-1 h-[28px] md:h-[32px] rounded-full z-0 bg-[#81db58]"
+            className="absolute top-1 h-[32px] rounded-full z-0 bg-[#81db58]"
             animate={{
               left: isEnglish ? "calc(50% - 2px)" : "2px",
               right: isEnglish ? "2px" : "calc(50% - 2px)",
@@ -227,8 +254,7 @@ const Navbar = () => {
             transition={{ type: "spring", stiffness: 500, damping: 30 }}
           />
           <span
-            className={`z-10 transition-all duration-300 text-xs md:text-sm font-medium ${isEnglish ? "text-white mr-1" : "text-gray-600"
-              }`}
+            className={`z-10 transition-all duration-300 text-sm font-medium ${isEnglish ? "text-white mr-1" : "text-gray-600"}`}
           >
             English
           </span>
@@ -259,55 +285,23 @@ const Navbar = () => {
               <IoIosArrowRoundBack
                 className={`text-[28px] md:text-[32px] ml-1 ${i18n.language === "ar" ? "rotate-180" : ""}`}
               />
-              <h1 className={`text-lg md:text-xl ${i18n.language === "ar" ? "mr-4" : "ml-2"}`}>
-                {t("Back")}
-              </h1>
+              <h1 className={`text-lg md:text-xl ${i18n.language === "ar" ? "mr-4" : "ml-2"}`}>{t("Back")}</h1>
             </div>
-
-
-
-
-
-            <div
-              className="max-w-2xl mx-auto p-6 rounded-lg mt-10 "
-              dir={i18n.language === "ar" ? "rtl" : "ltr"}
-            >
-              {/* Title */}
+            <div className="max-w-2xl mx-auto p-6 rounded-lg mt-10" dir={i18n.language === "ar" ? "rtl" : "ltr"}>
               <h1 className="text-2xl md:text-3xl font-bold text-blue-600 text-center mb-4">
                 {t("e_clinic_title")}
               </h1>
-
-              {/* Intro */}
-              <p className="text-base md:text-md text-gray-800 text-justify mb-4">
-                {t("e_clinic_intro")}
-              </p>
-
-              {/* What We Offer */}
-              <h2 className="text-xl md:text-2xl font-semibold text-blue-500 mb-3">
-                {t("e_clinic_reason")}
-              </h2>
-
-              {/* Services List */}
+              <p className="text-base md:text-md text-gray-800 text-justify mb-4">{t("e_clinic_intro")}</p>
+              <h2 className="text-xl md:text-2xl font-semibold text-blue-500 mb-3">{t("e_clinic_reason")}</h2>
               <div className="space-y-2 text-gray-700 text-base md:text-md list-disc list-inside">
                 <h1>{t("service_medications")}</h1>
                 <h1>{t("service_diagnosis")}</h1>
                 <h1>{t("service_reports")}</h1>
                 <h1>{t("service_tests")}</h1>
-
               </div>
-
-              {/* Disclaimer Note */}
-              <p className="mt-4 text-gray-600 text-sm md:text-base">
-                {t("disclaimer_note")}
-              </p>
-
-              {/* Contact Info */}
-              <h3 className="mt-6 text-lg md:text-xl font-semibold text-blue-500 text-center">
-                {t("contact_us")}
-              </h3>
-              <p className="text-center text-gray-800 text-base md:text-md">
-                {t("For_question")}
-              </p>
+              <p className="mt-4 text-gray-600 text-sm md:text-base">{t("disclaimer_note")}</p>
+              <h3 className="mt-6 text-lg md:text-xl font-semibold text-blue-500 text-center">{t("contact_us")}</h3>
+              <p className="text-center text-gray-800 text-base md:text-md">{t("For_question")}</p>
               <p className="text-center text-blue-600 font-semibold text-base md:text-md">
                 📩 info@e-clinic.ai
               </p>

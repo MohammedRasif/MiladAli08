@@ -142,6 +142,7 @@ const resources = {
 
 
       // login
+      "login":"Login",
       "Login to Account":"Login to Account",
       "Please enter your email and password to continue":"Please enter your email and password to continue",
       "email":"Email",
@@ -337,6 +338,7 @@ const resources = {
       "contact_email": "info@e-clinic.ai",
 
       // login
+      "login":"تسجيل الدخول",
       "Login to Account": "تسجيل الدخول إلى الحساب",
       "Please enter your email and password to continue": "الرجاء إدخال بريدك الإلكتروني وكلمة المرور للمتابعة",
       "email": "البريد الإلكتروني",

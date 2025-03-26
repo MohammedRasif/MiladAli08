@@ -125,7 +125,7 @@ const Verification = () => {
                 <div className="w-full md:w-1/2 flex justify-center">
                     <img
                         src="https://res.cloudinary.com/dfsu0cuvb/image/upload/v1741106696/Blue_Green_White_Simple_Modern_Medical_Logo-removebg-preview_r3wqv9.png"
-                        className="w-full max-w-[483px] h-auto"
+                        className="w-full max-w-[483px] h-auto hidden md:block"
                         alt="Verification Image"
                     />
                 </div>

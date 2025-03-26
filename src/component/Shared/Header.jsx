@@ -56,7 +56,7 @@ const Header = () => {
 
       console.log("Language sent:", language);
 
-      const response = await fetch("https://www.backend.e-clinic.ai/api/v1/chat/bot", {
+      const response = await fetch("http://192.168.10.131:3000/api/v1/chat/bot", {
         method: "POST",
         body: formData,
       });
@@ -104,7 +104,7 @@ const Header = () => {
 
   const fetchChatData = useCallback(async (id) => {
     try {
-      const response = await fetch(`https://www.backend.e-clinic.ai/api/v1/chat/list/${id}`, {
+      const response = await fetch(`http://192.168.10.131:3000/api/v1/chat/list/${id}`, {
         method: "GET",
         headers: { "Content-Type": "application/json" },
       });
@@ -122,14 +122,11 @@ const Header = () => {
   }, []);
 
   const handleCheck = () => {
-    console.log("hello");
-    const uniqueId = localStorage.getItem("unique_id");
-    if (uniqueId) {
-      navigate("/"); // Navigate to home if unique_id exists
-      console.log("hiii");
+    const patientDetails = localStorage.getItem("patientDetails");
+    if (patientDetails) {
+      navigate("/"); // Go to home if patientDetails exists
     } else {
-      navigate("/patientDetails"); // Navigate to patientDetails if unique_id doesn't exist
-      console.log("heyyyy");
+      navigate("/patientDetails"); // Go to patientDetails if it doesn’t
     }
   };
 
@@ -170,7 +167,7 @@ const Header = () => {
 
       console.log("Language sent:", language);
 
-      const response = await fetch("https://www.backend.e-clinic.ai/api/v1/chat/bot", {
+      const response = await fetch("http://192.168.10.131:3000/api/v1/chat/bot", {
         method: "POST",
         body: formData,
       });
@@ -200,8 +197,8 @@ const Header = () => {
 
   // Initial setup
   useEffect(() => {
-    const id = localStorage.getItem("unique_id");
-    console.log("Unique ID from localStorage:", id);
+    const id = localStorage.getItem("patientDetails");
+    console.log(id);
 
     if (!id) {
       setShowNotification(true);
@@ -277,7 +274,7 @@ const Header = () => {
                 {t("Hi")}
               </h1>
             </div>
-            <div className="mt-8 md:mt-32 text-center text-[18px] md:text-[23px] font-[500]">
+            <div className="mt-8  text-center text-[18px] md:text-[23px] font-[500]">
               <h1 className="py-1 md:py-2">{t("I’m your AI agent from")}</h1>
               <h1 className="text-[#81db58] py-1 md:py-2">{t("E-Hospital")}</h1>
             </div>

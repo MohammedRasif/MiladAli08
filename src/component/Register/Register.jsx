@@ -77,7 +77,7 @@ const Register = () => {
             const data = await response.json();
             console.log('Registration successful:', data);
             localStorage.setItem('userEmail', formData.email);
-            localStorage.setItem('unique_id',data.unique_id)
+            // localStorage.setItem('unique_id',data.unique_id)
             navigate('/verification_sign_up'); // Redirect to verification_sign_up route
         } catch (err) {
             setError(err.message || 'Registration failed. Please try again.');
@@ -90,10 +90,10 @@ const Register = () => {
     return (
         <div className="min-h-screen flex items-center justify-center px-4 py-12 bg-gray-50">
             <div className="w-full max-w-6xl flex flex-col md:flex-row items-center gap-8">
-                <div className="w-full md:w-1/2 flex justify-center">
+                <div className="w-full md:w-1/2 flex justify-center ">
                     <img
                         src="https://res.cloudinary.com/dfsu0cuvb/image/upload/v1741106696/Blue_Green_White_Simple_Modern_Medical_Logo-removebg-preview_r3wqv9.png"
-                        className="w-full max-w-[483px] h-auto"
+                        className="w-full max-w-[483px] h-auto hidden md:block"
                         alt="Register Image"
                     />
                 </div>
@@ -199,11 +199,11 @@ const Register = () => {
                             type="submit"
                             disabled={!passwordsMatch || loading}
                             className={`mt-8 w-full h-12 rounded-full text-base text-[#FAF1E6] transition-colors duration-200 ${passwordsMatch && !loading
-                                ? 'bg-[#81db58] hover:bg-green-400 '
-                                : 'bg-[#81db58] hover:bg-green-400 cursor-pointer'
+                                ? 'bg-[#81db58] hover:bg-green-400 cursor-pointer'
+                                : 'bg-[#81db58] hover:bg-green-400 '
                                 }`}
                         >
-                            {loading ? t("signing_up") : t("sign_up")}
+                            {loading ? t("sign_up") : t("sign_up")}
                         </button>
 
                         <p className="mt-4 text-sm text-center text-gray-700">

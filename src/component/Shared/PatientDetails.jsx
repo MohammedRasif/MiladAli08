@@ -16,8 +16,13 @@ const PatientDetailsForm = () => {
     reported_symptoms: "",
     additional_health_conditions: "",
     country: "",
-    family_history:"",
+    family_history: "",
+    unique_id: "",
   });
+
+  // console.log(setFormData);
+  // console.log(formData);
+
 
   const navigate = useNavigate();
   const { t } = useTranslation();
@@ -30,71 +35,10 @@ const PatientDetailsForm = () => {
     }));
   };
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-
-  //   // Transform form data to match API structure
-  //   const transformedData = {
-  //     age: parseInt(formData.age, 10),
-  //     sex: formData.sex,
-  //     diabetes: formData.diabetes === "Yes",
-  //     high_blood_pressure: formData.high_blood_pressure === "Yes",
-  //     taking_medications: formData.taking_medications === "Yes",
-  //     medications: formData.list_of_medications || "",
-  //     reported_symptoms: formData.reported_symptoms || "",
-  //     additional_health_conditions: formData.additional_health_conditions || "",
-  //     country: formData.country,
-  //     family_history:formData.family_history,
-  //     // ip_address: await fetchUserIP() || "Unknown",
-  //   };
-
-  //   console.log("Form submitted data:", transformedData); // Log the submitted data
-
-  //   try {
-  //     const response = await fetch("https://www.backend.e-clinic.ai/api/v1/patient/details/create", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify(transformedData),
-  //     });
-
-  //     if (!response.ok) {
-  //       throw new Error(`Network response was not ok. Status: ${response.status}`);
-  //     }
-
-  //     const result = await response.json();
-  //     console.log("Success - Parsed Result:", result);
-
-  //     const uniqueId = result.unique_id;
-  //     if (uniqueId) {
-  //       const updatedPatientDetails = {
-  //         ...transformedData,
-  //         id: uniqueId,
-  //       };
-  //       localStorage.setItem("unique_id",uniqueId)
-  //       console.log("Saved to localStorage with unique_id:", updatedPatientDetails);
-  //     } else {
-  //       console.warn("No unique_id found in API response");
-  //       localStorage.setItem("patientDetails", JSON.stringify(transformedData));
-  //     }
-
-  //     // Construct URL with form data
-  //     const queryParams = new URLSearchParams(transformedData).toString();
-  //     const url = `http://your-api-endpoint.com/patient?${queryParams}`;
-  //     console.log("Generated URL:", url);
-
-  //     navigate("/");
-  //   } catch (error) {
-  //     console.error("Error:", error.message);
-  //     alert(t("An error occurred while saving patient details. Please try again."));
-  //   }
-  // };
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+    const id = localStorage.getItem("unique_id")
     const transformedData = {
       age: parseInt(formData.age, 10),
       sex: formData.sex,
@@ -106,26 +50,28 @@ const PatientDetailsForm = () => {
       additional_health_conditions: formData.additional_health_conditions || "",
       country: formData.country,
       family_history: formData.family_history,
+      unique_id: id,
     };
-  
+
     console.log("Form submitted data:", transformedData);
-  
+
     try {
-      const response = await fetch("https://www.backend.e-clinic.ai/api/v1/patient/details/create", {
+      const response = await fetch("http://192.168.10.131:3000/api/v1/patient/details/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(transformedData),
       });
-  
+
       if (!response.ok) {
         throw new Error(`Network response was not ok. Status: ${response.status}`);
       }
-  
+
       const result = await response.json();
       console.log("Success - Parsed Result:", result);
-  
+      console.log("Success - Parsed response:", response);
+
       const uniqueId = result.unique_id;
       if (uniqueId) {
         const updatedPatientDetails = {
@@ -154,15 +100,16 @@ const PatientDetailsForm = () => {
       transition: { type: "spring", stiffness: 50, damping: 10, duration: 1.5 },
     },
   };
-  
 
-  const Fetchpatient = async()=>{
+
+  const Fetchpatient = async () => {
     const id = localStorage.getItem("unique_id")
+    console.log(id);
     try {
-      const response = await fetch(`https://www.backend.e-clinic.ai/api/v1/patient/info/${id}`);
+      const response = await fetch(`http://192.168.10.131:3000/api/v1/patient/info/${id}`);
       const data = await response.json();
-     
-      
+
+
       setFormData(
         {
           age: data.age,
@@ -174,10 +121,11 @@ const PatientDetailsForm = () => {
           reported_symptoms: data.reported_symptoms,
           additional_health_conditions: data.additional_health_conditions,
           country: data.country,
-          family_history:data.family_history,
+          family_history: data.family_history,
+          unique_id: id,
         }
       )
-     
+
     } catch (error) {
       console.error("Error fetching data:", error);
       return null;
@@ -185,7 +133,7 @@ const PatientDetailsForm = () => {
   }
 
   useEffect(() => {
-    
+
     Fetchpatient()
   }, []);
 
@@ -243,13 +191,13 @@ const PatientDetailsForm = () => {
               </select>
             </div>
 
-           
+
           </div>
 
           {/* Diabetes Field */}
           <div className="flex items-center space-x-3">
             {/* High Blood Pressure Field */}
-            
+
 
             <div className="w-full">
               <label className="block text-sm font-semibold text-gray-700">{t("Are They Taking Any Medications?")}</label>
@@ -278,7 +226,7 @@ const PatientDetailsForm = () => {
             />
           </div>
           <div className="flex items-center space-x-3">
-          <div className="w-1/2">
+            <div className="w-1/2">
               <label className="block text-sm font-semibold text-gray-700">{t("High Blood Pressure")}</label>
               <select
                 name="high_blood_pressure"
@@ -293,7 +241,7 @@ const PatientDetailsForm = () => {
               </select>
             </div>
 
-          <div className="w-1/2 lg:mt-0 md:mt-0 mt-5">
+            <div className="w-1/2 lg:mt-0 md:mt-0 mt-5">
               <label className="block text-sm font-semibold text-gray-700">{t("Diabetes")}</label>
               <select
                 name="diabetes"
@@ -338,7 +286,7 @@ const PatientDetailsForm = () => {
           </div>
 
           {/* List of Medications Field */}
-         
+
 
           {/* Reported Symptoms Field */}
           <div>
@@ -352,17 +300,17 @@ const PatientDetailsForm = () => {
             />
           </div>
           <div className="w-full">
-              <label className="block text-sm font-semibold text-gray-700">{t("Allergies or Family History")}</label>
-              <input
-                type="text"
-                name="family_history"
-                value={formData.family_history}
-                onChange={handleChange}
-                placeholder={t("Enter here")}
-                className="mt-2 block w-full p-[8px] border border-gray-300 bg-gray-50 rounded-lg focus:ring-2 focus:ring-[#006400] focus:border-transparent outline-none transition duration-200"
-                
-              />
-            </div>
+            <label className="block text-sm font-semibold text-gray-700">{t("Allergies or Family History")}</label>
+            <input
+              type="text"
+              name="family_history"
+              value={formData.family_history}
+              onChange={handleChange}
+              placeholder={t("Enter here")}
+              className="mt-2 block w-full p-[8px] border border-gray-300 bg-gray-50 rounded-lg focus:ring-2 focus:ring-[#006400] focus:border-transparent outline-none transition duration-200"
+
+            />
+          </div>
           {/* Submit Button */}
           <button
             type="submit"
