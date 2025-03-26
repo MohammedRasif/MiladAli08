@@ -21,7 +21,9 @@ const Navbar = () => {
 
     if (!accessToken) {
       localStorage.removeItem("access_token");
+      localStorage.removeItem("patientDetails");
       localStorage.removeItem("unique_id");
+     
       navigate("/login");
       return;
     }
@@ -46,6 +48,8 @@ const Navbar = () => {
     } finally {
       localStorage.removeItem("access_token");
       localStorage.removeItem("unique_id");
+      localStorage.removeItem("patientDetails");
+
       navigate("/login");
     }
   };
