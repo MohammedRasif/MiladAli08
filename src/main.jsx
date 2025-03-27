@@ -23,47 +23,47 @@ import RegisterVerification from "./Root/RegisterVerification.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Roots />,  
+    element: <Roots />,
     // errorElement: <ErrorPage />,
     children: [
       {
-        path: "/",  
-        element:<Home/>
+        path: "/",
+        element: <Home />
       },
       {
-        path: "/patientDetails",  
+        path: "/patientDetails",
         element: <PrivateRoutes><PatientDetails /></PrivateRoutes>,
       },
       {
-        path: "/disclaimer",  
+        path: "/disclaimer",
         element: <PrivateRoutes><Disclaimer /></PrivateRoutes>,
       },
       {
-        path: "/login",  
+        path: "/login",
         element: <Login />,
       },
       {
-        path: "/register",  
+        path: "/register",
         element: <Register />,
       },
       {
-        path: "/forgetPassword",  
+        path: "/forgetPassword",
         element: <ForgetPassword />,
       },
       {
-        path: "/verification",  
+        path: "/verification",
         element: <VerificationRoute><Verification /></VerificationRoute>,
       },
       {
-        path: "/setNewPassoword",  
+        path: "/setNewPassoword",
         element: <SetNewPasswordRoute><SetNewPassword /></SetNewPasswordRoute>,
       },
       {
-        path: "/verification_Sign_up",  
+        path: "/verification_Sign_up",
         element: <RegisterVerification><VerificationSign /></RegisterVerification>,
       },
       {
-        path: "/congratulation",  
+        path: "/congratulation",
         element: <Congratulation />,
       },
     ],
@@ -71,9 +71,9 @@ const router = createBrowserRouter([
 ]);
 
 createRoot(document.getElementById("root")).render(
- 
-   
-    <RouterProvider router={router} />
-    
-  
+
+
+  <RouterProvider router={router} />
+
+
 );

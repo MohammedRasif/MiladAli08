@@ -102,6 +102,27 @@ const Header = () => {
   const chatContainerRef = useRef(null);
   const fileInputRef = useRef(null);
 
+  // const fetchChatData = useCallback(async (id) => {
+  //   try {
+  //     const response = await fetch(`http://192.168.10.131:3000/api/v1/chat/list/${id}`, {
+  //       method: "GET",
+  //       headers: { "Content-Type": "application/json" },
+  //     });
+
+  //     if (!response.ok) throw new Error(`Server error: ${response.status}`);
+  //     const chat = await response.json();
+  //     console.log("Chat data:", chat.data);
+
+  //     setMessages(chat.data || []);
+  //     setShowNotification(false);
+  //     setHasSentMessage(!!chat.data?.length);
+  //   } catch (error) {
+  //     console.error("Error fetching chat:", error);
+  //   }
+  // }, []);
+
+  //------------------------------------------
+
   const fetchChatData = useCallback(async (id) => {
     try {
       const response = await fetch(`http://192.168.10.131:3000/api/v1/chat/list/${id}`, {
@@ -111,8 +132,8 @@ const Header = () => {
 
       if (!response.ok) throw new Error(`Server error: ${response.status}`);
       const chat = await response.json();
-      console.log("Chat data:", chat.data);
 
+      // Set the complete chat history
       setMessages(chat.data || []);
       setShowNotification(false);
       setHasSentMessage(!!chat.data?.length);
@@ -121,8 +142,21 @@ const Header = () => {
     }
   }, []);
 
+
+
+  const id = localStorage.getItem("unique_id")
+  useEffect(() => {
+    console.log("id", id);
+
+    if (id) {
+      fetchChatData(id);
+    }
+  }, [id, fetchChatData]);
+
+  // -------------------------------------
+
   const handleCheck = () => {
-    const patientDetails = localStorage.getItem("patientDetails");
+    const patientDetails = localStorage.getItem("access_token");
     if (patientDetails) {
       navigate("/"); // Go to home if patientDetails exists
     } else {
@@ -143,41 +177,88 @@ const Header = () => {
   };
 
   // Handle form submission
+  // const handleSendMessage = async (event) => {
+  //   event.preventDefault();
+  //   if (!isInputActive || (!inputText.trim() && !file)) return;
+
+  //   const userMessage = inputText.trim();
+  //   const newMessages = [...messages, { text: userMessage || "File uploaded", sender: "user" }];
+  //   setMessages(newMessages);
+  //   setInputText("");
+  //   setIsLoading(true);
+
+  //   try {
+  //     const uniqueId = localStorage.getItem("unique_id");
+  //     if (!uniqueId) throw new Error("Unique ID not found");
+
+  //     const language = localStorage.getItem("language"); // Fetch language from localStorage
+
+  //     const formData = new FormData();
+  //     formData.append("question", userMessage || "File uploaded");
+  //     formData.append("unique_id", uniqueId);
+  //     formData.append("english", language); // Send the raw language value
+  //     if (file) formData.append("pdf_file", file);
+
+  //     console.log("Language sent:", language);
+
+  //     const response = await fetch("http://192.168.10.131:3000/api/v1/chat/bot", {
+  //       method: "POST",
+  //       body: formData,
+  //     });
+  //     console.log(formData);
+
+  //     if (!response.ok) throw new Error("Network response was not ok");
+  //     const result = await response.json();
+
+  //     if (result.success && result.data?.length > 0) {
+  //       await fetchChatData(uniqueId);
+  //     } else {
+  //       throw new Error("Invalid API response");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error sending message:", error);
+  //     setMessages((prev) => [
+  //       ...prev,
+  //       { text: t("Failed to get a response from the AI. Please try again."), sender: "ai" },
+  //     ]);
+  //   } finally {
+  //     setIsLoading(false);
+  //     setFile(null);
+  //     setFileName(null);
+  //     if (fileInputRef.current) fileInputRef.current.value = "";
+  //   }
+  // };
+
+  // --------------------------------------------------
   const handleSendMessage = async (event) => {
     event.preventDefault();
     if (!isInputActive || (!inputText.trim() && !file)) return;
 
-    const userMessage = inputText.trim();
-    const newMessages = [...messages, { text: userMessage || "File uploaded", sender: "user" }];
-    setMessages(newMessages);
-    setInputText("");
     setIsLoading(true);
+    const userMessage = inputText.trim();
 
     try {
       const uniqueId = localStorage.getItem("unique_id");
       if (!uniqueId) throw new Error("Unique ID not found");
 
-      const language = localStorage.getItem("language"); // Fetch language from localStorage
-
+      const language = localStorage.getItem("language");
       const formData = new FormData();
       formData.append("question", userMessage || "File uploaded");
       formData.append("unique_id", uniqueId);
-      formData.append("english", language); // Send the raw language value
+      formData.append("english", language);
       if (file) formData.append("pdf_file", file);
-
-      console.log("Language sent:", language);
 
       const response = await fetch("http://192.168.10.131:3000/api/v1/chat/bot", {
         method: "POST",
         body: formData,
       });
-      console.log(formData);
 
       if (!response.ok) throw new Error("Network response was not ok");
       const result = await response.json();
 
       if (result.success && result.data?.length > 0) {
-        await fetchChatData(uniqueId);
+        // Replace the entire messages state with the complete history from the API
+        setMessages(result.data);
       } else {
         throw new Error("Invalid API response");
       }
@@ -189,6 +270,7 @@ const Header = () => {
       ]);
     } finally {
       setIsLoading(false);
+      setInputText("");
       setFile(null);
       setFileName(null);
       if (fileInputRef.current) fileInputRef.current.value = "";
@@ -207,7 +289,7 @@ const Header = () => {
       setIsInputActive(true);
       fetchChatData(id);
     }
-
+    
     // Set Arabic ("ar") as the default language if not present in localStorage
     const savedLanguage = localStorage.getItem("language");
     if (!savedLanguage) {
