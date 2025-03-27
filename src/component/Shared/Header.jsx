@@ -102,24 +102,6 @@ const Header = () => {
   const chatContainerRef = useRef(null);
   const fileInputRef = useRef(null);
 
-  // const fetchChatData = useCallback(async (id) => {
-  //   try {
-  //     const response = await fetch(`http://192.168.10.131:3000/api/v1/chat/list/${id}`, {
-  //       method: "GET",
-  //       headers: { "Content-Type": "application/json" },
-  //     });
-
-  //     if (!response.ok) throw new Error(`Server error: ${response.status}`);
-  //     const chat = await response.json();
-  //     console.log("Chat data:", chat.data);
-
-  //     setMessages(chat.data || []);
-  //     setShowNotification(false);
-  //     setHasSentMessage(!!chat.data?.length);
-  //   } catch (error) {
-  //     console.error("Error fetching chat:", error);
-  //   }
-  // }, []);
 
   //------------------------------------------
 
@@ -156,7 +138,7 @@ const Header = () => {
   // -------------------------------------
 
   const handleCheck = () => {
-    const patientDetails = localStorage.getItem("access_token");
+    const patientDetails = localStorage.getItem("pationDetails");
     if (patientDetails) {
       navigate("/"); // Go to home if patientDetails exists
     } else {
@@ -176,58 +158,47 @@ const Header = () => {
     }
   };
 
-  // Handle form submission
-  // const handleSendMessage = async (event) => {
-  //   event.preventDefault();
-  //   if (!isInputActive || (!inputText.trim() && !file)) return;
+   //-----------------------------------------
+   useEffect(() => {
+    const page_url = window.location.href;
 
-  //   const userMessage = inputText.trim();
-  //   const newMessages = [...messages, { text: userMessage || "File uploaded", sender: "user" }];
-  //   setMessages(newMessages);
-  //   setInputText("");
-  //   setIsLoading(true);
+    const unique_id = localStorage.getItem("unique_id");
+    const postData = {
+      page_url, 
+      unique_id,
+    };
+    console.log(postData);
 
-  //   try {
-  //     const uniqueId = localStorage.getItem("unique_id");
-  //     if (!uniqueId) throw new Error("Unique ID not found");
+    const sendDataToDashboard = async () => {
+      try {
+        const response = await fetch(
+          "http://192.168.10.131:3000/api/v1/dashboard/activity/",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              
+            },
+            body: JSON.stringify(postData), 
+          }
+        );
 
-  //     const language = localStorage.getItem("language"); // Fetch language from localStorage
+        if (!response.ok) {
+          throw new Error(`API Error: ${response.status}`);
+        }
 
-  //     const formData = new FormData();
-  //     formData.append("question", userMessage || "File uploaded");
-  //     formData.append("unique_id", uniqueId);
-  //     formData.append("english", language); // Send the raw language value
-  //     if (file) formData.append("pdf_file", file);
+        const result = await response.json();
+        console.log("API Response:", result);
+      } catch (error) {
+        console.error("Failed to send data:", error);
+      }
+    };
 
-  //     console.log("Language sent:", language);
+    sendDataToDashboard();
+  }, []);
 
-  //     const response = await fetch("http://192.168.10.131:3000/api/v1/chat/bot", {
-  //       method: "POST",
-  //       body: formData,
-  //     });
-  //     console.log(formData);
 
-  //     if (!response.ok) throw new Error("Network response was not ok");
-  //     const result = await response.json();
 
-  //     if (result.success && result.data?.length > 0) {
-  //       await fetchChatData(uniqueId);
-  //     } else {
-  //       throw new Error("Invalid API response");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error sending message:", error);
-  //     setMessages((prev) => [
-  //       ...prev,
-  //       { text: t("Failed to get a response from the AI. Please try again."), sender: "ai" },
-  //     ]);
-  //   } finally {
-  //     setIsLoading(false);
-  //     setFile(null);
-  //     setFileName(null);
-  //     if (fileInputRef.current) fileInputRef.current.value = "";
-  //   }
-  // };
 
   // --------------------------------------------------
   const handleSendMessage = async (event) => {
@@ -279,17 +250,19 @@ const Header = () => {
 
   // Initial setup
   useEffect(() => {
-    const id = localStorage.getItem("patientDetails");
+    const id = localStorage.getItem("pationDetails");
     console.log(id);
 
     if (!id) {
       setShowNotification(true);
-      setIsInputActive(false);
+      setIsInputActive(true);
     } else {
       setIsInputActive(true);
+      // setShowNotification(false);
+
       fetchChatData(id);
     }
-    
+
     // Set Arabic ("ar") as the default language if not present in localStorage
     const savedLanguage = localStorage.getItem("language");
     if (!savedLanguage) {
@@ -380,9 +353,11 @@ const Header = () => {
                 <button
                   className={`text-white bg-[#81db58] rounded-md px-3 py-1 md:px-4 mt-3 md:mt-5 text-sm md:text-base w-full max-w-[200px] md:max-w-none ${!isChecked ? 'opacity-50 cursor-not-allowed' : ''}`}
                   disabled={!isChecked} // Disable button if checkbox is not checked
+                 
                 >
                   {t("Got It")}
                 </button>
+
               </Tappable>
               {/* Checkbox, shortened text, and Terms of Use on the same line */}
               <div className="mt-3 md:mt-5 text-sm md:text-base  items-center justify-center space-x-2">
@@ -567,5 +542,3 @@ const Header = () => {
 };
 
 export default Header;
-
-

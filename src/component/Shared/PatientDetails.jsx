@@ -32,6 +32,48 @@ const PatientDetailsForm = () => {
     }));
   };
 
+  //-----------------------------------------
+  useEffect(() => {
+    const page_url = window.location.href;
+
+    const unique_id = localStorage.getItem("unique_id");
+    const postData = {
+      page_url, 
+      unique_id,
+    };
+    console.log(postData);
+
+    const sendDataToDashboard = async () => {
+      try {
+        const response = await fetch(
+          "http://192.168.10.131:3000/api/v1/dashboard/activity/",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              
+            },
+            body: JSON.stringify(postData), 
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error(`API Error: ${response.status}`);
+        }
+
+        const result = await response.json();
+        console.log("API Response:", result);
+      } catch (error) {
+        console.error("Failed to send data:", error);
+      }
+    };
+
+    sendDataToDashboard();
+  }, []);
+
+
+
+
   const Fetchpatient = async () => {
     const id = localStorage.getItem("unique_id");
     if (!id) {
@@ -320,7 +362,7 @@ const PatientDetailsForm = () => {
           {/* Submit/Update Button */}
           <button
             type="submit"
-            className="w-full bg-[#81db58] text-white py-3 rounded-lg hover:bg-green-700 transition duration-300 font-semibold shadow-md hover:shadow-lg mt-6"
+            className="w-full bg-[#81db58] text-white py-3 rounded-lg hover:bg-green-700 transition duration-300 font-semibold shadow-md hover:shadow-lg mt-6 cursor-pointer"
           >
             {hasData ? t("Update") : t("Submit")}
           </button>
