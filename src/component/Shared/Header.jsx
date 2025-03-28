@@ -114,11 +114,13 @@ const Header = () => {
 
       if (!response.ok) throw new Error(`Server error: ${response.status}`);
       const chat = await response.json();
+      if (chat) {
+
+        setMessages(chat.data || []);
+        setHasSentMessage(!!chat.data?.length);
+      }
 
       // Set the complete chat history
-      setMessages(chat.data || []);
-      setShowNotification(false);
-      setHasSentMessage(!!chat.data?.length);
     } catch (error) {
       console.error("Error fetching chat:", error);
     }
@@ -158,13 +160,13 @@ const Header = () => {
     }
   };
 
-   //-----------------------------------------
-   useEffect(() => {
+  //-----------------------------------------
+  useEffect(() => {
     const page_url = window.location.href;
 
     const unique_id = localStorage.getItem("unique_id");
     const postData = {
-      page_url, 
+      page_url,
       unique_id,
     };
     console.log(postData);
@@ -177,9 +179,9 @@ const Header = () => {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-              
+
             },
-            body: JSON.stringify(postData), 
+            body: JSON.stringify(postData),
           }
         );
 
@@ -204,29 +206,38 @@ const Header = () => {
   const handleSendMessage = async (event) => {
     event.preventDefault();
     if (!isInputActive || (!inputText.trim() && !file)) return;
-
+  
+    // Create user message object immediately
+    const userMessage = {
+      text: inputText.trim() || "File uploaded",
+      sender: "user",
+      timestamp: new Date().toISOString() // Add timestamp for unique key
+    };
+  
+    // Add user message to UI immediately
+    setMessages(prev => [...prev, userMessage]);
     setIsLoading(true);
-    const userMessage = inputText.trim();
-
+    setInputText("");
+  
     try {
       const uniqueId = localStorage.getItem("unique_id");
       if (!uniqueId) throw new Error("Unique ID not found");
-
+  
       const language = localStorage.getItem("language");
       const formData = new FormData();
-      formData.append("question", userMessage || "File uploaded");
+      formData.append("question", userMessage.text);
       formData.append("unique_id", uniqueId);
       formData.append("english", language);
       if (file) formData.append("pdf_file", file);
-
+  
       const response = await fetch("https://backend.e-clinic.ai/api/v1/chat/bot", {
         method: "POST",
         body: formData,
       });
-
+  
       if (!response.ok) throw new Error("Network response was not ok");
       const result = await response.json();
-
+  
       if (result.success && result.data?.length > 0) {
         // Replace the entire messages state with the complete history from the API
         setMessages(result.data);
@@ -235,13 +246,16 @@ const Header = () => {
       }
     } catch (error) {
       console.error("Error sending message:", error);
-      setMessages((prev) => [
+      setMessages(prev => [
         ...prev,
-        { text: t("Failed to get a response from the AI. Please try again."), sender: "ai" },
+        { 
+          text: t("Failed to get a response from the AI. Please try again."), 
+          sender: "ai",
+          timestamp: new Date().toISOString()
+        },
       ]);
     } finally {
       setIsLoading(false);
-      setInputText("");
       setFile(null);
       setFileName(null);
       if (fileInputRef.current) fileInputRef.current.value = "";
@@ -250,19 +264,6 @@ const Header = () => {
 
   // Initial setup
   useEffect(() => {
-    const id = localStorage.getItem("patientDetails");
-    console.log(id);
-
-    if (!id) {
-      setShowNotification(true);
-      setIsInputActive(true);
-    } else {
-      setIsInputActive(true);
-      // setShowNotification(false);
-
-      fetchChatData(id);
-    }
-
     // Set Arabic ("ar") as the default language if not present in localStorage
     const savedLanguage = localStorage.getItem("language");
     if (!savedLanguage) {
@@ -271,7 +272,23 @@ const Header = () => {
     const initialLanguage = savedLanguage || "ar"; // Use saved language or "ar"
     i18n.changeLanguage(initialLanguage); // Apply the initial language
     setIsEnglish(initialLanguage === "en"); // Update isEnglish state
-  }, [fetchChatData, i18n.language]);
+  }, [i18n, i18n.language]);
+
+
+  useEffect(() => {
+    const patient = localStorage.getItem("patientDetails");
+    console.log("Patient Details:", patient);
+  
+    // Check if patient exists and is not an empty string
+    if (!patient || patient === "") {
+      setShowNotification(true); // Show notification if no patient details
+      setIsInputActive(false);  // Disable input if no patient details
+    } else {
+      setShowNotification(false); // Hide notification if patient details exist
+      setIsInputActive(true);    // Enable input if patient details exist
+      fetchChatData(id);         // Fetch chat data
+    }
+  }, [fetchChatData, id]);
 
   // Save messages to localStorage
   useEffect(() => {
@@ -353,7 +370,7 @@ const Header = () => {
                 <button
                   className={`text-white bg-[#81db58] rounded-md px-3 py-1 md:px-4 mt-3 md:mt-5 text-sm md:text-base w-full max-w-[200px] md:max-w-none ${!isChecked ? 'opacity-50 cursor-not-allowed' : ''}`}
                   disabled={!isChecked} // Disable button if checkbox is not checked
-                 
+
                 >
                   {t("Got It")}
                 </button>

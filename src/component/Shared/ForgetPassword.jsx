@@ -52,7 +52,7 @@ const ForgetPassword = () => {
 
             if (!response.ok) {
                 const errorData = await response.json();
-                throw new Error(errorData.message || errorData.email || 'Reset request failed');
+                throw new Error(errorData.message || errorData.email || 'No user found with the provided email address.');
             }
 
             const data = await response.json();
@@ -66,7 +66,8 @@ const ForgetPassword = () => {
 
             setError(null);
         } catch (err) {
-            setError(err.message || 'Reset request failed. Please try again.');
+            // setError(err.message || 'Reset request failed. Please try again.');
+            setError(err.message || 'No user found with the provided email address.');
             console.error('Reset request error:', err);
         } finally {
             setLoading(false);
@@ -112,8 +113,8 @@ const ForgetPassword = () => {
                             type="submit"
                             disabled={loading}
                             className={`mt-8 w-full h-12 rounded-full text-base text-[#FAF1E6] uppercase transition-colors duration-200 ${loading
-                                    ? 'bg-[#81db58] hover:bg-green-400'
-                                    : 'bg-[#81db58] hover:bg-green-400 cursor-pointer'
+                                ? 'bg-[#81db58] hover:bg-green-400'
+                                : 'bg-[#81db58] hover:bg-green-400 cursor-pointer'
                                 }`}
                         >
                             {loading ? (

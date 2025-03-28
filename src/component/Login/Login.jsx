@@ -167,8 +167,8 @@ const Login = () => {
                             type="submit"
                             disabled={loading}
                             className={`mt-8 w-full h-12 rounded-full text-base text-[#FAF1E6] transition-colors duration-200 ${loading
-                                    ? 'bg-[#81db58] hover:bg-green-400 cursor-pointer'
-                                    : 'bg-[#81db58] hover:bg-green-400 '
+                                    ? 'bg-[#81db58] hover:bg-green-400 '
+                                    : 'bg-[#81db58] hover:bg-green-400 cursor-pointer'
                                 }`}
                         >
                             {loading ? (

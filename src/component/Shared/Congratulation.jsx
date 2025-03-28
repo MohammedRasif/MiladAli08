@@ -49,11 +49,11 @@ const Congratulation = () => {
 
                     {/* Home Button */}
                     <div className="mt-6 md:mt-10 mb-8">
-                        <NavLink to="/">
+                        <NavLink to="/login">
                             <button
                                 className="   h-12 ] rounded-full px-5 py-3 bg-[#81db58] hover:bg-green-400 text-[#FAF1E6] font-medium text-sm md:text-base transition-colors duration-200"
                             >
-                                {t("home")}
+                                {t("login")}
                             </button>
                         </NavLink>
                     </div>
