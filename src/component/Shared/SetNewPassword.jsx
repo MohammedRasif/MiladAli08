@@ -65,7 +65,7 @@ const SetNewPassword = () => {
         }
 
         try {
-            const response = await fetch('http://192.168.10.131:3000/api/v1/accounts/reset-password/', {
+            const response = await fetch('https://backend.e-clinic.ai/api/v1/accounts/reset-password/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

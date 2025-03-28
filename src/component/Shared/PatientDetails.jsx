@@ -46,7 +46,7 @@ const PatientDetailsForm = () => {
     const sendDataToDashboard = async () => {
       try {
         const response = await fetch(
-          "http://192.168.10.131:3000/api/v1/dashboard/activity/",
+          "https://backend.e-clinic.ai/api/v1/dashboard/activity/",
           {
             method: "POST",
             headers: {
@@ -82,7 +82,7 @@ const PatientDetailsForm = () => {
     }
 
     try {
-      const response = await fetch(`http://192.168.10.131:3000/api/v1/patient/info/${id}`);
+      const response = await fetch(`https://backend.e-clinic.ai/api/v1/patient/info/${id}`);
       if (!response.ok) {
         throw new Error(`Network response was not ok. Status: ${response.status}`);
       }
@@ -136,11 +136,11 @@ const PatientDetailsForm = () => {
 
     try {
       const url = hasData
-        ? `http://192.168.10.131:3000/api/v1/patient/details/update/${id}` // Update endpoint if data exists
-        : "http://192.168.10.131:3000/api/v1/patient/details/create"; // Create endpoint if no data
+        ? "https://backend.e-clinic.ai/api/v1/patient/details/create" // Update endpoint if data exists
+        : "https://backend.e-clinic.ai/api/v1/patient/details/create"; // Create endpoint if no data
 
       const response = await fetch(url, {
-        method: hasData ? "PUT" : "POST", // Use PUT for update, POST for create
+        method: hasData ? "POST" : "POST", // Use PUT for update, POST for create
         headers: {
           "Content-Type": "application/json",
         },

@@ -29,7 +29,7 @@ const Navbar = () => {
     }
 
     try {
-      const response = await fetch("http://192.168.10.131:3000/api/v1/accounts/logout/", {
+      const response = await fetch("https://backend.e-clinic.ai/api/v1/accounts/logout/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -233,12 +233,7 @@ const Navbar = () => {
 
       {/* Language Toggle and Login/Logout for Desktop */}
       <div className="hidden md:flex space-x-3 mt-2 md:mt-0">
-        <button
-          className="text-md font-semibold bg-[#81db58] rounded-md px-4 py-2 cursor-pointer text-white"
-          onClick={isLoggedIn ? handleLogout : handleLogin}
-        >
-          {isLoggedIn ? t("logout") : t("login")}
-        </button>
+        
         <button
           onClick={toggleLanguage}
           className="flex items-center justify-between border border-gray-300 rounded-full px-2 py-1 w-[140px] h-[40px] relative overflow-hidden shadow-md hover:shadow-lg transition-all duration-300 bg-white"
@@ -262,6 +257,12 @@ const Navbar = () => {
           >
             English
           </span>
+        </button>
+        <button
+          className="text-md font-semibold bg-[#81db58] rounded-md px-4 py-2 cursor-pointer text-white"
+          onClick={isLoggedIn ? handleLogout : handleLogin}
+        >
+          {isLoggedIn ? t("logout") : t("login")}
         </button>
       </div>
 

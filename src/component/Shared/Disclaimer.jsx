@@ -26,6 +26,46 @@ const Disclaimer = () => {
     navigate("/"); // Navigate back to Home
   };
 
+   //-----------------------------------------
+   useEffect(() => {
+    const page_url = window.location.href;
+
+    const unique_id = localStorage.getItem("unique_id");
+    const postData = {
+      page_url, 
+      unique_id,
+    };
+    console.log(postData);
+
+    const sendDataToDashboard = async () => {
+      try {
+        const response = await fetch(
+          "https://backend.e-clinic.ai/api/v1/dashboard/activity/",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              
+            },
+            body: JSON.stringify(postData), 
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error(`API Error: ${response.status}`);
+        }
+
+        const result = await response.json();
+        console.log("API Response:", result);
+      } catch (error) {
+        console.error("Failed to send data:", error);
+      }
+    };
+
+    sendDataToDashboard();
+  }, []);
+
+
   return (
     <motion.div
       className="fixed inset-0 flex justify-center items-center z-50"

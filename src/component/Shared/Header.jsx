@@ -56,7 +56,7 @@ const Header = () => {
 
       console.log("Language sent:", language);
 
-      const response = await fetch("http://192.168.10.131:3000/api/v1/chat/bot", {
+      const response = await fetch("https://backend.e-clinic.ai/api/v1/chat/bot", {
         method: "POST",
         body: formData,
       });
@@ -107,7 +107,7 @@ const Header = () => {
 
   const fetchChatData = useCallback(async (id) => {
     try {
-      const response = await fetch(`http://192.168.10.131:3000/api/v1/chat/list/${id}`, {
+      const response = await fetch(`https://backend.e-clinic.ai/api/v1/chat/list/${id}`, {
         method: "GET",
         headers: { "Content-Type": "application/json" },
       });
@@ -172,7 +172,7 @@ const Header = () => {
     const sendDataToDashboard = async () => {
       try {
         const response = await fetch(
-          "http://192.168.10.131:3000/api/v1/dashboard/activity/",
+          "https://backend.e-clinic.ai/api/v1/dashboard/activity/",
           {
             method: "POST",
             headers: {
@@ -219,7 +219,7 @@ const Header = () => {
       formData.append("english", language);
       if (file) formData.append("pdf_file", file);
 
-      const response = await fetch("http://192.168.10.131:3000/api/v1/chat/bot", {
+      const response = await fetch("https://backend.e-clinic.ai/api/v1/chat/bot", {
         method: "POST",
         body: formData,
       });
@@ -250,7 +250,7 @@ const Header = () => {
 
   // Initial setup
   useEffect(() => {
-    const id = localStorage.getItem("pationDetails");
+    const id = localStorage.getItem("patientDetails");
     console.log(id);
 
     if (!id) {

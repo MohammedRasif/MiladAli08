@@ -89,7 +89,7 @@ const VerificationSign = () => {
         setError(null);
 
         try {
-            const response = await fetch('http://192.168.10.131:3000/api/v1/accounts/activate/', {
+            const response = await fetch('https://backend.e-clinic.ai/api/v1/accounts/activate/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
