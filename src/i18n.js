@@ -132,13 +132,7 @@ const resources = {
       "disclaimer_note": "Our AI health assistance helps users better understand their symptoms, but it is NOT a replacement for a licensed doctor.",
       "contact_us": "For questions or inquiries, contact us at:",
       "contact_email": "info@e-clinic.ai",
-
-
-
-
-
-
-
+      "loading":"Loading .....",
 
 
       // login
@@ -336,6 +330,7 @@ const resources = {
       "disclaimer_note": "مساعدتنا الصحية بالذكاء الاصطناعي تساعد المستخدمين على فهم أعراضهم بشكل أفضل، لكنها ليست بديلاً عن طبيب مرخص.",
       "contact_us": "للأسئلة أو الاستفسارات، تواصلوا معنا على:",
       "contact_email": "info@e-clinic.ai",
+      "loading":"تحميل .....",
 
       // login
       "login":"تسجيل الدخول",

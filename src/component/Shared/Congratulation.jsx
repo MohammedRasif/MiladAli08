@@ -47,11 +47,11 @@ const Congratulation = () => {
                         </h1>
                     </div>
 
-                    {/* Home Button */}
+                    {/* Enhanced Home Button */}
                     <div className="mt-6 md:mt-10 mb-8">
                         <NavLink to="/login">
                             <button
-                                className="   h-12 ] rounded-full px-5 py-3 bg-[#81db58] hover:bg-green-400 text-[#FAF1E6] font-medium text-sm md:text-base transition-colors duration-200"
+                                className="w-full flex items-center  h-12 rounded-full px-36 py-5 bg-[#81db58] hover:bg-green-400 text-[#FAF1E6] font-medium text-sm md:text-base transition-all duration-200 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-green-500 cursor-pointer"
                             >
                                 {t("login")}
                             </button>
