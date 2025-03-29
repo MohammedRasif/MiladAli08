@@ -98,7 +98,7 @@ const resources = {
 
       // "disclaimer_note": "Care Plan & Medication Guidance: Access tailored care plans and medication recommendations to support your health journey.",
 
-      "contact_us": "Our Commitment",
+      // "contact_us": "Our Commitment",
       "prayer_message": "🚨 Our AI health assistant provides helpful information but is not a substitute for professional medical advice. Always consult a licensed doctor for a proper diagnosis and treatment.",
 
       "Get_in": "Get in Touch",
@@ -299,7 +299,7 @@ const resources = {
       "service_medications": "✅ تشخيص للأعراض – تقييم شامل للأعراض لتقديم تفسيرات محتملة لحالتك الصحية.",
       // "disclaimer_note": "خطة رعاية وإرشادات دوائية: احصل على خطط رعاية مخصصة وتوصيات دوائية لدعم رحلتك الصحية.",
 
-      "contact_us": " إخلاء المسؤولية",
+      // "contact_us": " إخلاء المسؤولية",
       "prayer_message": "🚨 هذا المساعد الصحي هو استشاري مدعوم بالذكاء الاصطناعي، ولا يمكن اعتباره بديلاً عن الطبيب المرخّص. يُرجى استشارة أخصائي طبي للحصول على تشخيص دقيق وخطة علاج مناسبة.",
 
       "Get_in": "📩 للاستفسارات أو الأسئلة، تواصل معنا عبر البريد",
