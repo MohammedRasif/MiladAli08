@@ -23,6 +23,7 @@ const Navbar = () => {
       localStorage.removeItem("access_token");
       // localStorage.removeItem("patientDetails");
       localStorage.removeItem("unique_id");
+      localStorage.removeItem("patientDetails");
      
       navigate("/login");
       return;
@@ -58,7 +59,7 @@ const Navbar = () => {
     navigate("/login");
   };
 
-  const uniqueId = localStorage.getItem("unique_id");
+  const uniqueId = localStorage.getItem("access_token");
   const isLoggedIn = !!uniqueId;
 
   const patientDetails = localStorage.getItem("patientDetails");

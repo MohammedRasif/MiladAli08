@@ -275,20 +275,78 @@ const Header = () => {
   }, [i18n, i18n.language]);
 
 
-  useEffect(() => {
-    const patient = localStorage.getItem("patientDetails");
-    console.log("Patient Details:", patient);
+  //condition----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+  // useEffect(() => {
+  //   const patient = localStorage.getItem("patientDetails");
+  //   console.log("Patient Details:", patient);
   
-    // Check if patient exists and is not an empty string
-    if (!patient || patient === "") {
-      setShowNotification(true); // Show notification if no patient details
-      setIsInputActive(false);  // Disable input if no patient details
+    
+  //   if (!patient || patient === "") {
+  //     setShowNotification(true); 
+  //     setIsInputActive(false);  
+  //   } else {
+  //     setShowNotification(false); 
+  //     setIsInputActive(true);    
+  //     fetchChatData(id);         
+  //   }
+  // }, [fetchChatData, id]);
+
+
+
+
+
+  useEffect(() => {
+   
+  
+    setIsInputActive(false);
+  
+    // Function to check patient info from backend
+    const checkPatientInfo = async () => {
+      try {
+        const response = await fetch(`https://backend.e-clinic.ai/api/v1/patient/info/${id}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            // Add any authentication headers if required, e.g., Authorization: `Bearer ${token}`
+          },
+        });
+  
+        if (response.ok) {
+          const data = await response.json();
+          console.log("API Response:", data); // Log the response for debugging
+          if (data.age) { // Check if data exists and has an age
+            setShowNotification(false); // Hide notification if data exists
+            setIsInputActive(true);     // Enable input
+            fetchChatData(id);          // Fetch chat data
+          } else {
+            setShowNotification(true);  // Show notification if no data
+            setIsInputActive(false);    // Disable input
+          }
+        } else {
+          console.log("Response not OK, status:", response.status); // Log status if not OK
+          setShowNotification(true);    // Show notification if request fails
+          setIsInputActive(false);      // Disable input
+        }
+      } catch (error) {
+        console.error("Error fetching patient info:", error.message); // Log error
+        setShowNotification(true);      // Show notification on error
+        setIsInputActive(false);        // Disable input
+      }
+    };
+  
+    // Only call the API if id exists
+    if (id) {
+      console.log("Fetching patient info for ID:", id); // Log the ID being used
+      checkPatientInfo();
     } else {
-      setShowNotification(false); // Hide notification if patient details exist
-      setIsInputActive(true);    // Enable input if patient details exist
-      fetchChatData(id);         // Fetch chat data
+      console.log("No ID provided, showing notification");
+      setShowNotification(true);      // Show notification if no id
+      setIsInputActive(false);        // Disable input
     }
   }, [fetchChatData, id]);
+
+  //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
   // Save messages to localStorage
   useEffect(() => {

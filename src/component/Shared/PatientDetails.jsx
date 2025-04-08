@@ -114,7 +114,6 @@ const PatientDetailsForm = () => {
   useEffect(() => {
     Fetchpatient();
   }, []);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     const id = localStorage.getItem("unique_id");
@@ -129,16 +128,16 @@ const PatientDetailsForm = () => {
       additional_health_conditions: formData.additional_health_conditions || "",
       country: formData.country,
       family_history: formData.family_history,
-      unique_id: id,
+      unique_id: id ? id : null,
     };
-
+  
     console.log("Form submitted data:", transformedData);
-
+  
     try {
       const url = hasData
         ? "https://backend.e-clinic.ai/api/v1/patient/details/create" // Update endpoint if data exists
         : "https://backend.e-clinic.ai/api/v1/patient/details/create"; // Create endpoint if no data
-
+  
       const response = await fetch(url, {
         method: hasData ? "POST" : "POST", // Use PUT for update, POST for create
         headers: {
@@ -146,30 +145,34 @@ const PatientDetailsForm = () => {
         },
         body: JSON.stringify(transformedData),
       });
-
+  
       if (!response.ok) {
         throw new Error(`Network response was not ok. Status: ${response.status}`);
       }
-
+  
       const result = await response.json();
-      console.log("Success - Parsed Result:", result);
-
+  
+      // Log the response only when posting to the "create" endpoint (when hasData is false)
       if (!hasData) {
-        // Only set unique_id for new submissions (create)
-        const uniqueId = result.unique_id;
-        if (uniqueId) {
-          const updatedPatientDetails = {
-            ...transformedData,
-            id: uniqueId,
-          };
-          localStorage.setItem("unique_id", uniqueId);
-          console.log("Saved to localStorage with unique_id:", updatedPatientDetails);
-        } else {
-          console.warn("No unique_id found in API response");
-          localStorage.setItem("patientDetails", JSON.stringify(transformedData));
-        }
+        console.log("Response from Create Endpoint:", result);
+      } else {
+        console.log("Full API Response:", result); // Still log for update case, but with different label
       }
-
+  
+      // Set unique_id in localStorage regardless of hasData (for both create and update)
+      const uniqueId = result.unique_id;
+      if (uniqueId) {
+        localStorage.setItem("unique_id", uniqueId); // Set unique_id in localStorage
+        const updatedPatientDetails = {
+          ...transformedData,
+          id: uniqueId,
+        };
+        console.log("Saved to localStorage with unique_id:", updatedPatientDetails);
+      } else {
+        console.warn("No unique_id found in API response");
+        localStorage.setItem("patientDetails", JSON.stringify(transformedData));
+      }
+  
       localStorage.setItem("text", formData.reported_symptoms);
       navigate("/");
     } catch (error) {
